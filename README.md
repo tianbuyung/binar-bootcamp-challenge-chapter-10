@@ -1,4 +1,4 @@
-# binar e commerce
+# Binar E-commerce
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/fsw-23-binar-academy/binar-e-commerce.git
+git remote add origin https://gitlab.com/yang.riky/binar-e-commerce.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/fsw-23-binar-academy/binar-e-commerce/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/yang.riky/binar-e-commerce/-/settings/integrations)
 
 ## Collaborate with your team
 
