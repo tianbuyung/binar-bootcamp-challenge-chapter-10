@@ -1,4 +1,5 @@
 require("dotenv").config();
+// console.log("cek env : ", process.env);
 module.exports = {
 	development: {
 		username: process.env.DB_USERNAME_DEV || "postgres",

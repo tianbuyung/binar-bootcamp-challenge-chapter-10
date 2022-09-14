@@ -1,7 +1,12 @@
+const Model = require("../models");
+const { User } = Model;
+
 const getUser = (req, res) => {};
 
 const createUser = (req, res) => {
 	const { username, password, email } = req.body;
+	console.log("cek data masuk : ", username, password, email);
+
 	User.create({
 		username: username,
 		password: password,
@@ -9,7 +14,7 @@ const createUser = (req, res) => {
 	})
 		.then(() => {
 			res.status(200).json({
-				message: "Successfully create user"
+				message: "Successfully create user",
 			});
 		})
 		.catch((err) => {
@@ -25,4 +30,4 @@ const getUserAllUser = (req, res) => {
 	});
 };
 
-module.exports = { getUser, getUserAllUser };
+module.exports = { getUser, getUserAllUser, createUser };

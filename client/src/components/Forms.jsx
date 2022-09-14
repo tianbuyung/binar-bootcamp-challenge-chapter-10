@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-const Forms = ({ label, type, placeholder, name }) => {
+const Forms = ({ label, type, placeholder, name, onChange }) => {
 	return (
 		<Form.Group className="mb-3">
 			<Form.Label>{label}</Form.Label>
@@ -9,6 +9,7 @@ const Forms = ({ label, type, placeholder, name }) => {
 				placeholder={placeholder}
 				name={name}
 				required
+				onChange={onChange}
 			/>
 		</Form.Group>
 	);
