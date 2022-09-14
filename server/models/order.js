@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Order.init({
-    cartId: {
+    CartId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
