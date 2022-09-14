@@ -4,6 +4,7 @@ import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
+import Admin from "./pages/admin";
 
 const ProtectedRouteNonAuth = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -52,6 +53,10 @@ const routes = [
         <RegisterPage />
       </ProtectedRouteNonAuth>
     ),
+  },
+  {
+    path: "/admin",
+    page: <Admin />,
   },
 ];
 
