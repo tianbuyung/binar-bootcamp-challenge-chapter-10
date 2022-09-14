@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     isBought: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+      allowNull: false,
       validate: {
         notNull: true,
         notEmpty: true

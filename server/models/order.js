@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     totalOrder: {
       type: DataTypes.NUMERIC,
+      allowNull: false,
       validate: {
         isDecimal: true,
         notNull: true,
