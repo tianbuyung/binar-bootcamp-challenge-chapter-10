@@ -21,9 +21,21 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
-    totalOrder: DataTypes.NUMERIC
+    totalOrder: {
+      type: DataTypes.NUMERIC,
+      validate: {
+        isDecimal: true,
+        notNull: true,
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Order',
