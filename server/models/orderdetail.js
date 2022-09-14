@@ -59,12 +59,13 @@ module.exports = (sequelize, DataTypes) => {
 					notNull: true,
 					notEmpty: true,
 				},
-			},
-			set() {
-				this.setDataValue(
-					"totalOrderDetail",
-					this.getDataValue("qty") * this.getDataValue("price")
-				);
+				set() {
+					this.setDataValue(
+						"totalOrderDetail",
+						this.getDataValue("qty") *
+							this.getDataValue("price")
+					);
+				},
 			},
 		},
 		{
