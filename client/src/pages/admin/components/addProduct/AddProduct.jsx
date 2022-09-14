@@ -1,16 +1,5 @@
 import { useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Label,
-  Row,
-} from "reactstrap";
+import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 
 const AddProduct = (props) => {
   const [enteredProductName, setEnteredProductName] = useState("");
@@ -46,7 +35,7 @@ const AddProduct = (props) => {
       <Row className="justify-content-center">
         <Col lg={6}>
           <Form onSubmit={addProductHandler}>
-            <Input
+            <Form.Control
               className="my-3"
               id="productName"
               name="productName"
@@ -56,20 +45,20 @@ const AddProduct = (props) => {
               value={enteredProductName}
             />
             <InputGroup className="mb-3">
-              <InputGroupText>Rp</InputGroupText>
-              <Input
+              <InputGroup.Text id="productPrice">Rp</InputGroup.Text>
+              <Form.Control
                 placeholder="Product Price"
                 type="number"
                 onChange={productPriceChangeHandler}
                 value={enteredProductPrice}
               />
             </InputGroup>
-            <FormGroup row className="mb-3">
-              <Label for="categorySelect" md={3}>
+            <Form.Group as={Row} className="mb-3 text-start">
+              <Form.Label htmlFor="categorySelect" column md={3}>
                 Category
-              </Label>
+              </Form.Label>
               <Col md={9}>
-                <Input
+                <Form.Select
                   id="categorySelect"
                   name="categorySelect"
                   type="select"
@@ -82,9 +71,9 @@ const AddProduct = (props) => {
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
-                </Input>
+                </Form.Select>
               </Col>
-            </FormGroup>
+            </Form.Group>
             <Button className="mb-3" type="submit">
               Submit
             </Button>
