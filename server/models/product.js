@@ -26,15 +26,30 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true,
+        len: [3, 255]
+      }
     },
     price: {
       type: DataTypes.DECIMAL,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isDecimal: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     }
   }, {
     sequelize,

@@ -1,6 +1,6 @@
 'use strict';
 
-const { hashPassword } = require("../utils/hashPassword");
+const hashPassword = require("../utils/hashPassword");
 
 const {
   Model
@@ -19,16 +19,33 @@ module.exports = (sequelize, DataTypes) => {
   Admin.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isAlpha: true,
+        notNull: true,
+        notEmpty: true,
+        len: [3, 255]
+      }
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isEmail: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlphanumeric: true,
+        notNull: true,
+        notEmpty: true,
+        len: [6, 20]
+      },
       set(value) {
         this.setDataValue('password', hashPassword(value));
       }

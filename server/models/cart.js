@@ -25,11 +25,20 @@ module.exports = (sequelize, DataTypes) => {
   Cart.init({
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     isBought: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     }
   }, {
     sequelize,
