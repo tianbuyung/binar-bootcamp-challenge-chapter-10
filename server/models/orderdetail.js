@@ -18,21 +18,48 @@ module.exports = (sequelize, DataTypes) => {
   OrderDetail.init({
     orderId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     qty: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     price: {
       type: DataTypes.NUMERIC,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isDecimal: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
-    totalOrderDetail: DataTypes.NUMERIC,
+    totalOrderDetail: {
+      type: DataTypes.NUMERIC,
+      validate: {
+        isDecimal: true,
+        notNull: true,
+        notEmpty: true
+      }
+    },
     set() {
       this.setDataValue('totalOrderDetail', this.getDataValue('qty') * this.getDataValue('price'));
     }

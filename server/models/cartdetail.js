@@ -18,15 +18,30 @@ module.exports = (sequelize, DataTypes) => {
   CartDetail.init({
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     },
     qty: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        notNull: true,
+        notEmpty: true
+      }
     }
   }, {
     sequelize,
