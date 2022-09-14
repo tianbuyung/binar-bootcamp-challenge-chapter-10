@@ -54,14 +54,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     totalOrderDetail: {
       type: DataTypes.NUMERIC,
+      allowNull: false,
       validate: {
         isDecimal: true,
         notNull: true,
         notEmpty: true
+      },
+      set() {
+        this.setDataValue('totalOrderDetail', this.getDataValue('qty') * this.getDataValue('price'));
       }
-    },
-    set() {
-      this.setDataValue('totalOrderDetail', this.getDataValue('qty') * this.getDataValue('price'));
     }
   }, {
     sequelize,
