@@ -10,6 +10,7 @@ module.exports = {
       },
       cartId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Carts'
         },

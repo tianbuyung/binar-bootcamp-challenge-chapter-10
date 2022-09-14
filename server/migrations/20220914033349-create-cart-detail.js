@@ -10,6 +10,7 @@ module.exports = {
       },
       cartId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Carts'
         },
@@ -18,6 +19,7 @@ module.exports = {
       },
       productId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Products'
         },
@@ -25,7 +27,8 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       qty: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +38,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      indexes: [{ unique: true, fields: ['cartId', 'productId'] }]
     });
   },
   async down(queryInterface, Sequelize) {

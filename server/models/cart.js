@@ -23,8 +23,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Cart.init({
-    userId: DataTypes.INTEGER,
-    isBought: DataTypes.BOOLEAN
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    isBought: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Cart',

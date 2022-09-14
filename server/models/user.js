@@ -1,4 +1,7 @@
 'use strict';
+
+const { hashPassword } = require("../utils/hashPassword");
+
 const {
   Model
 } = require('sequelize');
@@ -18,9 +21,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set(value) {
+        this.setDataValue('password', hashPassword(value));
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

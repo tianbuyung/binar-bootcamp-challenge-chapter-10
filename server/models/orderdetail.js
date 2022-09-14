@@ -16,14 +16,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   OrderDetail.init({
-    orderId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    qty: DataTypes.INTEGER,
-    price: DataTypes.NUMERIC,
-    totalOrderDetail: DataTypes.NUMERIC
+    orderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    qty: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.NUMERIC,
+      allowNull: false
+    },
+    totalOrderDetail: DataTypes.NUMERIC,
+    set() {
+      this.setDataValue('totalOrderDetail', this.getDataValue('qty') * this.getDataValue('price'));
+    }
   }, {
     sequelize,
     modelName: 'OrderDetail',
+    indexes: [{ unique: true, fields: ['orderId', 'productId'] }]
   });
   return OrderDetail;
 };

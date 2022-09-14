@@ -16,12 +16,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CartDetail.init({
-    cartId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    qty: DataTypes.INTEGER
+    cartId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    qty: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'CartDetail',
+    indexes: [{ unique: true, fields: ['cartId', 'productId'] }]
   });
   return CartDetail;
 };

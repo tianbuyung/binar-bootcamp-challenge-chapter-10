@@ -9,8 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       orderId: {
-        type: Sequelize.INTEGER
-        ,
+        type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Orders'
         },
@@ -19,6 +19,7 @@ module.exports = {
       },
       productId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Products'
         },
@@ -26,10 +27,12 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       qty: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       price: {
-        type: Sequelize.NUMERIC
+        type: Sequelize.NUMERIC,
+        allowNull: false
       },
       totalOrderDetail: {
         type: Sequelize.NUMERIC
@@ -42,6 +45,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      indexes: [{ unique: true, fields: ['orderId', 'productId'] }]
     });
   },
   async down(queryInterface, Sequelize) {

@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Order.init({
-    cartId: DataTypes.INTEGER,
+    cartId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     totalOrder: DataTypes.NUMERIC
   }, {
     sequelize,
