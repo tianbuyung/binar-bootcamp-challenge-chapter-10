@@ -19,7 +19,7 @@ module.exports = {
       const seedData = {
         name: faker.commerce.productName(),
         price: faker.commerce.price(),
-        categoryId: Math.floor(Math.random() * 5) + 1,
+        CategoryId: Math.floor(Math.random() * 5) + 1,
         createdAt: new Date(),
         updatedAt: new Date()
       };

@@ -17,7 +17,7 @@ module.exports = {
 
     for (let i = 0; i < 5; i++) {
       const seedData = {
-        userId: Math.floor(Math.random() * 20) + 1,
+        UserId: Math.floor(Math.random() * 20) + 1,
         isBought: Math.floor(Math.random() * 1) ? true : false,
         createdAt: new Date(),
         updatedAt: new Date()

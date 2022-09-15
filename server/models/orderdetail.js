@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   OrderDetail.init({
-    orderId: {
+    OrderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
-    productId: {
+    ProductId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
