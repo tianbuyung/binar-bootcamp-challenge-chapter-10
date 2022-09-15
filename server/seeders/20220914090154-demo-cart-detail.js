@@ -17,8 +17,8 @@ module.exports = {
 
     for (let i = 0; i < 20; i++) {
       const seedData = {
-        cartId: Math.floor(Math.random() * 5) + 1,
-        productId: Math.floor(Math.random() * 20) + 1,
+        CartId: Math.floor(Math.random() * 5) + 1,
+        ProductId: Math.floor(Math.random() * 20) + 1,
         qty: Math.floor(Math.random() * 20) + 1,
         createdAt: new Date(),
         updatedAt: new Date()

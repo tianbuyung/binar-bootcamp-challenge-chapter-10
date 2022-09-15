@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CartDetail.init({
-    cartId: {
+    CartId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
-    productId: {
+    ProductId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {

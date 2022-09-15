@@ -17,8 +17,8 @@ module.exports = {
 
     for (let i = 0; i < 20; i++) {
       const seedData = {
-        orderId: Math.floor(Math.random() * 5) + 1,
-        productId: Math.floor(Math.random() * 20) + 1,
+        OrderId: Math.floor(Math.random() * 5) + 1,
+        ProductId: Math.floor(Math.random() * 20) + 1,
         qty: Math.floor(Math.random() * 20) + 1,
         price: faker.commerce.price(),
         totalOrderDetail: (Math.floor(Math.random() * 20) + 1) * faker.commerce.price(),
