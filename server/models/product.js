@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -13,48 +11,51 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Product.belongsTo(models.Category);
       models.Product.hasMany(models.CartDetail, {
-        onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE'
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE",
       });
       models.Product.hasMany(models.OrderDetail, {
-        onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE'
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE",
       });
     }
   }
-  Product.init({
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty: true,
-        len: [3, 255]
-      }
+  Product.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+          len: [3, 255],
+        },
+      },
+      price: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+          isDecimal: true,
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          notNull: true,
+          notEmpty: true,
+        },
+      },
     },
-    price: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-      validate: {
-        isDecimal: true,
-        notNull: true,
-        notEmpty: true
-      }
-    },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-        notNull: true,
-        notEmpty: true
-      }
+    {
+      sequelize,
+      modelName: "Product",
+      paranoid: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Product',
-    paranoid: true
-  });
+  );
   return Product;
 };

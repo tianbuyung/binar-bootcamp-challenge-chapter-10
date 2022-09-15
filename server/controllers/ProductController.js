@@ -1,24 +1,16 @@
+const Model = require("../models");
+const { Product } = Model;
+
 const getProduct = async (req, res) => {
-  let err = null;
-  const products = [
-    {
-      id: 1,
-      productName: "Indomie Goreng",
-      productPrice: 1300,
-      categoryId: 2,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      deletedAt: "",
-    },
-  ];
-  if (err) {
-    res.status(400).json({
-      message: err,
-    });
-  } else {
+  try {
+    const products = await Product.findAll();
     res.status(200).json({
-      message: "Successfully get all produts",
+      message: "Successfully get all products",
       products,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error,
     });
   }
 };
