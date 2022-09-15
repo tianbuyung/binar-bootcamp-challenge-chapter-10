@@ -1,5 +1,5 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { redirect } from "react-router";
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
@@ -7,24 +7,43 @@ import Forms from "../../components/Forms";
 const RegisterPage = () => {
 	const [user, setUser] = useState();
 
-	const createUser = (e) => {
-		e.preventDefault();
-		fetch("http://localhost:4000/users/register", {
+	const createUser = async (e) => {
+		// fetch("http://localhost:4000/users", {
+		// 	method: "POST",
+		// 	body: JSON.stringify(user),
+		// 	headers: { "Content-Type": "application/json" },
+		// 	redirect: "follow",
+		// })
+		// 	.then((res) => {
+		// 		if (res.ok) {
+		// 			alert("Successfully create new user");
+		// 			<Navigate to="/" />;
+		// 		} else {
+		// 			alert("Error! Silahkan cek lagi");
+		// 			<Navigate to="register" />;
+		// 		}
+		// 	})
+		// 	.catch((err) => {
+		// 		alert("Error! Please try again : " + err);
+		// 		console.log("error while send api : " + err.message);
+		// 		<Navigate to="register" />;
+		// 	});
+
+		const cekUser = await fetch("http://localhost:4000/users", {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: { "Content-Type": "application/json" },
-		})
-			.then((res) => {
-				if (res.ok) {
-					alert("Successfully create new user");
-					return redirect("/login");
-				} else {
-					alert("Error! Please try again");
-				}
-			})
-			.catch((err) => {
-				console.log("error while send api : " + err.message);
-			});
+			redirect: "follow",
+		});
+
+		if (cekUser.status === 200) {
+			alert("Successfully create new user");
+			<Navigate to="/" />;
+		} else {
+			e.preventDefault();
+			alert("Error! Silahkan cek lagi");
+			// <Navigate to="register" />;
+		}
 	};
 
 	return (
@@ -42,12 +61,12 @@ const RegisterPage = () => {
 					}}
 				/>
 				<Forms
-					label={"Username"}
-					name={"username"}
+					label={"Nama"}
+					name={"nama"}
 					type={"text"}
-					placeholder={"Masukkan username Anda"}
+					placeholder={"Masukkan nama Anda"}
 					onChange={(e) => {
-						setUser({ ...user, username: e.target.value });
+						setUser({ ...user, nama: e.target.value });
 					}}
 				/>
 				<Forms

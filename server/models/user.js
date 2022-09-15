@@ -43,19 +43,14 @@ module.exports = (sequelize, DataTypes) => {
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				// validate: {
-				// 	isAlphanumeric: true,
-				// 	notNull: true,
-				// 	notEmpty: true,
-				// 	len: [6, 60],
-				// },
+				validate: {
+					isAlphanumeric: true,
+					notNull: true,
+					notEmpty: true,
+					len: [6, 60],
+				},
 				async set(value) {
-					const hashpass = await hashPassword(value);
-					console.log(
-						"🚀 ~ file: user.js ~ line 54 ~ set ~ hashpass",
-						hashpass
-					);
-					this.setDataValue("password", await hashpass);
+					this.setDataValue("password", value);
 				},
 			},
 		},

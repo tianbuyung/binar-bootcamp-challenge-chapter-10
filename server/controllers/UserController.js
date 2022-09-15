@@ -3,16 +3,11 @@ const { User } = require("../models");
 const getUser = (req, res) => {};
 
 const createUser = (req, res) => {
-	const { username, password, email } = req.body;
-	console.log(
-		"🚀 ~ file: UserController.js ~ line 7 ~ createUser ~ username, password, email",
-		username,
-		password,
-		email
-	);
+	const { nama, password, email } = req.body;
 
+	// User.findOne()
 	User.create({
-		name: username,
+		name: nama,
 		password: password,
 		email: email,
 	})
@@ -23,7 +18,7 @@ const createUser = (req, res) => {
 		})
 		.catch((err) => {
 			res.status(500).json({
-				message: "error creating user : " + err.message,
+				message: "error creating user : " + err,
 			});
 		});
 };
