@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Product.belongsTo(models.Category);
+      models.Product.belongsTo(models.Category, { foreignKey: "categoryId" });
       models.Product.hasMany(models.CartDetail, {
         onDelete: "RESTRICT",
         onUpdate: "CASCADE",
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      CategoryId: {
+      categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
