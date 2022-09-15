@@ -1,5 +1,6 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { redirect } from "react-router";
+import { useState } from "react";
 
 import Forms from "../../components/Forms";
 
@@ -14,21 +15,25 @@ const RegisterPage = () => {
 			headers: { "Content-Type": "application/json" },
 		})
 			.then((res) => {
-				res.json();
+				if (res.ok) {
+					alert("Successfully create new user");
+					return redirect("/login");
+				} else {
+					alert("Error! Please try again");
+				}
 			})
-			.then((json) => setUser(json.user))
 			.catch((err) => {
-				console.log("error while send api : " + err);
+				console.log("error while send api : " + err.message);
 			});
 	};
 
 	return (
 		<Container>
-			<h2 align="center">Daftar</h2>
+			<h2 align="center">Daftar Akun</h2>
 
-			<Form onSubmit={createUser}>
+			<Form onSubmit={createUser} align="left">
 				<Forms
-					label={"email"}
+					label={"Email"}
 					name={"email"}
 					type={"email"}
 					placeholder={"Masukkan email Anda"}
@@ -37,7 +42,7 @@ const RegisterPage = () => {
 					}}
 				/>
 				<Forms
-					label={"username"}
+					label={"Username"}
 					name={"username"}
 					type={"text"}
 					placeholder={"Masukkan username Anda"}
@@ -46,7 +51,7 @@ const RegisterPage = () => {
 					}}
 				/>
 				<Forms
-					label={"password"}
+					label={"Password"}
 					name={"password"}
 					type={"password"}
 					placeholder={"Masukkan password Anda"}
