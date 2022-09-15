@@ -58,23 +58,24 @@ const getDetailProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, categoryId } = req.body;
+    const { name, price, CategoryId } = req.body;
     const options = {
       where: {
         name,
         price,
-        categoryId,
+        CategoryId,
       },
     };
     let [data, created] = await Product.findOrCreate(options);
-    console.log(data, created);
     if (created) {
       res.status(200).json({
         message: "Your product has been created!",
+        data,
       });
     } else {
       res.status(400).json({
         message: "The name of product is already exist!",
+        data,
       });
     }
   } catch (error) {
@@ -84,9 +85,62 @@ const createProduct = async (req, res) => {
   }
 };
 
-const editProduct = async (req, res) => {};
+const editProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name, price, CategoryId } = req.body;
+    const options = {
+      where: { id },
+    };
+    let product = await Product.findOne(options);
+    if (product) {
+      await Product.update(
+        {
+          name,
+          price,
+          CategoryId,
+          updatedAt: new Date().getTime(),
+        },
+        options
+      );
+      res.status(200).json({
+        message: "The data has been successfully updated",
+      });
+    } else {
+      res.status(400).json({
+        message: "Product is not found!",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: error,
+    });
+  }
+};
 
-const deleteProduct = async (req, res) => {};
+const deleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const options = {
+      where: { id },
+    };
+    let product = await Product.findOne(options);
+    if (!product) {
+      res.status(400).json({
+        message: "Product is not found!",
+      });
+    } else {
+      await Product.destroy(options);
+      res.status(200).json({
+        message: "The data has been successfully deleted",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: error,
+    });
+  }
+};
 
 module.exports = {
   getProduct,
