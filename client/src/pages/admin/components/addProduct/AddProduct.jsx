@@ -28,7 +28,7 @@ const AddProduct = (props) => {
     );
     setEnteredProductName("");
     setEnteredProductPrice("");
-    setEnteredProductCategory([]);
+    setEnteredProductCategory(enteredProductCategory);
   };
 
   const productNameChangeHandler = (event) => {
@@ -79,7 +79,11 @@ const AddProduct = (props) => {
                   onChange={productCategoryChangeHandler}
                 >
                   {enteredProductCategory.map((category) => {
-                    return <option key={category.id}>{category.name}</option>;
+                    return (
+                      <option value={category.id} key={category.id}>
+                        {category.name}
+                      </option>
+                    );
                   })}
                 </Form.Select>
               </Col>
