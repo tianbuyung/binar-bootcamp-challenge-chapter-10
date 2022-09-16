@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 
 const AddProduct = (props) => {
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
-  const [enteredProductCategory, setEnteredProductCategory] = useState("");
+  const [enteredProductCategory, setEnteredProductCategory] = useState([]);
+
+  const API = "http://localhost:4000/";
+  const ROUTE = "categories";
+
+  const fetchGetCategoryHandler = useCallback(async () => {
+    const response = await fetch(API + ROUTE, { method: "GET" });
+    const data = await response.json();
+    setEnteredProductCategory(data.categories);
+  }, []);
+
+  useEffect(() => {
+    fetchGetCategoryHandler();
+  }, [fetchGetCategoryHandler]);
 
   const addProductHandler = (event) => {
     event.preventDefault();
@@ -15,7 +28,7 @@ const AddProduct = (props) => {
     );
     setEnteredProductName("");
     setEnteredProductPrice("");
-    setEnteredProductCategory("");
+    setEnteredProductCategory([]);
   };
 
   const productNameChangeHandler = (event) => {
@@ -35,6 +48,7 @@ const AddProduct = (props) => {
       <Row className="justify-content-center">
         <Col lg={6}>
           <Form onSubmit={addProductHandler}>
+            <h1>Add Product</h1>
             <Form.Control
               className="my-3"
               id="productName"
@@ -63,14 +77,10 @@ const AddProduct = (props) => {
                   name="categorySelect"
                   type="select"
                   onChange={productCategoryChangeHandler}
-                  value={enteredProductCategory}
                 >
-                  <option></option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  {enteredProductCategory.map((category) => {
+                    return <option key={category.id}>{category.name}</option>;
+                  })}
                 </Form.Select>
               </Col>
             </Form.Group>
