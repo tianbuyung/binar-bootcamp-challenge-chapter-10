@@ -17,15 +17,15 @@ const RegisterPage = () => {
 			redirect: "follow",
 		})
 			.then((res) => {
-				if (res.ok) {
+				if (res.status === 200) {
 					alert("Successfully create new user");
 					navigate("/");
-				} else {
-					alert("Error! Silahkan cek lagi");
+				} else if (res.status === 409) {
+					alert("Email is already registered");
 				}
 			})
 			.catch((err) => {
-				alert("Error! Please try again : " + err);
+				alert("Error! Please try again : ");
 				console.log("error while send api : " + err.message);
 			});
 	};
