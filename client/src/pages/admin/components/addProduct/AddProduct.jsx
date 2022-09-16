@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 
 const AddProduct = (props) => {
+  const [getCategory, setGetCategory] = useState([]);
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
-  const [enteredProductCategory, setEnteredProductCategory] = useState([]);
+  const [enteredProductCategory, setEnteredProductCategory] = useState("");
 
   const API = "http://localhost:4000/";
   const ROUTE = "categories";
@@ -12,23 +13,31 @@ const AddProduct = (props) => {
   const fetchGetCategoryHandler = useCallback(async () => {
     const response = await fetch(API + ROUTE, { method: "GET" });
     const data = await response.json();
-    setEnteredProductCategory(data.categories);
+    setGetCategory(data.categories);
   }, []);
 
   useEffect(() => {
     fetchGetCategoryHandler();
   }, [fetchGetCategoryHandler]);
 
-  const addProductHandler = (event) => {
+  const addProductHandler = async (event) => {
     event.preventDefault();
-    console.log(
-      enteredProductName,
-      enteredProductPrice,
-      enteredProductCategory
-    );
+    const AddProductRoute = "admin/products";
+    const body = {
+      name: enteredProductName,
+      price: enteredProductPrice,
+      CategoryId: enteredProductCategory,
+    };
+    const response = await fetch(API + AddProductRoute, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    alert(data.message);
     setEnteredProductName("");
     setEnteredProductPrice("");
-    setEnteredProductCategory(enteredProductCategory);
+    setEnteredProductCategory("");
   };
 
   const productNameChangeHandler = (event) => {
@@ -77,8 +86,10 @@ const AddProduct = (props) => {
                   name="categorySelect"
                   type="select"
                   onChange={productCategoryChangeHandler}
+                  value={enteredProductCategory}
                 >
-                  {enteredProductCategory.map((category) => {
+                  <option>Please select your product category!</option>
+                  {getCategory.map((category) => {
                     return (
                       <option value={category.id} key={category.id}>
                         {category.name}
