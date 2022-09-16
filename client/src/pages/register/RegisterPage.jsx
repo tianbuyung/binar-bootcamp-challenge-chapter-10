@@ -1,49 +1,33 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
 
 const RegisterPage = () => {
 	const [user, setUser] = useState();
+	let navigate = useNavigate();
 
-	const createUser = async (e) => {
-		// fetch("http://localhost:4000/users", {
-		// 	method: "POST",
-		// 	body: JSON.stringify(user),
-		// 	headers: { "Content-Type": "application/json" },
-		// 	redirect: "follow",
-		// })
-		// 	.then((res) => {
-		// 		if (res.ok) {
-		// 			alert("Successfully create new user");
-		// 			<Navigate to="/" />;
-		// 		} else {
-		// 			alert("Error! Silahkan cek lagi");
-		// 			<Navigate to="register" />;
-		// 		}
-		// 	})
-		// 	.catch((err) => {
-		// 		alert("Error! Please try again : " + err);
-		// 		console.log("error while send api : " + err.message);
-		// 		<Navigate to="register" />;
-		// 	});
-
-		const cekUser = await fetch("http://localhost:4000/users", {
+	const createUser = (e) => {
+		e.preventDefault();
+		fetch("http://localhost:4000/users", {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: { "Content-Type": "application/json" },
 			redirect: "follow",
-		});
-
-		if (cekUser.status === 200) {
-			alert("Successfully create new user");
-			<Navigate to="/" />;
-		} else {
-			e.preventDefault();
-			alert("Error! Silahkan cek lagi");
-			// <Navigate to="register" />;
-		}
+		})
+			.then((res) => {
+				if (res.ok) {
+					alert("Successfully create new user");
+					navigate("/");
+				} else {
+					alert("Error! Silahkan cek lagi");
+				}
+			})
+			.catch((err) => {
+				alert("Error! Please try again : " + err);
+				console.log("error while send api : " + err.message);
+			});
 	};
 
 	return (
