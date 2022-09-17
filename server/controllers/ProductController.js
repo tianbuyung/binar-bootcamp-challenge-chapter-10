@@ -58,12 +58,13 @@ const getDetailProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, CategoryId } = req.body;
+    const { name, price, CategoryId, imageUrl } = req.body;
     const options = {
       where: {
         name,
         price,
         CategoryId,
+        imageUrl,
       },
     };
     let [data, created] = await Product.findOrCreate(options);
