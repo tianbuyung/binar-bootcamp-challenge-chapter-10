@@ -89,7 +89,7 @@ const createProduct = async (req, res) => {
 const editProduct = async (req, res) => {
   try {
     const id = req.params.id;
-    const { name, price, CategoryId } = req.body;
+    const { name, price, CategoryId, imageUrl } = req.body;
     const options = {
       where: { id },
     };
@@ -100,6 +100,7 @@ const editProduct = async (req, res) => {
           name,
           price,
           CategoryId,
+          imageUrl,
           updatedAt: new Date().getTime(),
         },
         options

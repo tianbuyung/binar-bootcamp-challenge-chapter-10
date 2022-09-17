@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Form,
+  InputGroup,
+  Modal,
+  Row,
+  FormGroup,
+} from "react-bootstrap";
 
 const UpdateProducts = (props) => {
   const { product } = props;
 
+  const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
   const [enteredProductName, setEnteredProductName] = useState("");
@@ -27,9 +36,16 @@ const UpdateProducts = (props) => {
     fetchGetCategoryHandler();
   }, [fetchGetCategoryHandler]);
 
-  const addProductHandler = async (event) => {
+  const updateProductHandler = async (event) => {
     event.preventDefault();
-    const AddProductRoute = `admin/products/${product.id}`;
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
+
+    const UpdateProductRoute = `admin/products/${product.id}`;
     const body = {
       name: enteredProductName === "" ? product.name : enteredProductName,
       price: enteredProductPrice === "" ? product.price : enteredProductPrice,
@@ -39,13 +55,15 @@ const UpdateProducts = (props) => {
           : enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
-    const response = await fetch(API + AddProductRoute, {
+    const response = await fetch(API + UpdateProductRoute, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
     alert(data.message);
+    setValidated(false);
+    setShow(false);
   };
 
   const productNameChangeHandler = (event) => {
@@ -73,28 +91,38 @@ const UpdateProducts = (props) => {
         style={{ cursor: "pointer", marginRight: "0.5rem" }}
       />
       <Modal show={show} onHide={handleClose}>
-        <Form onSubmit={addProductHandler}>
+        <Form onSubmit={updateProductHandler} validated={validated} noValidate>
           <Modal.Header closeButton>
             <Modal.Title>Form Edit Product</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Control
-              className="my-3"
-              id="productName"
-              name="productName"
-              placeholder="Product Name"
-              type="text"
-              onChange={productNameChangeHandler}
-              defaultValue={product.name}
-            />
+            <FormGroup className="my-3">
+              <Form.Control
+                required
+                className="my-3"
+                id="productName"
+                name="productName"
+                placeholder="Product Name"
+                type="text"
+                onChange={productNameChangeHandler}
+                defaultValue={product.name}
+              />
+              <Form.Control.Feedback type="invalid" className="text-start">
+                Please provide a valid product price.
+              </Form.Control.Feedback>
+            </FormGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="productPrice">Rp</InputGroup.Text>
               <Form.Control
+                required
                 placeholder="Product Price"
                 type="number"
                 onChange={productPriceChangeHandler}
                 defaultValue={product.price}
               />
+              <Form.Control.Feedback type="invalid" className="text-start">
+                Please provide a valid product price.
+              </Form.Control.Feedback>
             </InputGroup>
             <Form.Group as={Row} className="mb-3 text-start">
               <Form.Label htmlFor="categorySelect" column md={3}>
@@ -102,13 +130,17 @@ const UpdateProducts = (props) => {
               </Form.Label>
               <Col md={9}>
                 <Form.Select
+                  required
+                  as="select"
                   id="categorySelect"
                   name="categorySelect"
                   type="select"
                   onChange={productCategoryChangeHandler}
                   defaultValue={product.CategoryId}
                 >
-                  <option>Please select your product category!</option>
+                  <option value={""}>
+                    Please select your product category!
+                  </option>
                   {getCategory.map((category) => {
                     return (
                       <option value={category.id} key={category.id}>
@@ -117,6 +149,9 @@ const UpdateProducts = (props) => {
                     );
                   })}
                 </Form.Select>
+                <Form.Control.Feedback type="invalid" className="text-start">
+                  Please select a valid product category.
+                </Form.Control.Feedback>
               </Col>
             </Form.Group>
             <InputGroup className="mb-3">
@@ -125,6 +160,13 @@ const UpdateProducts = (props) => {
                 type="file"
                 onChange={fileChangeHandler}
               />
+              <Form.Control.Feedback
+                type="invalid"
+                tooltip
+                className="text-start"
+              >
+                Please provide a valid image file.
+              </Form.Control.Feedback>
               <Button onClick={fileUpload}>Upload</Button>
             </InputGroup>
           </Modal.Body>

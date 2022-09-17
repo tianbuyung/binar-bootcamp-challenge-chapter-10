@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
 
 const AddProduct = (props) => {
+  const [validated, setValidated] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
@@ -23,23 +32,45 @@ const AddProduct = (props) => {
 
   const addProductHandler = async (event) => {
     event.preventDefault();
-    const AddProductRoute = "admin/products";
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
+
+    if (
+      enteredProductName.trim().length === 0 ||
+      enteredProductPrice.trim().length === 0 ||
+      enteredProductCategory.trim().length === 0
+      // enteredProductImage.trim().length === 0
+    ) {
+      return alert("Please provide a valid data!");
+    }
+
+    const AddProductRoute = `admin/products`;
     const body = {
       name: enteredProductName,
       price: enteredProductPrice,
       CategoryId: enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
+
     const response = await fetch(API + AddProductRoute, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
     });
+
     const data = await response.json();
     alert(data.message);
+
     setEnteredProductName("");
     setEnteredProductPrice("");
     setEnteredProductCategory("");
+    setEnteredProductImage("");
+    setValidated(false);
   };
 
   const productNameChangeHandler = (event) => {
@@ -64,25 +95,34 @@ const AddProduct = (props) => {
     <Container className="bg-light mt-5" fluid="md">
       <Row className="justify-content-center">
         <Col lg={6}>
-          <Form onSubmit={addProductHandler}>
+          <Form onSubmit={addProductHandler} validated={validated} noValidate>
             <h1>Add Product</h1>
-            <Form.Control
-              className="my-3"
-              id="productName"
-              name="productName"
-              placeholder="Product Name"
-              type="text"
-              onChange={productNameChangeHandler}
-              value={enteredProductName}
-            />
+            <FormGroup className="my-3">
+              <Form.Control
+                required
+                id="productName"
+                name="productName"
+                placeholder="Product Name"
+                type="text"
+                onChange={productNameChangeHandler}
+                value={enteredProductName}
+              />
+              <Form.Control.Feedback type="invalid" className="text-start">
+                Please provide a valid product name.
+              </Form.Control.Feedback>
+            </FormGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="productPrice">Rp</InputGroup.Text>
               <Form.Control
+                required
                 placeholder="Product Price"
                 type="number"
                 onChange={productPriceChangeHandler}
                 value={enteredProductPrice}
               />
+              <Form.Control.Feedback type="invalid" className="text-start">
+                Please provide a valid product price.
+              </Form.Control.Feedback>
             </InputGroup>
             <Form.Group as={Row} className="mb-3 text-start">
               <Form.Label htmlFor="categorySelect" column md={3}>
@@ -90,13 +130,17 @@ const AddProduct = (props) => {
               </Form.Label>
               <Col md={9}>
                 <Form.Select
+                  required
+                  as="select"
                   id="categorySelect"
                   name="categorySelect"
                   type="select"
                   onChange={productCategoryChangeHandler}
                   value={enteredProductCategory}
                 >
-                  <option>Please select your product category!</option>
+                  <option value={""}>
+                    Please select your product category!
+                  </option>
                   {getCategory.map((category) => {
                     return (
                       <option value={category.id} key={category.id}>
@@ -105,14 +149,25 @@ const AddProduct = (props) => {
                     );
                   })}
                 </Form.Select>
+                <Form.Control.Feedback type="invalid" className="text-start">
+                  Please select a valid product category.
+                </Form.Control.Feedback>
               </Col>
             </Form.Group>
             <InputGroup className="mb-3">
               <Form.Control
+                // required
                 placeholder="Upload image"
                 type="file"
                 onChange={fileChangeHandler}
               />
+              <Form.Control.Feedback
+                type="invalid"
+                tooltip
+                className="text-start"
+              >
+                Please provide a valid image file.
+              </Form.Control.Feedback>
               <Button onClick={fileUpload}>Upload</Button>
             </InputGroup>
             <Button className="mb-3" type="submit">

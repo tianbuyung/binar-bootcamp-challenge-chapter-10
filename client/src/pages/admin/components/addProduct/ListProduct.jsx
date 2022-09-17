@@ -28,8 +28,8 @@ const ListProduct = (props) => {
   };
 
   const handleDelete = async (id) => {
-    const AddProductRoute = `admin/products/${id}`;
-    const response = await fetch(API + AddProductRoute, {
+    const DeleteProductRoute = `admin/products/${id}`;
+    const response = await fetch(API + DeleteProductRoute, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
