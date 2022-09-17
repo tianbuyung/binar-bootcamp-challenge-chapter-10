@@ -1,11 +1,16 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
 const hashPassword = require("../utils/hashPassword");
+const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		const cekUser = await User.findOne({ email: email });
+		const cekUser = await User.findOne({
+			where: {
+				email: email,
+			},
+		});
 
 		if (!cekUser) {
 			return res.status(404).json({
@@ -13,7 +18,7 @@ const login = async (req, res) => {
 			});
 		}
 
-		const cekPass = bcrypt.compare(cekUser.password, password);
+		const cekPass = await bcrypt.compare(password, cekUser.password);
 
 		if (!cekPass) {
 			return res.status(401).json({
@@ -30,10 +35,11 @@ const login = async (req, res) => {
 
 		return res.status(200).json({
 			message: "Login successful",
+			token: "Bearer " + token,
 		});
 	} catch (error) {
 		return res.status(500).json({
-			message: "error while authenticating user = " + error.message,
+			message: "error while authenticating user",
 		});
 	}
 };
@@ -42,7 +48,11 @@ const createUser = async (req, res) => {
 	try {
 		const { nama, password, email } = req.body;
 
-		const cekEmail = await User.findOne({ email: email });
+		const cekEmail = await User.findOne({
+			where: {
+				email: email,
+			},
+		});
 
 		if (cekEmail) {
 			return res.status(409).json({
@@ -61,7 +71,7 @@ const createUser = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(500).json({
-			message: "error creating user : " + error.message,
+			message: "error creating user",
 		});
 	}
 };

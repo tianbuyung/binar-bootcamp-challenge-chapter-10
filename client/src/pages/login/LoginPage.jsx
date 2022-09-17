@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
+
 const LoginPage = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
 
 	const login = (e) => {
 		e.preventDefault();
-		fetch("http://localhost:4000/users/login", {
+		fetch(process.env.REACT_APP_SERVER + "/users/login", {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: { "Content-Type": "application/json" },
@@ -20,7 +21,9 @@ const LoginPage = () => {
 					alert("Successfully login");
 					navigate("/");
 				} else if (res.status === 404) {
-					alert("Email is not found, Please try again");
+					alert("Email is not found, please try again");
+				} else if (res.status === 401) {
+					alert("Wrong email or password, please try again");
 				}
 			})
 			.catch((err) => {
@@ -52,7 +55,7 @@ const LoginPage = () => {
 					}}
 				/>
 
-				<Button title={"Register"} type={"submit"}>
+				<Button title={"register"} type={"submit"}>
 					Register
 				</Button>
 			</Form>

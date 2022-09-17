@@ -3,11 +3,11 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const session = require("express-session");
 
 const hashPassword = require("./utils/hashPassword");
-require("./middlewares/passport");
+require("./middleware/passport");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");

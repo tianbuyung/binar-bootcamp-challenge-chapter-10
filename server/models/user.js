@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					isAlpha: true,
+					// isAlpha: true,
 					notNull: true,
 					notEmpty: true,
 					len: [3, 255],
@@ -44,13 +44,13 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					isAlphanumeric: true,
+					// isAlphanumeric: false,
 					notNull: true,
 					notEmpty: true,
 					len: [6, 60],
 				},
-				async set(value) {
-					this.setDataValue("password", value);
+				set(value) {
+					this.setDataValue("password", hashPassword(value));
 				},
 			},
 		},

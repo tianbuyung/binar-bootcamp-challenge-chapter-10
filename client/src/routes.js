@@ -45,14 +45,14 @@ const routes = [
 			</ProtectedRouteNonAuth>
 		),
 	},
-	{
-		path: "auth/login",
-		page: (
-			<ProtectedRouteNonAuth>
-				<RegisterPage />
-			</ProtectedRouteNonAuth>
-		),
-	},
+	// {
+	// 	path: "auth/login",
+	// 	page: (
+	// 		<ProtectedRouteNonAuth>
+	// 			<RegisterPage />
+	// 		</ProtectedRouteNonAuth>
+	// 	),
+	// },
 	{
 		path: "register",
 		page: <RegisterPage />,
