@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
+import UpdateProducts from "./UpdateProduct";
 
 const ListProduct = (props) => {
   const [products, setProducts] = useState([]);
@@ -26,6 +27,16 @@ const ListProduct = (props) => {
     setCurrentPage(value.selected + 1);
   };
 
+  const handleDelete = async (id) => {
+    const AddProductRoute = `admin/products/${id}`;
+    const response = await fetch(API + AddProductRoute, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    alert(data.message);
+  };
+
   return (
     <Container>
       <h1>List of Product</h1>
@@ -47,7 +58,15 @@ const ListProduct = (props) => {
                 <td className="text-start">{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.Category.name}</td>
-                <td>For Action</td>
+                <td>
+                  <UpdateProducts product={product} setProducts={setProducts} />
+                  |
+                  <i
+                    style={{ cursor: "pointer", marginLeft: "0.5rem" }}
+                    onClick={() => handleDelete(product.id)}
+                    className="bi bi-trash3-fill"
+                  ></i>
+                </td>
               </tr>
             );
           })}

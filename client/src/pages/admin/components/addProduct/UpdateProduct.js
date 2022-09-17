@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
 
-const AddProduct = (props) => {
+const UpdateProducts = (props) => {
+  const { product } = props;
+
+  const [show, setShow] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
   const [enteredProductCategory, setEnteredProductCategory] = useState("");
   const [enteredProductImage, setEnteredProductImage] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const API = "http://localhost:4000/";
   const ROUTE = "categories";
@@ -23,23 +29,23 @@ const AddProduct = (props) => {
 
   const addProductHandler = async (event) => {
     event.preventDefault();
-    const AddProductRoute = "admin/products";
+    const AddProductRoute = `admin/products/${product.id}`;
     const body = {
-      name: enteredProductName,
-      price: enteredProductPrice,
-      CategoryId: enteredProductCategory,
+      name: enteredProductName === "" ? product.name : enteredProductName,
+      price: enteredProductPrice === "" ? product.price : enteredProductPrice,
+      CategoryId:
+        enteredProductCategory === ""
+          ? product.CategoryId
+          : enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
     const response = await fetch(API + AddProductRoute, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
     alert(data.message);
-    setEnteredProductName("");
-    setEnteredProductPrice("");
-    setEnteredProductCategory("");
   };
 
   const productNameChangeHandler = (event) => {
@@ -59,13 +65,19 @@ const AddProduct = (props) => {
   };
 
   const fileUpload = (event) => {};
-
   return (
-    <Container className="bg-light mt-5" fluid="md">
-      <Row className="justify-content-center">
-        <Col lg={6}>
-          <Form onSubmit={addProductHandler}>
-            <h1>Add Product</h1>
+    <>
+      <i
+        className="bi bi-pencil-square"
+        onClick={handleShow}
+        style={{ cursor: "pointer", marginRight: "0.5rem" }}
+      />
+      <Modal show={show} onHide={handleClose}>
+        <Form onSubmit={addProductHandler}>
+          <Modal.Header closeButton>
+            <Modal.Title>Form Edit Product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Control
               className="my-3"
               id="productName"
@@ -73,7 +85,7 @@ const AddProduct = (props) => {
               placeholder="Product Name"
               type="text"
               onChange={productNameChangeHandler}
-              value={enteredProductName}
+              defaultValue={product.name}
             />
             <InputGroup className="mb-3">
               <InputGroup.Text id="productPrice">Rp</InputGroup.Text>
@@ -81,7 +93,7 @@ const AddProduct = (props) => {
                 placeholder="Product Price"
                 type="number"
                 onChange={productPriceChangeHandler}
-                value={enteredProductPrice}
+                defaultValue={product.price}
               />
             </InputGroup>
             <Form.Group as={Row} className="mb-3 text-start">
@@ -94,7 +106,7 @@ const AddProduct = (props) => {
                   name="categorySelect"
                   type="select"
                   onChange={productCategoryChangeHandler}
-                  value={enteredProductCategory}
+                  defaultValue={product.CategoryId}
                 >
                   <option>Please select your product category!</option>
                   {getCategory.map((category) => {
@@ -115,14 +127,19 @@ const AddProduct = (props) => {
               />
               <Button onClick={fileUpload}>Upload</Button>
             </InputGroup>
-            <Button className="mb-3" type="submit">
-              Submit
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
             </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    </>
   );
 };
 
-export default AddProduct;
+export default UpdateProducts;
