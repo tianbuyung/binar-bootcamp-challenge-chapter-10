@@ -52,6 +52,7 @@ const RegisterPage = () => {
 					onChange={(e) => {
 						setUser({ ...user, nama: e.target.value });
 					}}
+					min={3}
 				/>
 				<Forms
 					label={"Password"}
@@ -61,6 +62,7 @@ const RegisterPage = () => {
 					onChange={(e) => {
 						setUser({ ...user, password: e.target.value });
 					}}
+					min={6}
 				/>
 
 				<Button title={"Register"} type={"submit"}>
