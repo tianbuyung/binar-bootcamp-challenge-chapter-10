@@ -4,6 +4,7 @@ import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
+import Admin from "./pages/admin";
 
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = localStorage.getItem("token");
@@ -21,42 +22,42 @@ const ProtectedRouteAuth = ({ children }) => {
 };
 
 const routes = [
-	{
-		path: "/",
-		page: <HomePage />,
-	},
-	{
-		path: "product/:product_id",
-		page: <ProductDetailPage />,
-	},
-	{
-		path: "profile",
-		page: (
-			<ProtectedRouteAuth>
-				<ProfilePage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "auth/login",
-		page: (
-			<ProtectedRouteNonAuth>
-				<LoginPage />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "auth/login",
-		page: (
-			<ProtectedRouteNonAuth>
-				<RegisterPage />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "register",
-		page: <RegisterPage />,
-	},
+  {
+    path: "/",
+    page: <HomePage />,
+  },
+  {
+    path: "product/:product_id",
+    page: <ProductDetailPage />,
+  },
+  {
+    path: "profile",
+    page: (
+      <ProtectedRouteAuth>
+        <ProfilePage />
+      </ProtectedRouteAuth>
+    ),
+  },
+  {
+    path: "auth/login",
+    page: (
+      <ProtectedRouteNonAuth>
+        <LoginPage />
+      </ProtectedRouteNonAuth>
+    ),
+  },
+  {
+    path: "auth/login",
+    page: (
+      <ProtectedRouteNonAuth>
+        <RegisterPage />
+      </ProtectedRouteNonAuth>
+    ),
+  },
+  {
+    path: "/admin",
+    page: <Admin />,
+  },
 ];
 
 export default routes;
