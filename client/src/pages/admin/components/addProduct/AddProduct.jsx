@@ -17,14 +17,14 @@ const AddProduct = (props) => {
   const [enteredProductCategory, setEnteredProductCategory] = useState("");
   const [enteredProductImage, setEnteredProductImage] = useState("");
 
-  const API = "http://localhost:4000/";
+  const API = process.env.REACT_APP_SERVER;
 
   const fetchGetCategoryHandler = useCallback(async () => {
     const GetCategoryRoute = "categories";
     const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
-  }, []);
+  }, [API]);
 
   useEffect(() => {
     fetchGetCategoryHandler();
@@ -90,6 +90,7 @@ const AddProduct = (props) => {
   };
 
   const fileChangeHandler = (event) => {
+    setEnteredProductImage();
     console.log(event);
   };
 

@@ -27,7 +27,7 @@ const getProduct = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };
@@ -51,7 +51,7 @@ const getDetailProduct = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };
@@ -103,7 +103,6 @@ const editProduct = async (req, res) => {
           price,
           CategoryId,
           imageUrl,
-          updatedAt: new Date().getTime(),
         },
         options
       );
@@ -117,7 +116,7 @@ const editProduct = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };
@@ -141,7 +140,7 @@ const deleteProduct = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };

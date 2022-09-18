@@ -8,18 +8,21 @@ const ListProduct = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
-  const API = "http://localhost:4000/";
+  const API = process.env.REACT_APP_SERVER;
 
-  const fetchGetProductsHandler = useCallback(async (query) => {
-    const GetListProductRoute = "admin/products";
-    const response = await fetch(API + GetListProductRoute + query, {
-      method: "GET",
-    });
-    const data = await response.json();
-    setProducts(data?.products);
-    setCurrentPage(data?.currentPage);
-    setTotalPage(data?.totalPages);
-  }, []);
+  const fetchGetProductsHandler = useCallback(
+    async (query) => {
+      const GetListProductRoute = "admin/products";
+      const response = await fetch(API + GetListProductRoute + query, {
+        method: "GET",
+      });
+      const data = await response.json();
+      setProducts(data?.products);
+      setCurrentPage(data?.currentPage);
+      setTotalPage(data?.totalPages);
+    },
+    [API]
+  );
 
   useEffect(() => {
     fetchGetProductsHandler(`?page=${currentPage}`);
@@ -45,10 +48,11 @@ const ListProduct = (props) => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>id</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
+            <th>Image URL</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -60,6 +64,7 @@ const ListProduct = (props) => {
                 <td className="text-start">{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.Category.name}</td>
+                <td className="text-start">{product.imageUrl}</td>
                 <td>
                   <UpdateProducts product={product} setProducts={setProducts} />
                   |
