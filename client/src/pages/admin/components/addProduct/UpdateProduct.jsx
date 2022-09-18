@@ -23,14 +23,14 @@ const UpdateProducts = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const API = "http://localhost:4000/";
+  const API = process.env.REACT_APP_SERVER;
 
   const fetchGetCategoryHandler = useCallback(async () => {
     const GetCategoryRoute = "categories";
     const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
-  }, []);
+  }, [API]);
 
   useEffect(() => {
     fetchGetCategoryHandler();
@@ -82,6 +82,7 @@ const UpdateProducts = (props) => {
   };
 
   const fileChangeHandler = (event) => {
+    setEnteredProductImage();
     console.log(event);
   };
 
