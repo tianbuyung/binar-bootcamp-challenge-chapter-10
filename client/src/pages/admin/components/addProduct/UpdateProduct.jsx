@@ -24,10 +24,10 @@ const UpdateProducts = (props) => {
   const handleShow = () => setShow(true);
 
   const API = "http://localhost:4000/";
-  const ROUTE = "categories";
 
   const fetchGetCategoryHandler = useCallback(async () => {
-    const response = await fetch(API + ROUTE, { method: "GET" });
+    const GetCategoryRoute = "categories";
+    const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
   }, []);
@@ -38,6 +38,7 @@ const UpdateProducts = (props) => {
 
   const updateProductHandler = async (event) => {
     event.preventDefault();
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -55,13 +56,15 @@ const UpdateProducts = (props) => {
           : enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
+
     const response = await fetch(API + UpdateProductRoute, {
       method: "PUT",
-      body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
     const data = await response.json();
     alert(data.message);
+
     setValidated(false);
     setShow(false);
   };

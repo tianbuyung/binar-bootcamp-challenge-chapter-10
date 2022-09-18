@@ -18,10 +18,10 @@ const AddProduct = (props) => {
   const [enteredProductImage, setEnteredProductImage] = useState("");
 
   const API = "http://localhost:4000/";
-  const ROUTE = "categories";
 
   const fetchGetCategoryHandler = useCallback(async () => {
-    const response = await fetch(API + ROUTE, { method: "GET" });
+    const GetCategoryRoute = "categories";
+    const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
   }, []);
@@ -49,7 +49,7 @@ const AddProduct = (props) => {
       return alert("Please provide a valid data!");
     }
 
-    const AddProductRoute = `admin/products`;
+    const AddProductRoute = "admin/products";
     const body = {
       name: enteredProductName,
       price: enteredProductPrice,
@@ -59,9 +59,13 @@ const AddProduct = (props) => {
 
     const response = await fetch(API + AddProductRoute, {
       method: "POST",
-      body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
+
+    if (!response.ok) {
+      alert(`HTTP error! Status: ${response.status}`);
+    }
 
     const data = await response.json();
     alert(data.message);

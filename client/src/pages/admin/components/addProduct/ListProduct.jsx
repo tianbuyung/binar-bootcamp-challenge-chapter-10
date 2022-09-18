@@ -9,10 +9,12 @@ const ListProduct = (props) => {
   const [totalPage, setTotalPage] = useState(1);
 
   const API = "http://localhost:4000/";
-  const ROUTE = "admin/products";
 
   const fetchGetProductsHandler = useCallback(async (query) => {
-    const response = await fetch(API + ROUTE + query, { method: "GET" });
+    const GetListProductRoute = "admin/products";
+    const response = await fetch(API + GetListProductRoute + query, {
+      method: "GET",
+    });
     const data = await response.json();
     setProducts(data?.products);
     setCurrentPage(data?.currentPage);
@@ -30,8 +32,8 @@ const ListProduct = (props) => {
   const handleDelete = async (id) => {
     const DeleteProductRoute = `admin/products/${id}`;
     const response = await fetch(API + DeleteProductRoute, {
-      method: "DELETE",
       headers: { "Content-Type": "application/json" },
+      method: "DELETE",
     });
     const data = await response.json();
     alert(data.message);
