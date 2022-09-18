@@ -62,6 +62,8 @@ const createProduct = async (req, res) => {
     const options = {
       where: {
         name,
+      },
+      defaults: {
         price,
         CategoryId,
         imageUrl,
@@ -81,7 +83,7 @@ const createProduct = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };
