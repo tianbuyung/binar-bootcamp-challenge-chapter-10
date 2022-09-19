@@ -2,13 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import UpdateProducts from "./UpdateProduct";
-
-const ListProduct = (props) => {
+const API = process.env.REACT_APP_SERVER +'/';
+const ListProduct = ({ isFetching }) => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-
-  const API = process.env.REACT_APP_SERVER;
 
   const fetchGetProductsHandler = useCallback(
     async (query) => {
@@ -26,7 +24,7 @@ const ListProduct = (props) => {
 
   useEffect(() => {
     fetchGetProductsHandler(`?page=${currentPage}`);
-  }, [fetchGetProductsHandler, currentPage]);
+  }, [fetchGetProductsHandler, currentPage, isFetching]);
 
   const handlePageClick = (value) => {
     setCurrentPage(value.selected + 1);

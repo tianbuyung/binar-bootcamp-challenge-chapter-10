@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, memo } from "react";
 import {
   Button,
   Col,
@@ -8,8 +8,8 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
-
-const AddProduct = (props) => {
+const API = process.env.REACT_APP_SERVER + '/';
+const AddProduct = ({ setIsFetching }) => {
   const [validated, setValidated] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
   const [enteredProductName, setEnteredProductName] = useState("");
@@ -17,8 +17,7 @@ const AddProduct = (props) => {
   const [enteredProductCategory, setEnteredProductCategory] = useState("");
   const [enteredProductImage, setEnteredProductImage] = useState("");
 
-  const API = process.env.REACT_APP_SERVER;
-
+  
   const fetchGetCategoryHandler = useCallback(async () => {
     const GetCategoryRoute = "categories";
     const response = await fetch(API + GetCategoryRoute, { method: "GET" });
@@ -33,6 +32,7 @@ const AddProduct = (props) => {
   const addProductHandler = async (event) => {
     event.preventDefault();
 
+    setIsFetching(false);
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -69,6 +69,7 @@ const AddProduct = (props) => {
 
     const data = await response.json();
     alert(data.message);
+    setIsFetching(true);
 
     setEnteredProductName("");
     setEnteredProductPrice("");
@@ -185,4 +186,4 @@ const AddProduct = (props) => {
   );
 };
 
-export default AddProduct;
+export default memo(AddProduct);
