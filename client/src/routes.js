@@ -6,16 +6,18 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
-	const token = localStorage.getItem("token");
+	const token = document.cookie;
 	if (token) {
+		console.log("cek token = ", token);
 		return <Navigate to="/" replace />;
 	}
 	return children;
 };
 const ProtectedRouteAuth = ({ children }) => {
-	const token = localStorage.getItem("token");
+	const token = document.cookie;
 	if (!token) {
-		return <Navigate to="/auth/login" replace />;
+		console.log("cek token = ", token);
+		return <Navigate to="/login" replace />;
 	}
 	return children;
 };
@@ -38,7 +40,7 @@ const routes = [
 		),
 	},
 	{
-		path: "auth/login",
+		path: "login",
 		page: (
 			<ProtectedRouteNonAuth>
 				<LoginPage />

@@ -31,14 +31,14 @@ const login = async (req, res) => {
 		};
 
 		const secret = hashPassword("v3ry 53cr3t!1!");
-		const token = jwt.sign(payload, secret, { expiresIn: "1 days" });
+		const token = jwt.sign(payload, secret);
 
-		return res.status(200).json({
+		return await res.status(200).json({
 			message: "Login successful",
-			token: "Bearer " + token,
+			token: token,
 		});
 	} catch (error) {
-		return res.status(500).json({
+		return await res.status(500).json({
 			message: "error while authenticating user",
 		});
 	}

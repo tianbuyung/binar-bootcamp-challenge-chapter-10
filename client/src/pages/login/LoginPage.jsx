@@ -1,5 +1,5 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
@@ -8,28 +8,34 @@ const LoginPage = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
 
-	const login = (e) => {
+	const login = async (e) => {
 		e.preventDefault();
-		fetch(process.env.REACT_APP_SERVER + "/users/login", {
-			method: "POST",
-			body: JSON.stringify(user),
-			headers: { "Content-Type": "application/json" },
-			redirect: "follow",
-		})
-			.then((res) => {
-				if (res.status === 200) {
-					alert("Successfully login");
-					navigate("/");
-				} else if (res.status === 404) {
-					alert("Email is not found, please try again");
-				} else if (res.status === 401) {
-					alert("Wrong email or password, please try again");
+		try {
+			const getData = await fetch(
+				process.env.REACT_APP_SERVER + "/users/login",
+				{
+					method: "POST",
+					body: JSON.stringify(user),
+					headers: { "Content-Type": "application/json" },
+					redirect: "follow",
 				}
-			})
-			.catch((err) => {
-				alert("Error! Please try again");
-				console.log("error while send api : " + err.message);
-			});
+			);
+
+			if (getData.status === 200) {
+				alert("Successfully login");
+				// localStorage.setItem("token", JSON.stringify(getData.body));
+				const token = await getData.json();
+				document.cookie = "token =" + token.token;
+				// navigate("/");
+			} else if (getData.status === 404) {
+				alert("Email is not found, please try again");
+			} else if (getData.status === 401) {
+				alert("Wrong email or password, please try again");
+			}
+		} catch (err) {
+			alert("Error! Please try again");
+			console.log("error while send api : " + err.message);
+		}
 	};
 
 	return (
@@ -55,8 +61,8 @@ const LoginPage = () => {
 					}}
 				/>
 
-				<Button title={"register"} type={"submit"}>
-					Register
+				<Button title={"login"} type={"submit"}>
+					Login
 				</Button>
 			</Form>
 		</Container>
