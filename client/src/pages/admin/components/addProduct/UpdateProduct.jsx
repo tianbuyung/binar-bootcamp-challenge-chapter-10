@@ -26,7 +26,7 @@ const UpdateProducts = (props) => {
   const API = process.env.REACT_APP_SERVER;
 
   const fetchGetCategoryHandler = useCallback(async () => {
-    const GetCategoryRoute = "categories";
+    const GetCategoryRoute = "/categories";
     const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
@@ -46,7 +46,7 @@ const UpdateProducts = (props) => {
     }
     setValidated(true);
 
-    const UpdateProductRoute = `admin/products/${product.id}`;
+    const UpdateProductRoute = `/admin/products/${product.id}`;
     const body = {
       name: enteredProductName === "" ? product.name : enteredProductName,
       price: enteredProductPrice === "" ? product.price : enteredProductPrice,

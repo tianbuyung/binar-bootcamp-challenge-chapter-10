@@ -20,7 +20,7 @@ const AddProduct = (props) => {
   const API = process.env.REACT_APP_SERVER;
 
   const fetchGetCategoryHandler = useCallback(async () => {
-    const GetCategoryRoute = "categories";
+    const GetCategoryRoute = "/categories";
     const response = await fetch(API + GetCategoryRoute, { method: "GET" });
     const data = await response.json();
     setGetCategory(data.categories);
@@ -49,7 +49,7 @@ const AddProduct = (props) => {
       return alert("Please provide a valid data!");
     }
 
-    const AddProductRoute = "admin/products";
+    const AddProductRoute = "/admin/products";
     const body = {
       name: enteredProductName,
       price: enteredProductPrice,

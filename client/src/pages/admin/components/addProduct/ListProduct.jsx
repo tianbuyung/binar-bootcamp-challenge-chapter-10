@@ -12,7 +12,7 @@ const ListProduct = (props) => {
 
   const fetchGetProductsHandler = useCallback(
     async (query) => {
-      const GetListProductRoute = "admin/products";
+      const GetListProductRoute = "/admin/products";
       const response = await fetch(API + GetListProductRoute + query, {
         method: "GET",
       });
@@ -33,7 +33,7 @@ const ListProduct = (props) => {
   };
 
   const handleDelete = async (id) => {
-    const DeleteProductRoute = `admin/products/${id}`;
+    const DeleteProductRoute = `/admin/products/${id}`;
     const response = await fetch(API + DeleteProductRoute, {
       headers: { "Content-Type": "application/json" },
       method: "DELETE",
