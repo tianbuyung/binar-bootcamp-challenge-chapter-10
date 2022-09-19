@@ -8,7 +8,7 @@ import {
   Row,
   FormGroup,
 } from "react-bootstrap";
-
+  const API = process.env.REACT_APP_SERVER + '/';
 const UpdateProducts = (props) => {
   const { product } = props;
 
@@ -23,7 +23,7 @@ const UpdateProducts = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const API = process.env.REACT_APP_SERVER;
+
 
   const fetchGetCategoryHandler = useCallback(async () => {
     const GetCategoryRoute = "/categories";

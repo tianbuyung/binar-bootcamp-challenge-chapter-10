@@ -47,7 +47,7 @@ const routes = [
     ),
   },
   {
-    path: "auth/login",
+    path: "auth/register",
     page: (
       <ProtectedRouteNonAuth>
         <RegisterPage />
