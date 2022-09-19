@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
     /**
@@ -12,26 +10,29 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Category.hasMany(models.Product, {
-        onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE'
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE",
       });
     }
   }
-  Category.init({
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty: true,
-        len: [3, 255]
-      }
+  Category.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+          len: [3, 255],
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Category",
+      paranoid: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Category',
-    paranoid: true
-  });
+  );
   return Category;
 };

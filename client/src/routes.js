@@ -4,6 +4,7 @@ import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
+import Admin from "./pages/admin";
 
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = document.cookie;
@@ -40,24 +41,24 @@ const routes = [
 		),
 	},
 	{
-		path: "login",
+		path: "auth/login",
 		page: (
 			<ProtectedRouteNonAuth>
 				<LoginPage />
 			</ProtectedRouteNonAuth>
 		),
 	},
-	// {
-	// 	path: "auth/login",
-	// 	page: (
-	// 		<ProtectedRouteNonAuth>
-	// 			<RegisterPage />
-	// 		</ProtectedRouteNonAuth>
-	// 	),
-	// },
 	{
-		path: "register",
-		page: <RegisterPage />,
+		path: "auth/register",
+		page: (
+			<ProtectedRouteNonAuth>
+				<RegisterPage />
+			</ProtectedRouteNonAuth>
+		),
+	},
+	{
+		path: "/admin",
+		page: <Admin />,
 	},
 ];
 
