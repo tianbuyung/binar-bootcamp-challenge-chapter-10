@@ -9,7 +9,6 @@ import Admin from "./pages/admin";
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = document.cookie;
 	if (token) {
-		console.log("cek token = ", token);
 		return <Navigate to="/" replace />;
 	}
 	return children;
@@ -17,7 +16,6 @@ const ProtectedRouteNonAuth = ({ children }) => {
 const ProtectedRouteAuth = ({ children }) => {
 	const token = document.cookie;
 	if (!token) {
-		console.log("cek token = ", token);
 		return <Navigate to="/login" replace />;
 	}
 	return children;
@@ -41,7 +39,7 @@ const routes = [
 		),
 	},
 	{
-		path: "auth/login",
+		path: "login",
 		page: (
 			<ProtectedRouteNonAuth>
 				<LoginPage />
@@ -49,7 +47,7 @@ const routes = [
 		),
 	},
 	{
-		path: "auth/register",
+		path: "register",
 		page: (
 			<ProtectedRouteNonAuth>
 				<RegisterPage />
@@ -58,7 +56,11 @@ const routes = [
 	},
 	{
 		path: "/admin",
-		page: <Admin />,
+		page: (
+			<ProtectedRouteAuth>
+				<Admin />
+			</ProtectedRouteAuth>
+		),
 	},
 ];
 

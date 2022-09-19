@@ -23,10 +23,9 @@ const LoginPage = () => {
 
 			if (getData.status === 200) {
 				alert("Successfully login");
-				// localStorage.setItem("token", JSON.stringify(getData.body));
 				const token = await getData.json();
 				document.cookie = "token =" + token.token;
-				// navigate("/");
+				navigate("/");
 			} else if (getData.status === 404) {
 				alert("Email is not found, please try again");
 			} else if (getData.status === 401) {
