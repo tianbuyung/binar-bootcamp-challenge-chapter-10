@@ -8,10 +8,6 @@ const createOrder = async (req, res) => {
                 UserId: 11,
                 // UserId: req.UserId,
                 isBought: false
-            },
-            include: {
-                model: CartDetail,
-                include: Product
             }
         });
 
@@ -22,7 +18,9 @@ const createOrder = async (req, res) => {
                     totalOrder: 0 // hitung
                 }, { transaction: t });
 
-                // createOrderDetail
+                // const [results, metadata] = await sequelize.query(
+                //     "INSERT INTO OrderDetails SELECT * FROM CartDetails WHERE"
+                //     );
 
                 await Cart.update({
                     isBought: true
