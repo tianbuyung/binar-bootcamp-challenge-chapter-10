@@ -4,10 +4,10 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 const passport = require("passport");
-const session = require("express-session");
 
 const hashPassword = require("./utils/hashPassword");
-require("./middleware/passport");
+require("./middleware/passportUser");
+require("./middleware/passportAdmin");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -15,11 +15,16 @@ const adminRouter = require("./routes/admin");
 const categoriesRouter = require("./routes/categories");
 
 const app = express();
-app.use(cors());
+app.use(
+	cors({
+		origin: process.env.CORS_ORIGIN,
+		credentials: true,
+	})
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(hashPassword(process.env.COOKIE_KEY)));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 

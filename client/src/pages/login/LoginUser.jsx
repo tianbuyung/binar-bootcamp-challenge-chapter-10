@@ -1,10 +1,10 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { BrowserRouter, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
 
-const LoginPage = () => {
+const LoginUser = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
 
@@ -18,18 +18,19 @@ const LoginPage = () => {
 					body: JSON.stringify(user),
 					headers: { "Content-Type": "application/json" },
 					redirect: "follow",
+					credentials: "include",
+					withCredntials: true,
+					mode: "cors",
 				}
 			);
 
 			if (getData.status === 200) {
-				alert("Successfully login");
-				const token = await getData.json();
-				document.cookie = "token =" + token.token;
-				navigate("/");
-			} else if (getData.status === 404) {
-				alert("Email is not found, please try again");
-			} else if (getData.status === 401) {
-				alert("Wrong email or password, please try again");
+				const message = await getData.json();
+				alert(message.message);
+				navigate("../profile", { replace: true });
+			} else {
+				const message = await getData.json();
+				alert(message.message);
 			}
 		} catch (err) {
 			alert("Error! Please try again");
@@ -39,7 +40,7 @@ const LoginPage = () => {
 
 	return (
 		<Container>
-			<h1>Login Page</h1>
+			<h1>Login User</h1>
 			<Form onSubmit={login} align="left">
 				<Forms
 					label={"Email"}
@@ -68,4 +69,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default LoginUser;

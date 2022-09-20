@@ -3,21 +3,29 @@ const JwtStrategy = require("passport-jwt").Strategy,
 	ExtractJwt = require("passport-jwt").ExtractJwt;
 const Model = require("../models");
 const hashPassword = require("../utils/hashPassword");
-const { userGame } = Model;
+const { User } = Model;
+
+const cookieExtractor = (req) => {
+	let jwt = null;
+
+	if (req && req.cookies) {
+		jwt = req.signed.cookies["token"];
+	}
+
+	return jwt;
+};
 
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = hashPassword("v3ry 53cr3t!1!");
+opts.jwtFromRequest = cookieExtractor;
+opts.secretOrKey = hashPassword(process.env.KEY);
 
 passport.use(
 	new JwtStrategy(opts, function (jwt_payload, done) {
-		return userGame
-			.findOne({ where: { email: jwt_payload.id } })
+		return User.findOne({ where: { email: jwt_payload.id } })
 			.then((user) => {
 				return done(null, user);
 			})
 			.catch((err) => {
-				console.log("error passport: " + err);
 				return done(err, false);
 			});
 	})

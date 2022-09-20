@@ -2,12 +2,16 @@ import { Navigate } from "react-router-dom";
 import HomePage from "./pages/home";
 import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile/ProfilePage";
-import LoginPage from "./pages/login/LoginPage";
+import LoginUser from "./pages/login/LoginUser";
+import LoginAdmin from "./pages/login-admin/LoginAdmin";
 import RegisterPage from "./pages/register/RegisterPage";
-import Admin from "./pages/admin";
 
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = document.cookie;
+	console.log(
+		"🚀 ~ file: routes.js ~ line 12 ~ ProtectedRouteNonAuth ~ token",
+		token
+	);
 	if (token) {
 		return <Navigate to="/" replace />;
 	}
@@ -42,7 +46,7 @@ const routes = [
 		path: "login",
 		page: (
 			<ProtectedRouteNonAuth>
-				<LoginPage />
+				<LoginUser />
 			</ProtectedRouteNonAuth>
 		),
 	},
@@ -55,10 +59,10 @@ const routes = [
 		),
 	},
 	{
-		path: "/admin",
+		path: "admin",
 		page: (
 			<ProtectedRouteAuth>
-				<Admin />
+				<LoginAdmin />
 			</ProtectedRouteAuth>
 		),
 	},

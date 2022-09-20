@@ -13,8 +13,8 @@ const login = async (req, res) => {
 		});
 
 		if (!cekUser) {
-			return res.status(404).json({
-				message: "User not found",
+			return res.status(401).json({
+				message: "Wrong email or password",
 			});
 		}
 
@@ -22,7 +22,7 @@ const login = async (req, res) => {
 
 		if (!cekPass) {
 			return res.status(401).json({
-				message: "Passwords do not match",
+				message: "Wrong email or password",
 			});
 		}
 
@@ -30,8 +30,18 @@ const login = async (req, res) => {
 			id: cekUser.email,
 		};
 
-		const secret = hashPassword("v3ry 53cr3t!1!");
+		const secret = hashPassword(process.env.KEY);
 		const token = jwt.sign(payload, secret);
+
+		let options = {
+			maxAge: 1000 * 60 * 60, // would expire after 60 minutes
+			httpOnly: true, // The cookie only accessible by the web server
+			signed: true, // Indicates if the cookie should be signed
+			secure: true, // Indicates if the cookie should be secure
+			samesite: "none",
+		};
+
+		res.cookie("token", token, options);
 
 		return await res.status(200).json({
 			message: "Login successful",
@@ -39,7 +49,21 @@ const login = async (req, res) => {
 		});
 	} catch (error) {
 		return await res.status(500).json({
-			message: "error while authenticating user",
+			message: "error while authenticating user " + error.message,
+		});
+	}
+};
+
+const logout = async (req, res) => {
+	try {
+		res.clearCookies("token");
+
+		return await res.status(200).send({
+			message: "Successfully logged out",
+		});
+	} catch (error) {
+		return await res.status(500).json({
+			message: "error while logout",
 		});
 	}
 };
@@ -82,4 +106,4 @@ const getUserAllUser = (req, res) => {
 	});
 };
 
-module.exports = { login, getUserAllUser, createUser };
+module.exports = { login, getUserAllUser, createUser, logout };

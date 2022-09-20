@@ -19,7 +19,7 @@ const RegisterPage = () => {
 			.then((res) => {
 				if (res.status === 200) {
 					alert("Successfully create new user");
-					navigate("/");
+					navigate("login");
 				} else if (res.status === 409) {
 					alert("Email is already registered");
 				}
