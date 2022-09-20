@@ -18,9 +18,6 @@ const LoginAdmin = () => {
 					body: JSON.stringify(user),
 					headers: { "Content-Type": "application/json" },
 					redirect: "follow",
-					credentials: "include",
-					withCredntials: true,
-					mode: "cors",
 				}
 			);
 
