@@ -6,8 +6,7 @@ var cors = require("cors");
 const passport = require("passport");
 
 const hashPassword = require("./utils/hashPassword");
-require("./middleware/passportUser");
-require("./middleware/passportAdmin");
+require("./middleware/passport");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");

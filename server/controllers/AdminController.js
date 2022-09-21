@@ -28,12 +28,6 @@ const loginAdmin = async (req, res) => {
 	const secret = hashPassword(process.env.KEY);
 	const token = jwt.sign(payload, secret);
 
-	let options = {
-		maxAge: 1000 * 60 * 60, // would expire after 60 minutes
-	};
-
-	res.cookie("token", token, options);
-
 	return await res.status(200).send({
 		message: "Login successful",
 		token: token,

@@ -8,10 +8,6 @@ import RegisterPage from "./pages/register/RegisterPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = document.cookie;
-	console.log(
-		"🚀 ~ file: routes.js ~ line 12 ~ ProtectedRouteNonAuth ~ token",
-		token
-	);
 	if (token) {
 		return <Navigate to="/" replace />;
 	}

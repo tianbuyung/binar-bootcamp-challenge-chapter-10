@@ -23,6 +23,7 @@ const LoginAdmin = () => {
 
 			if (getData.status === 200) {
 				const message = await getData.json();
+				document.cookie = message.token;
 				alert(message.message);
 				navigate("admin");
 			} else {
