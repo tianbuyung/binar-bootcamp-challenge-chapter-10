@@ -62,6 +62,22 @@ const routes = [
 			</ProtectedRouteAuth>
 		),
 	},
+	// {
+	// 	path: "admin/logout",
+	// 	page: (
+	// 		<ProtectedRouteNonAuth>
+	// 			<LoginAdmin />
+	// 		</ProtectedRouteNonAuth>
+	// 	),
+	// },
+	// {
+	// 	path: "user/logout",
+	// 	page: (
+	// 		<ProtectedRouteNonAuth>
+	// 			<LoginUser />
+	// 		</ProtectedRouteNonAuth>
+	// 	),
+	// },
 ];
 
 export default routes;

@@ -15,11 +15,12 @@ const RegisterPage = () => {
 			body: JSON.stringify(user),
 			headers: { "Content-Type": "application/json" },
 			redirect: "follow",
+			credentials: "include",
 		})
 			.then((res) => {
 				if (res.status === 200) {
 					alert("Successfully create new user");
-					navigate("login");
+					navigate("../login", { replace: true });
 				} else if (res.status === 409) {
 					alert("Email is already registered");
 				}

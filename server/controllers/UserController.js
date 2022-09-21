@@ -33,6 +33,8 @@ const login = async (req, res) => {
 		const secret = hashPassword(process.env.KEY);
 		const token = jwt.sign(payload, secret);
 
+		res.cookie("token", token, { maxAge: 3600 * 1000, samesite: false });
+
 		return await res.status(200).json({
 			message: "Login successful",
 			token: token,
@@ -46,14 +48,14 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
 	try {
-		res.clearCookies("token");
+		res.clearCookie("token", { path: "/" });
 
 		return await res.status(200).send({
 			message: "Successfully logged out",
 		});
 	} catch (error) {
 		return await res.status(500).json({
-			message: "error while logout",
+			message: "error while logout : " + error.message,
 		});
 	}
 };

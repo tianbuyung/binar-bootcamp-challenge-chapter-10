@@ -18,12 +18,12 @@ const LoginUser = () => {
 					body: JSON.stringify(user),
 					headers: { "Content-Type": "application/json" },
 					redirect: "follow",
+					credentials: "include",
 				}
 			);
 
 			if (getData.status === 200) {
 				const message = await getData.json();
-				document.cookie = message.token;
 				alert(message.message);
 				navigate("../profile", { replace: true });
 			} else {
