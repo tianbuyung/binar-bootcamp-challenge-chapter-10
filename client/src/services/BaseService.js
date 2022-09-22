@@ -13,7 +13,7 @@ class BaseService {
     options.headers["Content-Type"] = "application/json";
 
     const response = await fetch(API + url, options);
-    return response.json();
+    return await response.json();
   }
 }
 
