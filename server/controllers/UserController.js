@@ -30,7 +30,7 @@ const login = async (req, res) => {
 			id: cekUser.email,
 		};
 
-		const secret = hashPassword(process.env.KEY);
+		const secret = process.env.KEY;
 		const token = jwt.sign(payload, secret);
 
 		let options = {
@@ -38,20 +38,35 @@ const login = async (req, res) => {
 			httpOnly: true, // The cookie only accessible by the web server
 			signed: true, // Indicates if the cookie should be signed
 			secure: true, // Indicates if the cookie should be secure
-			samesite: "none",
+			samesite: "lax",
 		};
 
 		res.cookie("token", token, options);
 
 		return await res.status(200).json({
 			message: "Login successful",
-			token: token,
 		});
 	} catch (error) {
 		return await res.status(500).json({
 			message: "error while authenticating user " + error.message,
 		});
 	}
+};
+
+const verifyJwt = (req, res) => {
+	const token = req.signedCookies.token;
+	jwt.verify(token, process.env.KEY, (err, result) => {
+		if (err) {
+			console.log("cek error : ", err);
+			res.status(403).json({
+				message: "unauthorized : ",
+			});
+		} else {
+			res.status(200).json({
+				message: "authorized",
+			});
+		}
+	});
 };
 
 const logout = async (req, res) => {
@@ -100,10 +115,4 @@ const createUser = async (req, res) => {
 	}
 };
 
-const getUserAllUser = (req, res) => {
-	res.json({
-		message: "Get User",
-	});
-};
-
-module.exports = { login, getUserAllUser, createUser, logout };
+module.exports = { login, verifyJwt, createUser, logout };

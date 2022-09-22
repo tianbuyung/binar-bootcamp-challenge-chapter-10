@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
 	const createUser = (e) => {
 		e.preventDefault();
-		fetch(process.env.REACT_APP_SERVER + "/users", {
+		fetch("/users", {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: { "Content-Type": "application/json" },

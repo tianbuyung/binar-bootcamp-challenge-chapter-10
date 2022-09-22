@@ -7,22 +7,39 @@ import LoginAdmin from "./pages/login-admin/LoginAdmin";
 import RegisterPage from "./pages/register/RegisterPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
-	const token = document.cookie;
-	console.log(
-		"🚀 ~ file: routes.js ~ line 12 ~ ProtectedRouteNonAuth ~ token",
-		token
-	);
-	if (token) {
-		return <Navigate to="/" replace />;
-	}
+	fetch("/users/verify", {
+		method: "GET",
+		redirect: "follow",
+	})
+		.then((res) => {
+			if (res.status === 200) {
+				alert("Anda sudah login");
+				return <Navigate to="/" replace />;
+			} else if (res.status === 403) {
+				return children;
+			}
+		})
+		.catch((err) => {
+			alert(err.message);
+			return <Navigate to="/login" replace />;
+		});
+
 	return children;
 };
 const ProtectedRouteAuth = ({ children }) => {
-	const token = document.cookie;
-	if (!token) {
-		return <Navigate to="/login" replace />;
-	}
+	const cekUser = async () => {
+		const res = await fetch("/users/verify", {
+			method: "GET",
+			redirect: "follow",
+		});
+
+		alert(res.status);
+	};
+
+	cekUser();
+
 	return children;
+	// if(cekUser.)
 };
 
 const routes = [

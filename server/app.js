@@ -6,8 +6,7 @@ var cors = require("cors");
 const passport = require("passport");
 
 const hashPassword = require("./utils/hashPassword");
-require("./middleware/passportUser");
-require("./middleware/passportAdmin");
+require("./middleware/passport");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -21,10 +20,12 @@ app.use(
 		credentials: true,
 	})
 );
+app.set("trust proxy", 1);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(hashPassword(process.env.COOKIE_KEY)));
+// app.use(cookieParser("test"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 

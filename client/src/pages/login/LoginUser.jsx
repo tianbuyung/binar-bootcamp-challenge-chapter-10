@@ -12,7 +12,7 @@ const LoginUser = () => {
 		e.preventDefault();
 		try {
 			const getData = await fetch(
-				process.env.REACT_APP_SERVER + "/users/login",
+				"/users/login",
 				{
 					method: "POST",
 					body: JSON.stringify(user),
