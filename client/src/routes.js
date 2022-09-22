@@ -9,7 +9,7 @@ import RegisterPage from "./pages/register/RegisterPage";
 const ProtectedRouteNonAuth = ({ children }) => {
 	const token = document.cookie;
 	if (token) {
-		return <Navigate to="/" replace />;
+		return <Navigate to="/profile" replace />;
 	}
 	return children;
 };
@@ -57,17 +57,17 @@ const routes = [
 	{
 		path: "admin",
 		page: (
-			<ProtectedRouteAuth>
+			<ProtectedRouteNonAuth>
 				<LoginAdmin />
-			</ProtectedRouteAuth>
+			</ProtectedRouteNonAuth>
 		),
 	},
 	// {
 	// 	path: "admin/logout",
 	// 	page: (
-	// 		<ProtectedRouteNonAuth>
+	// 		<ProtectedRouteAuth>
 	// 			<LoginAdmin />
-	// 		</ProtectedRouteNonAuth>
+	// 		</ProtectedRouteAuth>
 	// 	),
 	// },
 	// {

@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -29,12 +30,29 @@ const ProfilePage = () => {
 		}
 	};
 
+	const testCookie = async () => {
+		const getData = await fetch(
+			process.env.REACT_APP_SERVER + "/admin/products",
+			{
+				method: "GET",
+				redirect: "follow",
+				credentials: "include",
+			}
+		);
+
+		console.log("status - messages = ", getData.status, getData.message);
+	};
+
 	return (
-		<div>
+		<Container>
 			Ini ProfilePage Page <br /> test cookie ={" "}
 			{getCookie.split("token=")}
+			<br />
+			test tembak cookie ={" "}
+			<button onClick={testCookie}>Test Cookie</button>
+			<br />
 			<button onClick={logout}>Logout</button>
-		</div>
+		</Container>
 	);
 };
 

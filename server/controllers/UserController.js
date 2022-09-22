@@ -30,8 +30,8 @@ const login = async (req, res) => {
 			id: cekUser.email,
 		};
 
-		const secret = hashPassword(process.env.KEY);
-		const token = jwt.sign(payload, secret);
+		const secret = process.env.KEY;
+		const token = jwt.sign(payload, secret, { expiresIn: "1 hour" });
 
 		res.cookie("token", token, { maxAge: 3600 * 1000, samesite: false });
 
