@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 	const [cart, setCart] = useState();
 	const [inputs, setInputs] = useState({});
@@ -74,23 +76,46 @@ const CartPage = () => {
 		}
 	}
 
+	const createOrder = async () => {
+		const response = await fetch(
+			process.env.REACT_APP_SERVER + "/orders/", {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json; charset=UTF-8',
+			}
+		});
+
+		if (!response.ok) {
+			alert(`HTTP error! status: ${response.status}`);
+			const data = await response.json();
+			console.log(data);
+		} else {
+			const data = await response.json();
+			alert(data.message);
+			navigate('/order/2');
+		}
+	}
+
 	return (
 		<>
 			<h1>Ini CartPage Page</h1>
 			{
 				!loading ? (
-					<ul>
-						{cart.CartDetails.map((cartDetail) => <li key={cartDetail.id}>
-							{cartDetail.Product.name}
-							<input type="number" className="form-control" placeholder="Qty" min="1"
-								id={'qty-' + cartDetail.id} value={inputs['qty-' + cartDetail.id] || cartDetail.qty}
-								onChange={(event) => handleChange(event, cartDetail.ProductId, cartDetail.Product.name)} />
-							<button className="btn btn-danger" type="button"
-								onClick={() => deleteCartDetail(cartDetail.id, cartDetail.Product.name)}>
-								<i className="bi-trash"></i>
-							</button>
-						</li>)}
-					</ul>
+					<>
+						<ul>
+							{cart.CartDetails.map((cartDetail) => <li key={cartDetail.id}>
+								{cartDetail.Product.name}
+								<input type="number" className="form-control" placeholder="Qty" min="1"
+									id={'qty-' + cartDetail.id} value={inputs['qty-' + cartDetail.id] || cartDetail.qty}
+									onChange={(event) => handleChange(event, cartDetail.ProductId, cartDetail.Product.name)} />
+								<button className="btn btn-danger" type="button"
+									onClick={() => deleteCartDetail(cartDetail.id, cartDetail.Product.name)}>
+									<i className="bi-trash"></i>
+								</button>
+							</li>)}
+						</ul>
+						<button type="button" className="btn btn-primary" onClick={createOrder}>Checkout</button>
+					</>
 				) : (
 					<div>
 						Loading...

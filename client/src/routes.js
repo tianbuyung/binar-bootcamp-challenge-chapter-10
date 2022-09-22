@@ -6,6 +6,7 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import Admin from "./pages/admin";
 import CartPage from "./pages/cart/CartPage";
+import OrderPage from "./pages/order/OrderPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -62,6 +63,10 @@ const routes = [
   {
     path: "/cart",
     page: <CartPage />
+  },
+  {
+    path: "/order/:orderId",
+    page: <OrderPage />
   }
 ];
 

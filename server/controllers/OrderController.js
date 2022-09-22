@@ -55,12 +55,14 @@ const createOrder = async (req, res) => {
 const getOrder = async (req, res) => {
     try {
         const order = await Order.findOne({
+            where: {
+                id: req.params.id
+            },
             include: [{
                 model: Cart,
                 where: {
                     UserId: 11,
                     // UserId: req.UserId,
-                    isBought: false
                 }
             }, {
                 model: OrderDetail,
