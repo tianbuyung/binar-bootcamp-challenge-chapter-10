@@ -18,9 +18,12 @@ const createOrder = async (req, res) => {
                     totalOrder: 0 // hitung
                 }, { transaction: t });
 
-                // const [results, metadata] = await sequelize.query(
-                //     "INSERT INTO OrderDetails SELECT * FROM CartDetails WHERE"
-                //     );
+                const [results, metadata] = await sequelize.query(
+                    `INSERT INTO OrderDetails(OrderId, ProductId, qty, Price) 
+                    SELECT ${order.id}, ProductId, qty, Price FROM CartDetails 
+                    JOIN Products ON CartDetails.ProductId = Products.id 
+                    WHERE CartId = ${cart.id}`
+                );
 
                 await Cart.update({
                     isBought: true

@@ -5,20 +5,21 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import Admin from "./pages/admin";
+import CartPage from "./pages/cart/CartPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
-	const token = localStorage.getItem("token");
-	if (token) {
-		return <Navigate to="/" replace />;
-	}
-	return children;
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
 };
 const ProtectedRouteAuth = ({ children }) => {
-	const token = localStorage.getItem("token");
-	if (!token) {
-		return <Navigate to="/auth/login" replace />;
-	}
-	return children;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/auth/login" replace />;
+  }
+  return children;
 };
 
 const routes = [
@@ -58,6 +59,10 @@ const routes = [
     path: "/admin",
     page: <Admin />,
   },
+  {
+    path: "/cart",
+    page: <CartPage />
+  }
 ];
 
 export default routes;
