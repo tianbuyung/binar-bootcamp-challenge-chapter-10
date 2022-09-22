@@ -8,7 +8,11 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
-const API = process.env.REACT_APP_SERVER + '/';
+import CategoryService from "../../../../services/CategoryService";
+import ProductService from "../../../../services/ProductService";
+const API = process.env.REACT_APP_SERVER;
+const categoryService = new CategoryService();
+const productService = new ProductService();
 const AddProduct = ({ setIsFetching }) => {
   const [validated, setValidated] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
@@ -19,11 +23,13 @@ const AddProduct = ({ setIsFetching }) => {
 
   
   const fetchGetCategoryHandler = useCallback(async () => {
-    const GetCategoryRoute = "categories";
-    const response = await fetch(API + GetCategoryRoute, { method: "GET" });
-    const data = await response.json();
-    setGetCategory(data.categories);
-  }, [API]);
+    try {
+      const data = await categoryService.getAllCategories();
+      setGetCategory(data.categories);
+    } catch (error) {
+      // silent e
+    }
+  }, []);
 
   useEffect(() => {
     fetchGetCategoryHandler();
@@ -49,25 +55,14 @@ const AddProduct = ({ setIsFetching }) => {
       return alert("Please provide a valid data!");
     }
 
-    const AddProductRoute = "admin/products";
+    // const AddProductRoute = "/admin/products";
     const body = {
       name: enteredProductName,
       price: enteredProductPrice,
       CategoryId: enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
-
-    const response = await fetch(API + AddProductRoute, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      alert(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await productService.addProduct(body)
     alert(data.message);
     setIsFetching(true);
 

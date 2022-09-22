@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import UpdateProducts from "./UpdateProduct";
-const API = process.env.REACT_APP_SERVER +'/';
+import ProductService from "../../../../services/ProductService";
+const API = process.env.REACT_APP_SERVER;
+const productService = new ProductService();
 const ListProduct = ({ isFetching }) => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,14 +12,14 @@ const ListProduct = ({ isFetching }) => {
 
   const fetchGetProductsHandler = useCallback(
     async (query) => {
-      const GetListProductRoute = "admin/products";
-      const response = await fetch(API + GetListProductRoute + query, {
-        method: "GET",
-      });
-      const data = await response.json();
-      setProducts(data?.products);
-      setCurrentPage(data?.currentPage);
-      setTotalPage(data?.totalPages);
+      try {
+        const data = await productService.getAllProducts(query)
+        setProducts(data?.products);
+        setCurrentPage(data?.currentPage);
+        setTotalPage(data?.totalPages);
+      } catch (error) {
+        //
+      }
     },
     [API]
   );
@@ -31,7 +33,7 @@ const ListProduct = ({ isFetching }) => {
   };
 
   const handleDelete = async (id) => {
-    const DeleteProductRoute = `admin/products/${id}`;
+    const DeleteProductRoute = `/admin/products/${id}`;
     const response = await fetch(API + DeleteProductRoute, {
       headers: { "Content-Type": "application/json" },
       method: "DELETE",

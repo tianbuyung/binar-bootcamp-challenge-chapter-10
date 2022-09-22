@@ -12,6 +12,7 @@ const cartsRouter = require("./routes/carts");
 const cartDetailsRouter = require("./routes/cartDetails");
 const ordersRouter = require("./routes/orders");
 
+const productsRouter = require("./routes/product");
 const app = express();
 app.use(cors());
 app.use(logger("dev"));
@@ -27,5 +28,6 @@ app.use("/categories", categoriesRouter);
 app.use("/carts", cartsRouter);
 app.use("/cartDetails", cartDetailsRouter);
 app.use("/orders", ordersRouter);
+app.use("/product", productsRouter);
 
 module.exports = app;
