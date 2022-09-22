@@ -33,13 +33,16 @@ const ProtectedRouteAuth = ({ children }) => {
 			redirect: "follow",
 		});
 
-		alert(res.status);
+		if (res.status === 200) {
+			return children;
+		} else if (res.status === 403) {
+			alert("Not Authorized");
+			<Navigate to="/login" replace />;
+		}
 	};
 
 	cekUser();
-
-	return children;
-	// if(cekUser.)
+	// return children;
 };
 
 const routes = [
