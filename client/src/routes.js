@@ -4,7 +4,11 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import LoginUser from "./pages/login/LoginUser";
 import LoginAdmin from "./pages/login-admin/LoginAdmin";
 import RegisterPage from "./pages/register/RegisterPage";
+import Admin from "./pages/admin";
+import CartPage from "./pages/cart/CartPage";
+import OrderPage from "./pages/order/OrderPage";
 import { useNavigate } from "react-router-dom";
+
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate()
 	fetch("/users/verify", {
@@ -85,6 +89,30 @@ const routes = [
 			</ProtectedRouteAuth>
 		),
 	},
+  {
+    path: "/cart",
+    page: (
+      // < ProtectedRouteAuth >
+      <CartPage />
+      // </ProtectedRouteAuth >
+    )
+  },
+  {
+    path: "/order/:orderId",
+    page: (
+      // <ProtectedRouteAuth>
+      <OrderPage />
+      // </ProtectedRouteAuth >
+    )
+  },
+  {
+    path: "/admin",
+    page: (
+      // <ProtectedRouteAuth>
+      <Admin />
+      // </ProtectedRouteAuth >
+    )
+  },
 ];
 
 export default routes;
