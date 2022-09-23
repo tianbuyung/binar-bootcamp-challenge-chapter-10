@@ -12,7 +12,8 @@ const getCart = async (req, res) => {
             include: {
                 model: CartDetail,
                 include: Product
-            }
+            },
+            order: [[CartDetail, 'id', 'ASC']]
         });
 
         res.status(200).json({

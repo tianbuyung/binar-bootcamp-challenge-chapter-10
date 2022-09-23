@@ -1,5 +1,20 @@
+const Sequelize = require("sequelize");
 const Model = require("../models");
 const { Order, Cart, OrderDetail, Product } = Model;
+const env = process.env.NODE_ENV || "development";
+const config = require(__dirname + '/../config/config.js')[env];
+
+let sequelize;
+if (config.use_env_variable) {
+    sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+    sequelize = new Sequelize(
+        config.database,
+        config.username,
+        config.password,
+        config
+    );
+}
 
 const createOrder = async (req, res) => {
     try {
@@ -12,17 +27,21 @@ const createOrder = async (req, res) => {
         });
 
         if (cart) {
-            const result = await sequelize.transaction(async (t) => {
-                const order = await Order.create({
-                    CartId: cart.id,
-                    totalOrder: 0 // hitung
-                }, { transaction: t });
+            const [order, created] = await Order.findOrCreate({
+                where: {
+                    CartId: cart.id
+                },
+                defaults: {
+                    totalOrder: req.body.totalOrder
+                }
+            });
 
+            const result = await sequelize.transaction(async (t) => {
                 const [results, metadata] = await sequelize.query(
-                    `INSERT INTO OrderDetails(OrderId, ProductId, qty, Price) 
-                    SELECT ${order.id}, ProductId, qty, Price FROM CartDetails 
-                    JOIN Products ON CartDetails.ProductId = Products.id 
-                    WHERE CartId = ${cart.id}`
+                    `INSERT INTO "OrderDetails" ("OrderId", "ProductId", "qty", "price", "createdAt", "updatedAt") 
+                    SELECT ${order.id}, "ProductId", "qty", "price", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM "CartDetails" 
+                    JOIN "Products" ON "CartDetails"."ProductId" = "Products"."id" 
+                    WHERE "CartId" = ${cart.id}`
                 );
 
                 await Cart.update({

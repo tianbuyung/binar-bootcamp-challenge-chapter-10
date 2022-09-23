@@ -7,6 +7,7 @@ const CartPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [cart, setCart] = useState();
 	const [inputs, setInputs] = useState({});
+	const [totalCart, setTotalCart] = useState(0);
 
 	const handleChange = (event, productId, productName) => {
 		const id = event.target.id;
@@ -36,6 +37,7 @@ const CartPage = () => {
 			const data = await response.json();
 			setCart(data.data);
 			setLoading(false);
+			updateTotalCart();
 			console.log(data.data);
 		}
 	}
@@ -55,6 +57,8 @@ const CartPage = () => {
 
 		if (!response.ok) {
 			alert(`HTTP error! status: ${response.status}`);
+		} else {
+			fetchCart();
 		}
 	}
 
@@ -82,7 +86,10 @@ const CartPage = () => {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8',
-			}
+			},
+			body: JSON.stringify({
+				totalOrder: totalCart
+			})
 		});
 
 		if (!response.ok) {
@@ -92,8 +99,21 @@ const CartPage = () => {
 		} else {
 			const data = await response.json();
 			alert(data.message);
-			navigate('/order/2');
+			navigate('/order/' + data.data.id);
 		}
+	}
+
+	const updateTotalCart = () => {
+		let result = 0;
+
+		if (cart) {
+			cart.CartDetails.forEach(cartDetail => {
+				let subResult = cartDetail.qty * cartDetail.Product.price;
+				result += subResult;
+			});
+		}
+
+		setTotalCart(result);
 	}
 
 	return (
@@ -114,6 +134,7 @@ const CartPage = () => {
 								</button>
 							</li>)}
 						</ul>
+						Total: {totalCart}
 						<button type="button" className="btn btn-primary" onClick={createOrder}>Checkout</button>
 					</>
 				) : (
