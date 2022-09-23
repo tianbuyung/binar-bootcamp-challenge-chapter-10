@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-const Forms = ({ label, type, placeholder, name, onChange }) => {
+const Forms = ({ label, type, placeholder, name, onChange, min }) => {
 	return (
 		<Form.Group className="mb-3">
 			<Form.Label>{label}</Form.Label>
@@ -10,6 +10,7 @@ const Forms = ({ label, type, placeholder, name, onChange }) => {
 				name={name}
 				required
 				onChange={onChange}
+				minLength={min}
 			/>
 		</Form.Group>
 	);
