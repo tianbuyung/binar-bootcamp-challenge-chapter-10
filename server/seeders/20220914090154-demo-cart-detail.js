@@ -15,10 +15,10 @@ module.exports = {
     */
     const newData = [];
 
-    for (let i = 9; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
       const seedData = {
         CartId: Math.floor(Math.random() * 5) + 1,
-        ProductId: Math.floor(Math.random() * 25) + 9,
+        ProductId: Math.floor(Math.random() * 20) + 1,
         qty: Math.floor(Math.random() * 20) + 1,
         createdAt: new Date(),
         updatedAt: new Date()
