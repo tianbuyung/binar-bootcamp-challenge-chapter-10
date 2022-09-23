@@ -146,10 +146,45 @@ const deleteProduct = async (req, res) => {
 	}
 };
 
+const getDetailProductUser = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({
+      message: "Please Provide ID",
+    });
+  }
+  try {
+    const options = {
+      where: { id },
+      include: [
+        {
+          model: Category,
+          as: "Category",
+        },
+      ],
+    };
+    const product = await Product.findOne(options);
+    if (!product) {
+      res.status(400).json({
+        message: "Product not Found",
+      });
+    }
+    res.status(200).json({
+      message: "Successfully get detail a product",
+      product,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
-	getProduct,
-	getDetailProduct,
-	createProduct,
-	editProduct,
-	deleteProduct,
+  getProduct,
+  getDetailProduct,
+  createProduct,
+  editProduct,
+  deleteProduct,
+  getDetailProductUser,
 };

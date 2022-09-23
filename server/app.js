@@ -12,7 +12,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 const categoriesRouter = require("./routes/categories");
-
+const productsRouter = require("./routes/product");
 const app = express();
 app.use(
 	cors({
@@ -33,5 +33,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/categories", categoriesRouter);
+app.use("/product", productsRouter);
 
 module.exports = app;
