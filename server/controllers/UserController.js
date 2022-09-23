@@ -1,7 +1,26 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
-const hashPassword = require("../utils/hashPassword");
 const jwt = require("jsonwebtoken");
+
+const getUserByEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const options = {
+      where: { email },
+      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+    };
+    const user = await User.findOne(options);
+    res.status(200).json({
+      message: "Successfully get detail a user",
+      user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 
 const login = async (req, res) => {
 	try {
@@ -114,5 +133,6 @@ const createUser = async (req, res) => {
 		});
 	}
 };
+};
 
-module.exports = { login, verifyJwt, createUser, logout };
+module.exports = { login, verifyJwt, createUser, logout, getUserByEmail };

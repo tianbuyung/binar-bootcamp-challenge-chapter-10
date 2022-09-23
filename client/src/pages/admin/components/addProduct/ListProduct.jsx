@@ -1,28 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
-import UpdateProducts from "./UpdateProduct";
 import ProductService from "../../../../services/ProductService";
-const API = process.env.REACT_APP_SERVER;
+import UpdateProducts from "./UpdateProduct";
+
 const productService = new ProductService();
-const ListProduct = ({ isFetching }) => {
+
+const ListProduct = ({ isFetching, setIsFetching }) => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
-  const fetchGetProductsHandler = useCallback(
-    async (query) => {
-      try {
-        const data = await productService.getAllProducts(query)
-        setProducts(data?.products);
-        setCurrentPage(data?.currentPage);
-        setTotalPage(data?.totalPages);
-      } catch (error) {
-        //
-      }
-    },
-    [API]
-  );
+  const fetchGetProductsHandler = useCallback(async (query) => {
+    const data = await productService.getAllProducts(query);
+    setProducts(data?.products);
+    setCurrentPage(data?.currentPage);
+    setTotalPage(data?.totalPages);
+  }, []);
 
   useEffect(() => {
     fetchGetProductsHandler(`?page=${currentPage}`);
@@ -33,12 +27,7 @@ const ListProduct = ({ isFetching }) => {
   };
 
   const handleDelete = async (id) => {
-    const DeleteProductRoute = `/admin/products/${id}`;
-    const response = await fetch(API + DeleteProductRoute, {
-      headers: { "Content-Type": "application/json" },
-      method: "DELETE",
-    });
-    const data = await response.json();
+    const data = await productService.deleteProduct(id);
     alert(data.message);
   };
 
@@ -66,7 +55,11 @@ const ListProduct = ({ isFetching }) => {
                 <td>{product.Category.name}</td>
                 <td className="text-start">{product.imageUrl}</td>
                 <td>
-                  <UpdateProducts product={product} setProducts={setProducts} />
+                  <UpdateProducts
+                    product={product}
+                    setProducts={setProducts}
+                    setIsFetching={setIsFetching}
+                  />
                   |
                   <i
                     style={{ cursor: "pointer", marginLeft: "0.5rem" }}

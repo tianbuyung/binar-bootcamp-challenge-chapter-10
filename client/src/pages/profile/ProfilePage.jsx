@@ -1,59 +1,95 @@
-import { Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "react-bootstrap";
+
+import "./ProfilePage.css";
 
 const ProfilePage = () => {
-	let navigate = useNavigate();
-	const getCookie = document.cookie;
-
-	const logout = async () => {
-		try {
-			const getData = await fetch(
-				process.env.REACT_APP_SERVER + "/users/logout",
-				{
-					method: "POST",
-					redirect: "follow",
-					credentials: "include",
-				}
-			);
-
-			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
-				navigate("../login", { replace: true });
-			} else {
-				const message = await getData.json();
-				alert(message.message);
-			}
-		} catch (err) {
-			alert("Error! Please try again");
-			console.log("error while send api : " + err.message);
-		}
-	};
-
-	const testCookie = async () => {
-		const getData = await fetch(
-			process.env.REACT_APP_SERVER + "/admin/products",
-			{
-				method: "GET",
-				redirect: "follow",
-				credentials: "include",
-			}
-		);
-
-		console.log("status - messages = ", getData.status, getData.message);
-	};
-
-	return (
-		<Container>
-			Ini ProfilePage Page <br /> test cookie ={" "}
-			{getCookie.split("token=")}
-			<br />
-			test tembak cookie ={" "}
-			<button onClick={testCookie}>Test Cookie</button>
-			<br />
-			<button onClick={logout}>Logout</button>
-		</Container>
-	);
+  const socialMedias = [
+    { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
+    { name: "Github", icon: "bi bi-github", data: "dummy" },
+    { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
+    { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
+    { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
+  ];
+  return (
+    <Container className="main-body">
+      <Row className="gutters-sm">
+        <Col md={4} className="mb-3">
+          <Card>
+            <Card.Body className="card-body">
+              <div className="d-flex flex-column align-items-center text-center">
+                <img
+                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                  alt="Admin"
+                  className="rounded-circle"
+                  width="150"
+                />
+                <div className="mt-3">
+                  <h4>John Doe</h4>
+                  <p className="text-secondary mb-1">Full Stack Developer</p>
+                  <p className="text-muted font-size-sm">
+                    Bay Area, San Francisco, CA
+                  </p>
+                  <Button variant="primary" className="me-2">
+                    Follow
+                  </Button>
+                  <Button variant="outline-primary">Message</Button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+          <Card className="mt-3">
+            <ListGroup className="list-group-flush">
+              {socialMedias.map((socialMedia, index) => {
+                return (
+                  <ListGroupItem
+                    className="d-flex justify-content-between align-items-center flex-wrap"
+                    key={index}
+                  >
+                    <h6 className="mb-0">
+                      <i className={socialMedia.icon}></i> {socialMedia.name}
+                    </h6>
+                    <span className="text-secondary">{socialMedia.data}</span>
+                  </ListGroupItem>
+                );
+              })}
+            </ListGroup>
+          </Card>
+        </Col>
+        <Col md={8}>
+          <Card className="mb-3">
+            <Card.Body>
+              <Row>
+                <Col sm={3}>
+                  <h6 className="mb-0">Full Name</h6>
+                </Col>
+                <Col sm={9} className="text-secondary">
+                  Kenneth Valdez
+                </Col>
+              </Row>
+              <hr />
+              <Row>
+                <Col sm={3}>
+                  <h6 className="mb-0">Email</h6>
+                </Col>
+                <Col sm={9} className="text-secondary">
+                  dummy@email.com
+                </Col>
+              </Row>
+              <hr />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default ProfilePage;

@@ -7,7 +7,7 @@ const Admin = () => {
   return (
     <>
       <AddProduct setIsFetching={setIsFetching} />
-      <ListProduct isFetching={isFetching} />
+      <ListProduct isFetching={isFetching} setIsFetching={setIsFetching} />
     </>
   );
 };
