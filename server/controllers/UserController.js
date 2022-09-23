@@ -133,6 +133,5 @@ const createUser = async (req, res) => {
 		});
 	}
 };
-};
 
 module.exports = { login, verifyJwt, createUser, logout, getUserByEmail };
