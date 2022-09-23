@@ -37,10 +37,23 @@ const CartPage = () => {
 			const data = await response.json();
 			setCart(data.data);
 			setLoading(false);
-			updateTotalCart();
-			console.log(data.data);
 		}
 	}
+
+	useEffect(() => {
+		const updateTotalCart = () => {
+			let result = 0;
+
+			if (cart) {
+				cart.CartDetails.forEach(cartDetail => {
+					let subResult = cartDetail.qty * cartDetail.Product.price;
+					result += subResult;
+				});
+				setTotalCart(result);
+			}
+		}
+		updateTotalCart()
+	}, [cart])
 
 	const updateCartDetail = async (event, productId) => {
 		const response = await fetch(
@@ -103,18 +116,7 @@ const CartPage = () => {
 		}
 	}
 
-	const updateTotalCart = () => {
-		let result = 0;
 
-		if (cart) {
-			cart.CartDetails.forEach(cartDetail => {
-				let subResult = cartDetail.qty * cartDetail.Product.price;
-				result += subResult;
-			});
-		}
-
-		setTotalCart(result);
-	}
 
 	return (
 		<>

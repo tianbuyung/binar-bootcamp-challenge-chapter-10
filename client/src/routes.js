@@ -63,17 +63,17 @@ const routes = [
   {
     path: "/cart",
     page: (
-      < ProtectedRouteAuth >
+      // < ProtectedRouteAuth >
         <CartPage />
-      </ProtectedRouteAuth >
+      // </ProtectedRouteAuth >
     )
   },
   {
     path: "/order/:orderId",
     page: (
-      < ProtectedRouteAuth >
+      // <ProtectedRouteAuth>
         <OrderPage />
-      </ProtectedRouteAuth >
+      // </ProtectedRouteAuth >
     )
   }
 ];
