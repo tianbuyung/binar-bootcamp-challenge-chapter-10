@@ -1,12 +1,12 @@
-import { Navigate } from "react-router-dom";
 import HomePage from "./pages/home";
 import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile/ProfilePage";
 import LoginUser from "./pages/login/LoginUser";
 import LoginAdmin from "./pages/login-admin/LoginAdmin";
 import RegisterPage from "./pages/register/RegisterPage";
-
+import { useNavigate } from "react-router-dom";
 const ProtectedRouteNonAuth = ({ children }) => {
+	const navigate = useNavigate()
 	fetch("/users/verify", {
 		method: "GET",
 		redirect: "follow",
@@ -14,19 +14,19 @@ const ProtectedRouteNonAuth = ({ children }) => {
 		.then((res) => {
 			if (res.status === 200) {
 				alert("Anda sudah login");
-				return <Navigate to="/" replace />;
+				navigate('/')
 			} else if (res.status === 403) {
 				return children;
 			}
 		})
 		.catch((err) => {
 			alert(err.message);
-			return <Navigate to="/login" replace />;
 		});
 
 	return children;
 };
 const ProtectedRouteAuth = ({ children }) => {
+	const navigate = useNavigate()
 	const cekUser = async () => {
 		const res = await fetch("/users/verify", {
 			method: "GET",
@@ -36,8 +36,7 @@ const ProtectedRouteAuth = ({ children }) => {
 		if (res.status === 200) {
 			return children;
 		} else if (res.status === 403) {
-			alert("Not Authorized");
-			<Navigate to="/login" replace />;
+			navigate('/login', { replace: true })
 		}
 	};
 
