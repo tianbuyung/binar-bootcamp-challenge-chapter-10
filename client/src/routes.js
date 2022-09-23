@@ -7,18 +7,42 @@ import LoginAdmin from "./pages/login-admin/LoginAdmin";
 import RegisterPage from "./pages/register/RegisterPage";
 
 const ProtectedRouteNonAuth = ({ children }) => {
-	const token = document.cookie;
-	if (token) {
-		return <Navigate to="/profile" replace />;
-	}
+	fetch("/users/verify", {
+		method: "GET",
+		redirect: "follow",
+	})
+		.then((res) => {
+			if (res.status === 200) {
+				alert("Anda sudah login");
+				return <Navigate to="/" replace />;
+			} else if (res.status === 403) {
+				return children;
+			}
+		})
+		.catch((err) => {
+			alert(err.message);
+			return <Navigate to="/login" replace />;
+		});
+
 	return children;
 };
 const ProtectedRouteAuth = ({ children }) => {
-	const token = document.cookie;
-	if (!token) {
-		return <Navigate to="/login" replace />;
-	}
-	return children;
+	const cekUser = async () => {
+		const res = await fetch("/users/verify", {
+			method: "GET",
+			redirect: "follow",
+		});
+
+		if (res.status === 200) {
+			return children;
+		} else if (res.status === 403) {
+			alert("Not Authorized");
+			<Navigate to="/login" replace />;
+		}
+	};
+
+	cekUser();
+	// return children;
 };
 
 const routes = [
@@ -57,27 +81,11 @@ const routes = [
 	{
 		path: "admin",
 		page: (
-			<ProtectedRouteNonAuth>
+			<ProtectedRouteAuth>
 				<LoginAdmin />
-			</ProtectedRouteNonAuth>
+			</ProtectedRouteAuth>
 		),
 	},
-	// {
-	// 	path: "admin/logout",
-	// 	page: (
-	// 		<ProtectedRouteAuth>
-	// 			<LoginAdmin />
-	// 		</ProtectedRouteAuth>
-	// 	),
-	// },
-	// {
-	// 	path: "user/logout",
-	// 	page: (
-	// 		<ProtectedRouteNonAuth>
-	// 			<LoginUser />
-	// 		</ProtectedRouteNonAuth>
-	// 	),
-	// },
 ];
 
 export default routes;

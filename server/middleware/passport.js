@@ -1,15 +1,15 @@
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy,
 	ExtractJwt = require("passport-jwt").ExtractJwt;
-
 const Model = require("../models");
+const hashPassword = require("../utils/hashPassword");
 const { User, Admin } = Model;
 
 const cookieExtractor = (req) => {
 	let jwt = null;
 
 	if (req && req.cookies) {
-		jwt = req.cookies.token;
+		jwt = req.signed.cookies["token"];
 	}
 
 	return jwt;
@@ -17,7 +17,7 @@ const cookieExtractor = (req) => {
 
 const opts = {};
 opts.jwtFromRequest = cookieExtractor;
-opts.secretOrKey = process.env.KEY;
+opts.secretOrKey = hashPassword(process.env.KEY);
 
 passport.use(
 	"user-role",
@@ -40,7 +40,6 @@ passport.use(
 				return done(null, admin);
 			})
 			.catch((err) => {
-				console.log("error auth admin : " + err);
 				return done(err, false);
 			});
 	})

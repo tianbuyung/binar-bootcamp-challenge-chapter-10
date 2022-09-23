@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const UserController = require("../controllers/UserController");
-/* GET users listing. */
-// router.get("/", UserController.getUserAllUser);
+
+router.get("/verify", UserController.verifyJwt);
 
 router.post("/logout", UserController.logout);
 
