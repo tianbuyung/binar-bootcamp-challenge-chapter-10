@@ -34,4 +34,11 @@ export default class ProductService extends BaseService {
 
     return await this.fetch(`/admin/products/${id}`, options, true);
   };
+  getProductDetailUser = async (id) => {
+    const options = {
+      method: "GET",
+    };
+
+    return await this.fetch("/product/" + id, options, true);
+  };
 }

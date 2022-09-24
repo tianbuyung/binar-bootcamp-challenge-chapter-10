@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "RESTRICT",
         onUpdate: "CASCADE",
       });
+      // models.Category.belongsTo(models.Product)
     }
   }
   Category.init(
