@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CartDetailService from "../../services/CartDetailService";
+import CartService from "../../services/CartService";
+import OrderService from "../../services/OrderService";
+
+const cartService = new CartService();
+const cartDetailService = new CartDetailService();
+const orderService = new OrderService();
 
 const CartPage = () => {
 	const navigate = useNavigate();
@@ -26,18 +33,9 @@ const CartPage = () => {
 	}, []);
 
 	const fetchCart = async () => {
-		const response = await fetch(
-			process.env.REACT_APP_SERVER + "/carts/", { method: 'GET' }
-		)
-
-		if (!response.ok) {
-			setLoading(false);
-			alert(`HTTP error! status: ${response.status}`);
-		} else {
-			const data = await response.json();
-			setCart(data.data);
-			setLoading(false);
-		}
+		const data = await cartService.getCart('');
+		setCart(data.data);
+		setLoading(false);
 	}
 
 	useEffect(() => {
@@ -56,64 +54,35 @@ const CartPage = () => {
 	}, [cart])
 
 	const updateCartDetail = async (event, productId) => {
-		const response = await fetch(
-			process.env.REACT_APP_SERVER + "/cartDetails/", {
-			method: 'POST',
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8',
-			},
-			body: JSON.stringify({
-				ProductId: productId,
-				qty: event.target.value
-			})
-		});
-
-		if (!response.ok) {
-			alert(`HTTP error! status: ${response.status}`);
-		} else {
-			fetchCart();
+		const body = {
+			ProductId: productId,
+			qty: event.target.value,
+			isIcrement: false
 		}
+
+		await cartDetailService.createCartDetail(body);
+
+		fetchCart();
 	}
 
 	const deleteCartDetail = async (id, cartProductName) => {
 		if (window.confirm("Are you sure you want to delete this item '" + cartProductName + "'?")) {
-			const response = await fetch(
-				process.env.REACT_APP_SERVER + "/cartDetails/" + id, { method: 'DELETE' }
-			);
-
-			if (!response.ok) {
-				alert(`HTTP error! status: ${response.status}`);
-			} else {
-				const data = await response.json();
-				alert(data.message);
-				fetchCart();
-			}
+			const data = await cartDetailService.deleteCartDetail(id);
+			alert(data.message);
+			fetchCart();
 		} else {
 			// return before value
 		}
 	}
 
 	const createOrder = async () => {
-		const response = await fetch(
-			process.env.REACT_APP_SERVER + "/orders/", {
-			method: 'POST',
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8',
-			},
-			body: JSON.stringify({
-				totalOrder: totalCart
-			})
-		});
-
-		if (!response.ok) {
-			alert(`HTTP error! status: ${response.status}`);
-			const data = await response.json();
-			console.log(data);
-		} else {
-			const data = await response.json();
-			alert(data.message);
-			navigate('/order/' + data.data.id);
+		const body = {
+			totalOrder: totalCart
 		}
+
+		const data = await orderService.createOrder(body);
+		alert(data.message);
+		navigate('/order/' + data.data.id);
 	}
 
 

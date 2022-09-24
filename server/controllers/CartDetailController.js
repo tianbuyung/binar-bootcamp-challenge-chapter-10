@@ -27,13 +27,17 @@ const createCartDetail = async (req, res) => {
                 data: cartDetail
             });
         } else {
-            await CartDetail.update({
-                qty: req.body.qty
-            }, {
-                where: {
-                    id: cartDetail.id
-                }
-            });
+            if (req.body.isIncrement) {
+                await cartDetail.increment('qty');
+            } else {
+                await CartDetail.update({
+                    qty: req.body.qty
+                }, {
+                    where: {
+                        id: cartDetail.id
+                    }
+                });
+            }
 
             res.status(200).json({
                 message: "Update cart detail's qty success"
