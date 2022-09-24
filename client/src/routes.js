@@ -62,9 +62,9 @@ const routes = [
   {
     path: "profile",
     page: (
-      <ProtectedRouteAuth>
-        <ProfilePage />
-      </ProtectedRouteAuth>
+      // <ProtectedRouteAuth>
+      <ProfilePage />
+      // </ProtectedRouteAuth>
     ),
   },
   {
@@ -84,7 +84,7 @@ const routes = [
     ),
   },
   {
-    path: "admin",
+    path: "admin/login",
     page: (
       <ProtectedRouteAuth>
         <LoginAdmin />
@@ -112,7 +112,7 @@ const routes = [
     page: (
       // <ProtectedRouteAuth>
       <Admin />
-      // </ProtectedRouteAuth >
+      // </ProtectedRouteAuth>
     ),
   },
 ];
