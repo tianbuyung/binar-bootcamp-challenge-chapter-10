@@ -29,6 +29,7 @@ const ProtectedRouteNonAuth = ({ children }) => {
 
 	return children;
 };
+
 const ProtectedRouteAuth = ({ children }) => {
 	const navigate = useNavigate();
 	const cekUser = async () => {
