@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -7,10 +8,30 @@ import {
   ListGroupItem,
   Row,
 } from "react-bootstrap";
+import UserService from "../../services/UserService";
 
 import "./ProfilePage.css";
 
+const userService = new UserService();
+
 const ProfilePage = () => {
+  const [profile, setProfile] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const fetchGetUserHandler = async (email) => {
+      try {
+        const getEmail = document.cookie || "Molly_Lebsack33@hotmail.com";
+        setEmail(getEmail);
+        const data = await userService.getUser(email);
+        setProfile(data);
+      } catch (error) {
+        //
+      }
+    };
+    fetchGetUserHandler(email);
+  }, [email]);
+
   const socialMedias = [
     { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
     { name: "Github", icon: "bi bi-github", data: "dummy" },
@@ -18,6 +39,7 @@ const ProfilePage = () => {
     { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
     { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
   ];
+
   return (
     <Container className="main-body">
       <Row className="gutters-sm">
@@ -32,8 +54,8 @@ const ProfilePage = () => {
                   width="150"
                 />
                 <div className="mt-3">
-                  <h4>John Doe</h4>
-                  <p className="text-secondary mb-1">Full Stack Developer</p>
+                  <h4>{profile.user?.name}</h4>
+                  <p className="text-secondary mb-1">{profile.user?.email}</p>
                   <p className="text-muted font-size-sm">
                     Bay Area, San Francisco, CA
                   </p>
@@ -71,7 +93,7 @@ const ProfilePage = () => {
                   <h6 className="mb-0">Full Name</h6>
                 </Col>
                 <Col sm={9} className="text-secondary">
-                  Kenneth Valdez
+                  {profile.user?.name}
                 </Col>
               </Row>
               <hr />
@@ -80,7 +102,7 @@ const ProfilePage = () => {
                   <h6 className="mb-0">Email</h6>
                 </Col>
                 <Col sm={9} className="text-secondary">
-                  dummy@email.com
+                  {profile.user?.email}
                 </Col>
               </Row>
               <hr />
