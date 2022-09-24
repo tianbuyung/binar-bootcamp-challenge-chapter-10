@@ -31,7 +31,7 @@ passport.use(
 			});
 	})
 );
-
+// test
 passport.use(
 	"admin-role",
 	new JwtStrategy(opts, function (jwt_payload, done) {
