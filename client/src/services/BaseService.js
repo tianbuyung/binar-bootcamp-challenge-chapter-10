@@ -2,7 +2,6 @@ import { API } from "../configs/config";
 
 class BaseService {
   async fetch(url, options, authenticate = false) {
-    options.headers = {};
     if (authenticate) {
       const token = localStorage.getItem("token");
       options.headers = {

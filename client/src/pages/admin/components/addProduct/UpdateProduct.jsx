@@ -8,9 +8,14 @@ import {
   Row,
   FormGroup,
 } from "react-bootstrap";
-  const API = process.env.REACT_APP_SERVER;
+import CategoryService from "../../../../services/CategoryService";
+import ProductService from "../../../../services/ProductService";
+
+const categoryService = new CategoryService();
+const productService = new ProductService();
+
 const UpdateProducts = (props) => {
-  const { product } = props;
+  const { product, setIsFetching } = props;
 
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
@@ -23,14 +28,10 @@ const UpdateProducts = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-
   const fetchGetCategoryHandler = useCallback(async () => {
-    const GetCategoryRoute = "/categories";
-    const response = await fetch(API + GetCategoryRoute, { method: "GET" });
-    const data = await response.json();
+    const data = await categoryService.getAllCategories();
     setGetCategory(data.categories);
-  }, [API]);
+  }, []);
 
   useEffect(() => {
     fetchGetCategoryHandler();
@@ -39,6 +40,8 @@ const UpdateProducts = (props) => {
   const updateProductHandler = async (event) => {
     event.preventDefault();
 
+    setIsFetching(false);
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -46,7 +49,6 @@ const UpdateProducts = (props) => {
     }
     setValidated(true);
 
-    const UpdateProductRoute = `/admin/products/${product.id}`;
     const body = {
       name: enteredProductName === "" ? product.name : enteredProductName,
       price: enteredProductPrice === "" ? product.price : enteredProductPrice,
@@ -57,13 +59,9 @@ const UpdateProducts = (props) => {
       imagerUrl: enteredProductImage,
     };
 
-    const response = await fetch(API + UpdateProductRoute, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
+    const data = await productService.editProduct(body, product.id);
     alert(data.message);
+    setIsFetching(true);
 
     setValidated(false);
     setShow(false);

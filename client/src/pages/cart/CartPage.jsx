@@ -94,7 +94,7 @@ const CartPage = () => {
 				!loading ? (
 					<>
 						<ul>
-							{cart.CartDetails.map((cartDetail) => <li key={cartDetail.id}>
+							{cart?.CartDetails.map((cartDetail) => <li key={cartDetail.id}>
 								{cartDetail.Product.name}
 								<input type="number" className="form-control" placeholder="Qty" min="1"
 									id={'qty-' + cartDetail.id} value={inputs['qty-' + cartDetail.id] || cartDetail.qty}

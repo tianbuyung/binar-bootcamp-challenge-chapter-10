@@ -7,8 +7,6 @@ export default class ProductService extends BaseService {
       body: JSON.stringify(data),
     };
 
-    console.log("options", options);
-
     return await this.fetch("/admin/products", options, true);
   };
 
@@ -20,11 +18,20 @@ export default class ProductService extends BaseService {
     return await this.fetch("/admin/products" + query, options, true);
   };
 
-  getProductDetailUser = async (id) => {
+  editProduct = async (data, id) => {
     const options = {
-      method: "GET",
+      method: "PUT",
+      body: JSON.stringify(data),
     };
 
-    return await this.fetch("/product/" + id, options, false);
+    return await this.fetch(`/admin/products/${id}`, options, true);
+  };
+
+  deleteProduct = async (id) => {
+    const options = {
+      method: "DELETE",
+    };
+
+    return await this.fetch(`/admin/products/${id}`, options, true);
   };
 }

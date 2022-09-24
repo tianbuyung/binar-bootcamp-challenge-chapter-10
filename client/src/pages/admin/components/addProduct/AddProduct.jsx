@@ -10,9 +10,10 @@ import {
 } from "react-bootstrap";
 import CategoryService from "../../../../services/CategoryService";
 import ProductService from "../../../../services/ProductService";
-const API = process.env.REACT_APP_SERVER;
+
 const categoryService = new CategoryService();
 const productService = new ProductService();
+
 const AddProduct = ({ setIsFetching }) => {
   const [validated, setValidated] = useState(false);
   const [getCategory, setGetCategory] = useState([]);
@@ -21,7 +22,6 @@ const AddProduct = ({ setIsFetching }) => {
   const [enteredProductCategory, setEnteredProductCategory] = useState("");
   const [enteredProductImage, setEnteredProductImage] = useState("");
 
-  
   const fetchGetCategoryHandler = useCallback(async () => {
     try {
       const data = await categoryService.getAllCategories();
@@ -39,6 +39,7 @@ const AddProduct = ({ setIsFetching }) => {
     event.preventDefault();
 
     setIsFetching(false);
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -55,14 +56,14 @@ const AddProduct = ({ setIsFetching }) => {
       return alert("Please provide a valid data!");
     }
 
-    // const AddProductRoute = "/admin/products";
     const body = {
       name: enteredProductName,
       price: enteredProductPrice,
       CategoryId: enteredProductCategory,
       imagerUrl: enteredProductImage,
     };
-    const data = await productService.addProduct(body)
+
+    const data = await productService.addProduct(body);
     alert(data.message);
     setIsFetching(true);
 
