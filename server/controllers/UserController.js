@@ -3,24 +3,23 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const getUserByEmail = async (req, res) => {
-  try {
-    const email = req.params.email;
-    const options = {
-      where: { email },
-      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
-    };
-    const user = await User.findOne(options);
-    res.status(200).json({
-      message: "Successfully get detail a user",
-      user,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: error.message,
-    });
-  }
+	try {
+		const email = req.params.email;
+		const options = {
+			where: { email },
+			attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+		};
+		const user = await User.findOne(options);
+		res.status(200).json({
+			message: "Successfully get detail a user",
+			user,
+		});
+	} catch (error) {
+		res.status(400).json({
+			message: error.message,
+		});
+	}
 };
-
 
 const login = async (req, res) => {
 	try {
@@ -76,9 +75,8 @@ const verifyJwt = (req, res) => {
 	const token = req.signedCookies.token;
 	jwt.verify(token, process.env.KEY, (err, result) => {
 		if (err) {
-			console.log("cek error : ", err);
 			res.status(403).json({
-				message: "unauthorized : ",
+				message: "unauthorized",
 			});
 		} else {
 			res.status(200).json({

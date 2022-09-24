@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import OrderService from "../../services/OrderService";
+
+const orderService = new OrderService();
 
 const OrderPage = () => {
     const [loading, setLoading] = useState(true);
@@ -12,18 +15,9 @@ const OrderPage = () => {
     }, []);
 
     const fetchOrder = async () => {
-        const response = await fetch(
-            process.env.REACT_APP_SERVER + "/orders/" + orderId, { method: 'GET' }
-        )
-
-        if (!response.ok) {
-            setLoading(false);
-            alert(`HTTP error! status: ${response.status}`);
-        } else {
-            const data = await response.json();
-            setOrder(data.data);
-            setLoading(false);
-        }
+        const data = await orderService.getOrder(orderId);
+        setOrder(data.data);
+        setLoading(false);
     }
 
     return (

@@ -29,6 +29,7 @@ const ProtectedRouteNonAuth = ({ children }) => {
 
   return children;
 };
+
 const ProtectedRouteAuth = ({ children }) => {
   const navigate = useNavigate();
   const cekUser = async () => {
@@ -40,12 +41,13 @@ const ProtectedRouteAuth = ({ children }) => {
     if (res.status === 200) {
       return children;
     } else if (res.status === 403) {
+      alert("Anda harus login!");
       navigate("/login", { replace: true });
     }
+    return children;
   };
 
   cekUser();
-  // return children;
 };
 
 const routes = [
@@ -60,9 +62,9 @@ const routes = [
   {
     path: "profile",
     page: (
-      // <ProtectedRouteAuth>
-      <ProfilePage />
-      // </ProtectedRouteAuth>
+      <ProtectedRouteAuth>
+        <ProfilePage />
+      </ProtectedRouteAuth>
     ),
   },
   {
@@ -82,31 +84,35 @@ const routes = [
     ),
   },
   {
-    path: "admin/login",
-    page: <LoginAdmin />,
+    path: "admin",
+    page: (
+      <ProtectedRouteAuth>
+        <LoginAdmin />
+      </ProtectedRouteAuth>
+    ),
   },
   {
     path: "/cart",
     page: (
-      <ProtectedRouteAuth>
-        <CartPage />
-      </ProtectedRouteAuth>
+      // < ProtectedRouteAuth >
+      <CartPage />
+      // </ProtectedRouteAuth >
     ),
   },
   {
     path: "/order/:orderId",
     page: (
-      <ProtectedRouteAuth>
-        <OrderPage />
-      </ProtectedRouteAuth>
+      // <ProtectedRouteAuth>
+      <OrderPage />
+      // </ProtectedRouteAuth >
     ),
   },
   {
     path: "/admin",
     page: (
-      <ProtectedRouteAuth>
-        <Admin />
-      </ProtectedRouteAuth>
+      // <ProtectedRouteAuth>
+      <Admin />
+      // </ProtectedRouteAuth >
     ),
   },
 ];
