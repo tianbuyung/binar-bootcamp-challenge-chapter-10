@@ -20,7 +20,8 @@ const createOrder = async (req, res) => {
     try {
         const cart = await Cart.findOne({
             where: {
-                UserId: req.user.id,
+                UserId: 11,
+                // UserId: req.user.id,
                 isBought: false
             }
         });
@@ -79,7 +80,8 @@ const getOrder = async (req, res) => {
             include: [{
                 model: Cart,
                 where: {
-                    UserId: req.user.id,
+                    UserId: 11,
+                    // UserId: req.user.id,
                 }
             }, {
                 model: OrderDetail,

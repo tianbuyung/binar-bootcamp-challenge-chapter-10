@@ -5,7 +5,8 @@ const createCartDetail = async (req, res) => {
     try {
         const [cart, created] = await Cart.findOrCreate({
             where: {
-                UserId: req.user.id,
+                UserId: 11,
+                // UserId: req.user.id,
                 isBought: false
             }
         });
@@ -53,7 +54,8 @@ const deleteCartDetail = async (req, res) => {
     try {
         const cart = await Cart.findOne({
             where: {
-                UserId: req.user.id,
+                UserId: 11,
+                // UserId: req.user.id,
                 isBought: false
             }
         });

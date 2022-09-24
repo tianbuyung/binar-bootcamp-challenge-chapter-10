@@ -89,30 +89,30 @@ const routes = [
 			</ProtectedRouteAuth>
 		),
 	},
-  {
-    path: "/cart",
-    page: (
-      // < ProtectedRouteAuth >
-      <CartPage />
-      // </ProtectedRouteAuth >
-    )
-  },
-  {
-    path: "/order/:orderId",
-    page: (
-      // <ProtectedRouteAuth>
-      <OrderPage />
-      // </ProtectedRouteAuth >
-    )
-  },
-  {
-    path: "/admin",
-    page: (
-      // <ProtectedRouteAuth>
-      <Admin />
-      // </ProtectedRouteAuth >
-    )
-  },
+	{
+		path: "/cart",
+		page: (
+			// < ProtectedRouteAuth >
+			<CartPage />
+			// </ProtectedRouteAuth >
+		)
+	},
+	{
+		path: "/order/:orderId",
+		page: (
+			//<ProtectedRouteAuth>
+			<OrderPage />
+			// </ProtectedRouteAuth >
+		)
+	},
+	{
+		path: "/admin",
+		page: (
+			// <ProtectedRouteAuth>
+			<Admin />
+			// </ProtectedRouteAuth >
+		)
+	},
 ];
 
 export default routes;
