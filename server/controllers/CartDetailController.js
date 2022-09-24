@@ -5,8 +5,7 @@ const createCartDetail = async (req, res) => {
     try {
         const [cart, created] = await Cart.findOrCreate({
             where: {
-                UserId: 11,
-                // UserId: req.UserId,
+                UserId: req.user.id,
                 isBought: false
             }
         });
@@ -52,15 +51,41 @@ const createCartDetail = async (req, res) => {
 
 const deleteCartDetail = async (req, res) => {
     try {
-        await CartDetail.destroy({
+        const cart = await Cart.findOne({
             where: {
-                id: req.params.id
+                UserId: req.user.id,
+                isBought: false
             }
         });
 
-        res.status(200).json({
-            message: "Delete cart detail success"
-        });
+        if (cart) {
+            const cartDetail = await CartDetail.findOne({
+                where: {
+                    CartId: cart.id,
+                    id: req.params.id
+                }
+            });
+
+            if (cartDetail) {
+                await CartDetail.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                });
+
+                res.status(200).json({
+                    message: "Delete cart detail success"
+                });
+            } else {
+                res.status(404).json({
+                    message: 'Cart detail not found'
+                });
+            }
+        } else {
+            res.status(404).json({
+                message: 'Cart not found'
+            });
+        }
     } catch (error) {
         res.status(400).json({
             message: error.message
