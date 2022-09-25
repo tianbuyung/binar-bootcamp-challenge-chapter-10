@@ -29,8 +29,12 @@ const UpdateProducts = (props) => {
   const handleShow = () => setShow(true);
 
   const fetchGetCategoryHandler = useCallback(async () => {
-    const data = await categoryService.getAllCategories();
-    setGetCategory(data.categories);
+    try {
+      const data = await categoryService.getAllCategories();
+      setGetCategory(data.categories);
+    } catch (error) {
+      // silent e
+    }
   }, []);
 
   useEffect(() => {
