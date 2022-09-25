@@ -1,11 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const NavbarComponent = ({ variant, bg = "light" }) => {
   const { isLogin } = useAuth();
+  const navigate = useNavigate();
   return (
-    <Navbar variant={variant} bg={bg} expand="lg" sticky="top">
+    <Navbar variant={variant} bg={bg} expand="lg">
       <Container>
         <Navbar.Brand href="#home">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -13,7 +15,12 @@ const NavbarComponent = ({ variant, bg = "light" }) => {
         {isLogin() ? (
           <>
             <Navbar.Brand>
-              <div className="cursor-pointer">Profile</div>
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate("/profile")}
+              >
+                Profile
+              </div>
             </Navbar.Brand>
             <Navbar.Brand>
               <div className="cursor-pointer">Logout</div>
@@ -22,10 +29,20 @@ const NavbarComponent = ({ variant, bg = "light" }) => {
         ) : (
           <>
             <Navbar.Brand>
-              <div className="cursor-pointer">Login</div>
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </div>
             </Navbar.Brand>
             <Navbar.Brand>
-              <div className="cursor-pointer">Register</div>
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate("/register")}
+              >
+                Register
+              </div>
             </Navbar.Brand>
           </>
         )}
