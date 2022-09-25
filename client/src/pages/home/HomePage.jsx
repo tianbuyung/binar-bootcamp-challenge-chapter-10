@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
+import ProductPopular from "./components/ProductPopular/ProductPopular";
 
 const categoryService = new CategoryService();
 
@@ -31,6 +32,7 @@ const HomePage = () => {
         {!loading ? (
           <>
             <h2 className="text-start h2 mt-3">Jelajahi Produk Kami</h2>
+            <ProductPopular />
             {getCategory?.map((category) => {
               return (
                 <div
