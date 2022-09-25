@@ -20,15 +20,14 @@ const ProtectedRouteNonAuth = ({ children }) => {
 		});
 
 		if (res.status === 200) {
-			alert("Anda sudah login!");
-			navigate("/", { replace: true });
+			// alert("Anda sudah login!");
+			return navigate("/", { replace: true });
 		} else if (res.status === 403) {
 			return children;
 		}
 	};
 
 	cekUser();
-	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
@@ -43,13 +42,11 @@ const ProtectedRouteAuth = ({ children }) => {
 		if (res.status === 200) {
 			return children;
 		} else if (res.status === 403) {
-			alert("Anda harus login!");
-			navigate("/login", { replace: true });
+			// alert("Anda harus login!");
+			return navigate("/login", { replace: true });
 		}
 	};
 	cekUser();
-
-	return children;
 };
 
 // ! Error
