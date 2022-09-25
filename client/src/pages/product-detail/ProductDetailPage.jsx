@@ -1,16 +1,16 @@
 import Navbar from "../../components/navbar";
 import useProductDetailPage from "./useProductDetailPage";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container'
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from '../../components/breadcrumbs/BreadCrumbs'
 
-
 const NO_IMAGE = 'https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg'
 const cartDetailService = new CartDetailService();
 const ProductDetailPage = () => {
+    const navigate = useNavigate();
     const { product_id } = useParams()
     const { product } = useProductDetailPage({ id: product_id });
     const breadcrumbs = [
@@ -18,17 +18,23 @@ const ProductDetailPage = () => {
         { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
         { title: product?.name, isActive: true }
     ]
+
     const addCartDetail = async () => {
-        const body = {
-            ProductId: product_id,
-            qty: 1,
-            isIcrement: true
+        try {
+            const body = {
+                ProductId: product_id,
+                qty: 1,
+                isIcrement: true
+            }
+
+            const data = await cartDetailService.createCartDetail(body);
+
+            alert(data.message);
+        } catch (error) {
+            alert(error.message);
+            navigate("/login", { replace: true });
         }
-
-		const data = await cartDetailService.createCartDetail(body);
-
-		alert(data.message);
-	};
+    };
 
     return (
         <div>
