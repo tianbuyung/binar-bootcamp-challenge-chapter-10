@@ -38,6 +38,9 @@ const getCategoryProduct = async (req, res) => {
       offset,
       limit: size,
       include: Category,
+      where: {
+        CategoryId: id
+      }
     });
     if (!result) {
       if (!id) {
