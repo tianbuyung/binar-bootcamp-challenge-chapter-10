@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import OrderService from "../../services/OrderService";
+import Navbar from "../../components/navbar"
+import { Container } from "react-bootstrap";
+import OrderStack from "../cart/components/OrderStack";
 
 const orderService = new OrderService();
 
@@ -18,20 +21,23 @@ const OrderPage = () => {
         const data = await orderService.getOrder(orderId);
         setOrder(data.data);
         setLoading(false);
+        console.log(data.data)
     }
 
     return (
         <>
-            <h1>Ini OrderPage Page</h1>
+            <Navbar variant="dark" bg="dark" />
             {
                 !loading ? (
-                    <>
-                        <ul>
-                            {order.OrderDetails.map((orderDetail) => <li key={orderDetail.id}>
-                                {orderDetail.Product.name}
-                            </li>)}
-                        </ul>
-                    </>
+                    <Container>
+                        <h1 className="mt-3 mb-3">My Order</h1>
+                        <div className="border p-1">
+                            <div className="border mb-2">Order Date: {order.createdAt}</div>
+                            {order?.OrderDetails.map((orderDetail) =>
+                                <OrderStack key={orderDetail.id} orderDetail={orderDetail} />)}
+                            <div className="border">Total: {order.totalOrder}</div>
+                        </div>
+                    </Container>
                 ) : (
                     <div>
                         Loading...

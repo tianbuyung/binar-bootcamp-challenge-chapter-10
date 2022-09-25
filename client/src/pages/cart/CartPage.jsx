@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import CartDetailService from "../../services/CartDetailService";
 import CartService from "../../services/CartService";
 import OrderService from "../../services/OrderService";
+import CartStack from "./components/CartStack";
+import Navbar from "../../components/navbar"
 
 const cartService = new CartService();
 const cartDetailService = new CartDetailService();
@@ -85,29 +88,20 @@ const CartPage = () => {
 		navigate('/order/' + data.data.id);
 	}
 
-
-
 	return (
 		<>
-			<h1>Ini CartPage Page</h1>
+			<Navbar variant="dark" bg="dark" />
 			{
 				!loading ? (
-					<>
-						<ul>
-							{cart?.CartDetails.map((cartDetail) => <li key={cartDetail.id}>
-								{cartDetail.Product.name}
-								<input type="number" className="form-control" placeholder="Qty" min="1"
-									id={'qty-' + cartDetail.id} value={inputs['qty-' + cartDetail.id] || cartDetail.qty}
-									onChange={(event) => handleChange(event, cartDetail.ProductId, cartDetail.Product.name)} />
-								<button className="btn btn-danger" type="button"
-									onClick={() => deleteCartDetail(cartDetail.id, cartDetail.Product.name)}>
-									<i className="bi-trash"></i>
-								</button>
-							</li>)}
-						</ul>
-						Total: {totalCart}
-						<button type="button" className="btn btn-primary" onClick={createOrder}>Checkout</button>
-					</>
+					<Container>
+						<h1 className="mt-3 mb-3">My Cart</h1>
+						{cart?.CartDetails.map((cartDetail) =>
+							<CartStack key={cartDetail.id} cartDetail={cartDetail}
+								inputs={inputs} handleChange={handleChange}
+								deleteCartDetail={deleteCartDetail} />)}
+						<div>Total: {totalCart}</div>
+						<Button variant="primary" onClick={createOrder}>Checkout</Button>
+					</Container>
 				) : (
 					<div>
 						Loading...
