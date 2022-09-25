@@ -25,10 +25,10 @@ const ProductDetailPage = () => {
             isIcrement: true
         }
 
-        const data = await cartDetailService.createCartDetail(body);
+		const data = await cartDetailService.createCartDetail(body);
 
-        alert(data.message);
-    }
+		alert(data.message);
+	};
 
     return (
         <div>

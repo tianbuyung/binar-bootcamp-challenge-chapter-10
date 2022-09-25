@@ -1,7 +1,44 @@
 import BaseService from "./BaseService";
 
 export default class AuthService extends BaseService {
-  login = async () => {};
+	async customFetch(url, options) {
+		const response = await fetch(url, options);
+		return response;
+	}
 
-  register = async () => {};
+	loginUser = async (data) => {
+		const options = {
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: { "Content-Type": "application/json" },
+			redirect: "follow",
+			credentials: "include",
+		};
+
+		return await this.customFetch("users/login", options);
+	};
+
+	loginAdmin = async (data) => {
+		const options = {
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: { "Content-Type": "application/json" },
+			redirect: "follow",
+			credentials: "include",
+		};
+
+		return await this.customFetch("/admin/login", options);
+	};
+
+	register = async (data) => {
+		const options = {
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: { "Content-Type": "application/json" },
+			redirect: "follow",
+			credentials: "include",
+		};
+
+		return await this.customFetch("users/register", options);
+	};
 }

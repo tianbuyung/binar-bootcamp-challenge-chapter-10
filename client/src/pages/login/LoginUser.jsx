@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
+import AuthService from "../../services/AuthService";
 
+const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
@@ -11,16 +13,7 @@ const LoginUser = () => {
 	const login = async (e) => {
 		e.preventDefault();
 		try {
-			const getData = await fetch(
-				"/users/login",
-				{
-					method: "POST",
-					body: JSON.stringify(user),
-					headers: { "Content-Type": "application/json" },
-					redirect: "follow",
-					credentials: "include",
-				}
-			);
+			const getData = await authservice.loginUser(user);
 
 			if (getData.status === 200) {
 				const message = await getData.json();
@@ -28,7 +21,7 @@ const LoginUser = () => {
 				navigate("../profile", { replace: true });
 			} else {
 				const message = await getData.json();
-				alert(message.message);
+				alert(await message.message);
 			}
 		} catch (err) {
 			alert("Error! Please try again");

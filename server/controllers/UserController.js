@@ -88,12 +88,13 @@ const verifyJwt = (req, res) => {
 
 const logout = async (req, res) => {
 	try {
-		res.clearCookies("token");
+		res.cookie("token", "");
 
 		return await res.status(200).send({
 			message: "Successfully logged out",
 		});
 	} catch (error) {
+		console.log("error logout : ", error);
 		return await res.status(500).json({
 			message: "error while logout",
 		});

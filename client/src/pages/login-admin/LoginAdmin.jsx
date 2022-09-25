@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
+import AuthService from "../../services/AuthService";
 
+const authservice = new AuthService();
 const LoginAdmin = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
@@ -11,16 +13,7 @@ const LoginAdmin = () => {
 	const login = async (e) => {
 		e.preventDefault();
 		try {
-			const getData = await fetch(
-				process.env.REACT_APP_SERVER + "/admin",
-				{
-					method: "POST",
-					body: JSON.stringify(user),
-					headers: { "Content-Type": "application/json" },
-					redirect: "follow",
-					credentials: "include",
-				}
-			);
+			const getData = await authservice.loginAdmin(user);
 
 			if (getData.status === 200) {
 				const message = await getData.json();

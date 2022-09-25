@@ -12,22 +12,22 @@ import { useNavigate } from "react-router-dom";
 
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
-	fetch("/users/verify", {
-		method: "GET",
-		redirect: "follow",
-	})
-		.then((res) => {
-			if (res.status === 200) {
-				alert("Anda sudah login");
-				navigate("/");
-			} else if (res.status === 403) {
-				return children;
-			}
-		})
-		.catch((err) => {
-			alert(err.message);
+	const cekUser = async () => {
+		const res = await fetch("/users/verify", {
+			method: "GET",
+			redirect: "follow",
+			credentials: "include",
 		});
 
+		if (res.status === 200) {
+			alert("Anda sudah login!");
+			navigate("/", { replace: true });
+		} else if (res.status === 403) {
+			return children;
+		}
+	};
+
+	cekUser();
 	return children;
 };
 
@@ -37,6 +37,7 @@ const ProtectedRouteAuth = ({ children }) => {
 		const res = await fetch("/users/verify", {
 			method: "GET",
 			redirect: "follow",
+			credentials: "include",
 		});
 
 		if (res.status === 200) {
@@ -45,10 +46,10 @@ const ProtectedRouteAuth = ({ children }) => {
 			alert("Anda harus login!");
 			navigate("/login", { replace: true });
 		}
-		return children;
 	};
-
 	cekUser();
+
+	return children;
 };
 
 const routes = [
@@ -91,17 +92,17 @@ const routes = [
 	{
 		path: "admin",
 		page: (
-			<ProtectedRouteAuth>
+			<ProtectedRouteNonAuth>
 				<LoginAdmin />
-			</ProtectedRouteAuth>
+			</ProtectedRouteNonAuth>
 		),
 	},
 	{
 		path: "/cart",
 		page: (
-			< ProtectedRouteAuth >
+			<ProtectedRouteAuth>
 				<CartPage />
-			</ProtectedRouteAuth >
+			</ProtectedRouteAuth>
 		),
 	},
 	{
@@ -109,7 +110,7 @@ const routes = [
 		page: (
 			<ProtectedRouteAuth>
 				<OrderPage />
-			</ProtectedRouteAuth >
+			</ProtectedRouteAuth>
 		),
 	},
 	{
@@ -117,9 +118,13 @@ const routes = [
 		page: (
 			<ProtectedRouteAuth>
 				<Admin />
-			</ProtectedRouteAuth >
+			</ProtectedRouteAuth>
 		),
 	},
+	// {
+	// 	path: "/test",
+	// 	page: <Test />,
+	// },
 ];
 
 export default routes;
