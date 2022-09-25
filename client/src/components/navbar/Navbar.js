@@ -17,6 +17,14 @@ const NavbarComponent = ({ variant, bg = "light" }) => {
             <Navbar.Brand>
               <div
                 className="cursor-pointer"
+                onClick={() => navigate("/cart")}
+              >
+                Cart
+              </div>
+            </Navbar.Brand>
+            <Navbar.Brand>
+              <div
+                className="cursor-pointer"
                 onClick={() => navigate("/profile")}
               >
                 Profile
