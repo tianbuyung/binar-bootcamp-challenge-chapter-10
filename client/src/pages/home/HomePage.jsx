@@ -31,7 +31,7 @@ const HomePage = () => {
         {!loading ? (
           <>
             <h2 className="text-start h2 mt-3">Jelajahi Produk Kami</h2>
-            {getCategory.map((category) => {
+            {getCategory?.map((category) => {
               return (
                 <div
                   className="my-3 p-3 bg-secondary rounded"
@@ -53,7 +53,7 @@ const HomePage = () => {
                         </Col>
                       </Row>
                       <Row xs={1} md={5} className="g-4">
-                        {category.Products.slice(0, 5).map((product) => (
+                        {category?.Products?.slice(0, 5).map((product) => (
                           <Col key={product.id}>
                             <Link
                               to={`product/${product.id}`}
