@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
@@ -31,7 +31,7 @@ const HomePage = () => {
         {!loading ? (
           <>
             <h2 className="text-start h2 mt-3">Jelajahi Produk Kami</h2>
-            {getCategory.map((category) => {
+            {getCategory?.map((category) => {
               return (
                 <div
                   className="my-3 p-3 bg-secondary rounded"
@@ -46,33 +46,33 @@ const HomePage = () => {
                         <Col className="text-end my-3">
                           <Link
                             className="text-white text-decoration-none"
-                            to={`productlist/${category.id}`}
+                            to={`/product/category/${category.id}`}
                           >
                             Lihat Semua
                           </Link>
                         </Col>
                       </Row>
                       <Row xs={1} md={5} className="g-4">
-                        {category.Products.slice(0, 5).map((product) => (
+                        {category?.Products?.slice(0, 5).map((product) => (
                           <Col key={product.id}>
-                            <Card style={{ height: "400px" }}>
-                              <Card.Img
-                                variant="top"
-                                src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
-                              />
-                              <Card.Body>
-                                <Card.Title>{product.name}</Card.Title>
-                                <Card.Text>
-                                  Price: Rp. {product.price}K
-                                </Card.Text>
-                                <Link
-                                  to={`product/${product.id}`}
-                                  className="btn btn-success"
-                                >
-                                  Beli
-                                </Link>
-                              </Card.Body>
-                            </Card>
+                            <Link
+                              to={`product/${product.id}`}
+                              className="text-black text-decoration-none"
+                            >
+                              <Card style={{ height: "400px" }}>
+                                <Card.Img
+                                  variant="top"
+                                  src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
+                                />
+                                <Card.Body>
+                                  <Card.Title>{product.name}</Card.Title>
+                                  <Card.Text>
+                                    Price: Rp. {product.price}K
+                                  </Card.Text>
+                                  <Button variant="success">Buy</Button>
+                                </Card.Body>
+                              </Card>
+                            </Link>
                           </Col>
                         ))}
                       </Row>
