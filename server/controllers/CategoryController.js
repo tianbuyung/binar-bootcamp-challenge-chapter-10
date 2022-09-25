@@ -3,7 +3,14 @@ const { Category, Product } = Model;
 
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.findAll();
+    const options = {
+      include: [
+        {
+          model: Product,
+        },
+      ],
+    };
+    const categories = await Category.findAll(options);
     res.status(200).json({
       message: "Successfully get all categories",
       categories,

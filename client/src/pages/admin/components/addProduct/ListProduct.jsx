@@ -12,10 +12,14 @@ const ListProduct = ({ isFetching, setIsFetching }) => {
   const [totalPage, setTotalPage] = useState(1);
 
   const fetchGetProductsHandler = useCallback(async (query) => {
-    const data = await productService.getAllProducts(query);
-    setProducts(data?.products);
-    setCurrentPage(data?.currentPage);
-    setTotalPage(data?.totalPages);
+    try {
+      const data = await productService.getAllProducts(query);
+      setProducts(data?.products);
+      setCurrentPage(data?.currentPage);
+      setTotalPage(data?.totalPages);
+    } catch (error) {
+      //
+    }
   }, []);
 
   useEffect(() => {
