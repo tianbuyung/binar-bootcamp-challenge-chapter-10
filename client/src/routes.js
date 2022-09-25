@@ -99,25 +99,25 @@ const routes = [
 	{
 		path: "/cart",
 		page: (
-			// < ProtectedRouteAuth >
-			<CartPage />
-			// </ProtectedRouteAuth >
+			< ProtectedRouteAuth >
+				<CartPage />
+			</ProtectedRouteAuth >
 		),
 	},
 	{
 		path: "/order/:orderId",
 		page: (
-			// <ProtectedRouteAuth>
-			<OrderPage />
-			// </ProtectedRouteAuth >
+			<ProtectedRouteAuth>
+				<OrderPage />
+			</ProtectedRouteAuth >
 		),
 	},
 	{
 		path: "/admin",
 		page: (
-			// <ProtectedRouteAuth>
-			<Admin />
-			// </ProtectedRouteAuth >
+			<ProtectedRouteAuth>
+				<Admin />
+			</ProtectedRouteAuth >
 		),
 	},
 ];
