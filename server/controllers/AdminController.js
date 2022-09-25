@@ -43,6 +43,22 @@ const loginAdmin = async (req, res) => {
 	}
 };
 
+const verifyJwt = (req, res) => {
+	const token = req.signedCookies.token;
+	jwt.verify(token, process.env.KEY, (err, result) => {
+		if (err) {
+			res.status(403).json({
+				message: "unauthorized",
+			});
+		} else {
+			console.log("berhasil");
+			res.status(200).json({
+				message: "authorized",
+			});
+		}
+	});
+};
+
 const logoutAdmin = async (req, res) => {
 	try {
 		res.clearCookies("token");
@@ -57,4 +73,4 @@ const logoutAdmin = async (req, res) => {
 	}
 };
 
-module.exports = { loginAdmin, logoutAdmin };
+module.exports = { loginAdmin, logoutAdmin, verifyJwt };

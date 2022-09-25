@@ -52,6 +52,48 @@ const ProtectedRouteAuth = ({ children }) => {
 	return children;
 };
 
+// ! Error
+// const ProtectedRouteAdmin = async ({ children }) => {
+// 	const navigate = useNavigate();
+// 	const cekAdmin = async () => {
+// 		const res = await fetch("/admin/verify", {
+// 			method: "GET",
+// 			redirect: "follow",
+// 			credentials: "include",
+// 		});
+
+// 		if (res.status === 200) {
+// 			await children;
+// 			return children;
+// 		} else if (res.status === 403) {
+// 			alert("Hanya bisa diakses oleh Admin!");
+// 			navigate("/login", { replace: true });
+// 		}
+// 	};
+
+// 	cekAdmin();
+// };
+
+// const ProtectedRouteNonAuthAdmin = ({ children }) => {
+// 	const navigate = useNavigate();
+// 	const cekUser = async () => {
+// 		const res = await fetch("/admin/verify", {
+// 			method: "GET",
+// 			redirect: "follow",
+// 			credentials: "include",
+// 		});
+
+// 		if (res.status === 200) {
+// 			alert("Anda sudah login!");
+// 			navigate("/", { replace: true });
+// 		} else if (res.status === 403) {
+// 			return children;
+// 		}
+// 	};
+
+// 	cekUser();
+// 	return children;
+// };
 const routes = [
 	{
 		path: "/",
@@ -90,11 +132,11 @@ const routes = [
 		),
 	},
 	{
-		path: "admin",
+		path: "admin/login",
 		page: (
-			<ProtectedRouteNonAuth>
-				<LoginAdmin />
-			</ProtectedRouteNonAuth>
+			// <ProtectedRouteNonAuthAdmin>
+			<LoginAdmin />
+			// </ProtectedRouteNonAuthAdmin>
 		),
 	},
 	{
@@ -116,9 +158,9 @@ const routes = [
 	{
 		path: "/admin",
 		page: (
-			<ProtectedRouteAuth>
-				<Admin />
-			</ProtectedRouteAuth>
+			// <ProtectedRouteAdmin>
+			<Admin />
+			// </ProtectedRouteAdmin>
 		),
 	},
 	// {
