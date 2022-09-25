@@ -1,14 +1,13 @@
 import HomePage from "./pages/home";
 import ProductDetailPage from "./pages/product-detail";
-import ProfilePage from "./pages/profile/ProfilePage";
+import ProfilePage from "./pages/profile";
 import LoginUser from "./pages/login/LoginUser";
-import LoginAdmin from "./pages/login-admin/LoginAdmin";
-import RegisterPage from "./pages/register/RegisterPage";
+import LoginAdmin from "./pages/login-admin";
+import RegisterPage from "./pages/register";
 import Admin from "./pages/admin";
-import CartPage from "./pages/cart/CartPage";
-import OrderPage from "./pages/order/OrderPage";
-import Test from "./pages/test";
-
+import CartPage from "./pages/cart";
+import OrderPage from "./pages/order";
+import ProductListPage from "./pages/product-list";
 import { useNavigate } from "react-router-dom";
 
 const ProtectedRouteNonAuth = ({ children }) => {
@@ -63,6 +62,10 @@ const routes = [
 		page: <ProductDetailPage />,
 	},
 	{
+		path: "product/category/:product_id",
+		page: <ProductListPage />,
+	},
+	{
 		path: "profile",
 		page: (
 			<ProtectedRouteAuth>
@@ -113,15 +116,15 @@ const routes = [
 	{
 		path: "/admin",
 		page: (
-			// <ProtectedRouteAuth>
-			<Admin />
-			// </ProtectedRouteAuth >
+			<ProtectedRouteAuth>
+				<Admin />
+			</ProtectedRouteAuth>
 		),
 	},
-	{
-		path: "/test",
-		page: <Test />,
-	},
+	// {
+	// 	path: "/test",
+	// 	page: <Test />,
+	// },
 ];
 
 export default routes;

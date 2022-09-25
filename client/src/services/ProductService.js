@@ -18,6 +18,14 @@ export default class ProductService extends BaseService {
 		return await this.fetch("/admin/products" + query, options, true);
 	};
 
+	getProductDetailUser = async (id) => {
+		const options = {
+			method: "GET",
+		};
+
+		return await this.fetch("/product/" + id, options, false);
+	};
+
 	editProduct = async (data, id) => {
 		const options = {
 			method: "PUT",
