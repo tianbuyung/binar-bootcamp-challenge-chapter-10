@@ -3,13 +3,15 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
-import ProductPopular from "./components/ProductPopular/ProductPopular";
+import ProductService from "../../services/ProductService";
 
 const categoryService = new CategoryService();
+const productService = new ProductService();
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [getCategory, setGetCategory] = useState([]);
+  const [getProductPopular, setGetProductPopular] = useState([]);
 
   const fetchGetCategoryHandler = useCallback(async () => {
     try {
@@ -25,14 +27,61 @@ const HomePage = () => {
     fetchGetCategoryHandler();
   }, [fetchGetCategoryHandler]);
 
+  const fetchGetProductPopularHandler = useCallback(async () => {
+    try {
+      const data = await productService.getProductPopular();
+      setGetProductPopular(data.productPopuler);
+    } catch (error) {
+      // silent e
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchGetProductPopularHandler();
+  }, [fetchGetProductPopularHandler]);
+
   return (
     <div>
       <Navbar variant={"dark"} bg={"dark"} />
       <Container>
         {!loading ? (
           <>
+            <div className="my-3 p-3 bg-secondary rounded">
+              <h3 className="text-start text-white h2 mt-3">Produk Terlaris</h3>
+              <Row xs={1} md={5} className="g-4">
+                {getProductPopular?.slice(0, 5).map((productPopuler) => {
+                  return (
+                    <Col key={productPopuler?.Product?.id}>
+                      <Link
+                        to={`product/${productPopuler?.Product?.id}`}
+                        className="text-black text-decoration-none"
+                      >
+                        <Card
+                          style={{
+                            height: "400px",
+                          }}
+                        >
+                          <Card.Img
+                            variant="top"
+                            src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
+                          />
+                          <Card.Body>
+                            <Card.Title>
+                              {productPopuler?.Product?.name}
+                            </Card.Title>
+                            <Card.Text>
+                              Price: Rp. {productPopuler?.Product?.price}K
+                            </Card.Text>
+                            <Button variant="success">Details</Button>
+                          </Card.Body>
+                        </Card>
+                      </Link>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
             <h2 className="text-start h2 mt-3">Jelajahi Produk Kami</h2>
-            <ProductPopular />
             {getCategory?.map((category) => {
               return (
                 <div
