@@ -8,92 +8,109 @@ import Admin from "./pages/admin";
 import CartPage from "./pages/cart";
 import OrderPage from "./pages/order";
 import ProductListPage from "./pages/product-list";
+import { API } from "./configs/config";
+
 import { useNavigate } from "react-router-dom";
 
 // ! bug = masih bisa tembus di beberapa halaman
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
-	const cekUser = async () => {
-		const res = await fetch("/users/verify", {
+	const cekUser = () => {
+		const verify = fetch(API + "/users/verify", {
 			method: "GET",
 			redirect: "follow",
 			credentials: "include",
 		});
 
-		if (res.status === 200) {
-			// alert("Anda sudah login!");
-			return navigate("/", { replace: true });
-		} else if (res.status === 403) {
-			return children;
-		}
+		verify
+			.then((res) => {
+				if (res.status === 200) {
+					navigate("/", { replace: true });
+				}
+			})
+			.catch((err) => {
+				console.log("error verify user = ", err);
+			});
 	};
 
 	cekUser();
+
 	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
 	const navigate = useNavigate();
-	const cekUser = async () => {
-		const res = await fetch("/users/verify", {
+	const cekUser = () => {
+		const verify = fetch(API + "/users/verify", {
 			method: "GET",
 			redirect: "follow",
 			credentials: "include",
 		});
 
-		if (res.status === 200) {
-			return children;
-		} else if (res.status === 403) {
-			// alert("Anda harus login!");
-			return navigate("/login", { replace: true });
-		}
+		verify
+			.then((res) => {
+				if (res.status === 403) {
+					navigate("/login", { replace: true });
+				}
+			})
+			.catch((err) => {
+				console.log("error verify user = ", err);
+			});
 	};
+
 	cekUser();
+
 	return children;
 };
 
 // ! Error
-// const ProtectedRouteAdmin = async ({ children }) => {
-// 	const navigate = useNavigate();
-// 	const cekAdmin = async () => {
-// 		const res = await fetch("/admin/verify", {
-// 			method: "GET",
-// 			redirect: "follow",
-// 			credentials: "include",
-// 		});
+const ProtectedRouteAdmin = ({ children }) => {
+	const navigate = useNavigate();
+	const cekAdmin = () => {
+		const verify = fetch(API + "/admin/verify", {
+			method: "GET",
+			redirect: "follow",
+			credentials: "include",
+		});
 
-// 		if (res.status === 200) {
-// 			await children;
-// 			return children;
-// 		} else if (res.status === 403) {
-// 			alert("Hanya bisa diakses oleh Admin!");
-// 			navigate("/login", { replace: true });
-// 		}
-// 	};
+		verify
+			.then((res) => {
+				if (res.status === 403) {
+					navigate("/admin/login");
+				}
+			})
+			.catch((err) => {
+				console.log("error verify admin = ", err);
+			});
+	};
 
-// 	cekAdmin();
-// };
+	cekAdmin();
+	return children;
+};
 
-// const ProtectedRouteNonAuthAdmin = ({ children }) => {
-// 	const navigate = useNavigate();
-// 	const cekUser = async () => {
-// 		const res = await fetch("/admin/verify", {
-// 			method: "GET",
-// 			redirect: "follow",
-// 			credentials: "include",
-// 		});
+const ProtectedRouteNonAuthAdmin = ({ children }) => {
+	const navigate = useNavigate();
+	const cekUser = () => {
+		const verify = fetch(API + "/admin/verify", {
+			method: "GET",
+			redirect: "follow",
+			credentials: "include",
+		});
 
-// 		if (res.status === 200) {
-// 			alert("Anda sudah login!");
-// 			navigate("/", { replace: true });
-// 		} else if (res.status === 403) {
-// 			return children;
-// 		}
-// 	};
+		verify
+			.then((res) => {
+				if (res.status === 200) {
+					navigate("/admin");
+				}
+			})
+			.catch((err) => {
+				console.log("error verify admin = ", err);
+			});
+	};
 
-// 	cekUser();
-// 	return children;
-// };
+	cekUser();
+	return children;
+};
 const routes = [
 	{
 		path: "/",
@@ -134,9 +151,9 @@ const routes = [
 	{
 		path: "admin/login",
 		page: (
-			// <ProtectedRouteNonAuthAdmin>
-			<LoginAdmin />
-			// </ProtectedRouteNonAuthAdmin>
+			<ProtectedRouteNonAuthAdmin>
+				<LoginAdmin />
+			</ProtectedRouteNonAuthAdmin>
 		),
 	},
 	{
@@ -158,9 +175,9 @@ const routes = [
 	{
 		path: "/admin",
 		page: (
-			// <ProtectedRouteAdmin>
-			<Admin />
-			// </ProtectedRouteAdmin>
+			<ProtectedRouteAdmin>
+				<Admin />
+			</ProtectedRouteAdmin>
 		),
 	},
 	// {

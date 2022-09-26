@@ -2,12 +2,13 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 
+import { API } from "../../configs/config";
 const NavbarAdmin = () => {
 	const navigate = useNavigate();
 
 	const adminLogout = async () => {
 		try {
-			const getData = await fetch("/admin/logout", {
+			const getData = await fetch(API + "/admin/logout", {
 				method: "POST",
 				redirect: "follow",
 				credentials: "include",
@@ -30,7 +31,7 @@ const NavbarAdmin = () => {
 		<Navbar variant={"dark"} bg={"dark"} expand="lg">
 			<Container>
 				<Navbar.Brand
-					onClick={() => navigate("admin")}
+					onClick={() => navigate("/admin")}
 					className="cursor-pointer"
 				>
 					Home
@@ -40,7 +41,7 @@ const NavbarAdmin = () => {
 				<Navbar.Brand>
 					<div
 						className="cursor-pointer"
-						onClick={() => navigate("admin")}
+						onClick={() => navigate("/admin")}
 					>
 						Product
 					</div>

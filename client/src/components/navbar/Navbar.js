@@ -3,13 +3,14 @@ import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
+import { API } from "../../configs/config";
 const NavbarComponent = ({ variant, bg }) => {
 	const { isLogin } = useAuth();
 	const navigate = useNavigate();
 
 	const userLogout = async () => {
 		try {
-			const getData = await fetch("/users/logout", {
+			const getData = await fetch(API + "/users/logout", {
 				method: "POST",
 				redirect: "follow",
 				credentials: "include",
