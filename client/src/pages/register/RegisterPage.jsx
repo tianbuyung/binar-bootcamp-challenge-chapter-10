@@ -3,32 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
+import AuthService from "../../services/AuthService";
 
+const authservice = new AuthService();
 const RegisterPage = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
 
-	const createUser = (e) => {
+	const createUser = async (e) => {
 		e.preventDefault();
-		fetch("/users", {
-			method: "POST",
-			body: JSON.stringify(user),
-			headers: { "Content-Type": "application/json" },
-			redirect: "follow",
-			credentials: "include",
-		})
-			.then((res) => {
-				if (res.status === 200) {
-					alert("Successfully create new user");
-					navigate("../login", { replace: true });
-				} else if (res.status === 409) {
-					alert("Email is already registered");
-				}
-			})
-			.catch((err) => {
-				alert("Error! Please try again : ");
-				console.log("error while send api : " + err.message);
-			});
+		try {
+			const getData = await authservice.register(user);
+			if (getData.status === 200) {
+				const message = await getData.json();
+				alert(message.message);
+				navigate("../login", { replace: true });
+			} else {
+				const message = await getData.json();
+				alert(await message.message);	
+			}
+		} catch (err) {
+			alert("Error! Please try again");
+			console.log("error while send api : " + err.message);
+		}
 	};
 
 	return (

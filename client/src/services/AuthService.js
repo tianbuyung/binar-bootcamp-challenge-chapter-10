@@ -39,7 +39,7 @@ export default class AuthService extends BaseService {
 			credentials: "include",
 		};
 
-		return await this.customFetch(API + "/users/register", options);
+		return await this.customFetch(API + "/users", options);
 	};
 
 	// ? buat utk verify user dan admin?
