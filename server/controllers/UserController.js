@@ -67,7 +67,9 @@ const login = async (req, res) => {
 };
 
 const verifyJwt = (req, res) => {
+  console.log("masuk sini gak ================>");
   const token = req.signedCookies.token;
+  console.log("token", token);
   jwt.verify(token, process.env.KEY, (err, result) => {
     if (err) {
       res.status(403).json({

@@ -11,179 +11,188 @@ import ProductListPage from "./pages/product-list";
 import { API } from "./configs/config";
 
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // ! bug = masih bisa tembus di beberapa halaman
 const ProtectedRouteNonAuth = ({ children }) => {
-	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/users/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+  const navigate = useNavigate();
+  const [data, setData] = useState("");
 
-		verify
-			.then((res) => {
-				if (res.status === 200) {
-					navigate("/", { replace: true });
-				}
-			})
-			.catch((err) => {
-				console.log("error verify user = ", err);
-			});
-	};
+  useEffect(() => {
+    const cekUser = () => {
+      console.log("testing 2");
+      const verify = fetch(API + "/users/verify", {
+        method: "GET",
+        redirect: "follow",
+        credentials: "include",
+      });
+      console.log("verify", verify);
 
-	cekUser();
+      verify
+        .then((res) => {
+          console.log("res", res);
+          if (res.status === 200) {
+            navigate("/", { replace: true });
+          }
+        })
+        .catch((err) => {
+          console.log("error verify user = ", err);
+        });
+    };
+    cekUser();
+  }, []);
 
-	return children;
+  console.log("testing 1");
+  //   return children;
+  return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
-	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/users/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+  const navigate = useNavigate();
+  const cekUser = () => {
+    const verify = fetch(API + "/users/verify", {
+      method: "GET",
+      redirect: "follow",
+      credentials: "include",
+    });
 
-		verify
-			.then((res) => {
-				if (res.status === 403) {
-					navigate("/login", { replace: true });
-				}
-			})
-			.catch((err) => {
-				console.log("error verify user = ", err);
-			});
-	};
+    verify
+      .then((res) => {
+        if (res.status === 403) {
+          navigate("/login", { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log("error verify user = ", err);
+      });
+  };
 
-	cekUser();
+  cekUser();
 
-	return children;
+  return children;
 };
 
 // ! Error
 const ProtectedRouteAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	const cekAdmin = () => {
-		const verify = fetch(API + "/admin/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+  const navigate = useNavigate();
+  const cekAdmin = () => {
+    const verify = fetch(API + "/admin/verify", {
+      method: "GET",
+      redirect: "follow",
+      credentials: "include",
+    });
 
-		verify
-			.then((res) => {
-				if (res.status === 403) {
-					navigate("/admin/login");
-				}
-			})
-			.catch((err) => {
-				console.log("error verify admin = ", err);
-			});
-	};
+    verify
+      .then((res) => {
+        if (res.status === 403) {
+          navigate("/admin/login");
+        }
+      })
+      .catch((err) => {
+        console.log("error verify admin = ", err);
+      });
+  };
 
-	cekAdmin();
-	return children;
+  cekAdmin();
+  return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/admin/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+  const navigate = useNavigate();
+  const cekUser = () => {
+    const verify = fetch(API + "/admin/verify", {
+      method: "GET",
+      redirect: "follow",
+      credentials: "include",
+    });
 
-		verify
-			.then((res) => {
-				if (res.status === 200) {
-					navigate("/admin");
-				}
-			})
-			.catch((err) => {
-				console.log("error verify admin = ", err);
-			});
-	};
+    verify
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/admin");
+        }
+      })
+      .catch((err) => {
+        console.log("error verify admin = ", err);
+      });
+  };
 
-	cekUser();
-	return children;
+  cekUser();
+  return children;
 };
 const routes = [
-	{
-		path: "/",
-		page: <HomePage />,
-	},
-	{
-		path: "product/:product_id",
-		page: <ProductDetailPage />,
-	},
-	{
-		path: "product/category/:categoryId",
-		page: <ProductListPage />,
-	},
-	{
-		path: "profile",
-		page: (
-			<ProtectedRouteAuth>
-				<ProfilePage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "login",
-		page: (
-			<ProtectedRouteNonAuth>
-				<LoginUser />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "register",
-		page: (
-			<ProtectedRouteNonAuth>
-				<RegisterPage />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "admin/login",
-		page: (
-			<ProtectedRouteNonAuthAdmin>
-				<LoginAdmin />
-			</ProtectedRouteNonAuthAdmin>
-		),
-	},
-	{
-		path: "/cart",
-		page: (
-			<ProtectedRouteAuth>
-				<CartPage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "/order/:orderId",
-		page: (
-			<ProtectedRouteAuth>
-				<OrderPage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "/admin",
-		page: (
-			<ProtectedRouteAdmin>
-				<Admin />
-			</ProtectedRouteAdmin>
-		),
-	},
-	// {
-	// 	path: "/test",
-	// 	page: <Test />,
-	// },
+  {
+    path: "/",
+    page: <HomePage />,
+  },
+  {
+    path: "product/:product_id",
+    page: <ProductDetailPage />,
+  },
+  {
+    path: "product/category/:categoryId",
+    page: <ProductListPage />,
+  },
+  {
+    path: "profile",
+    page: (
+      <ProtectedRouteAuth>
+        <ProfilePage />
+      </ProtectedRouteAuth>
+    ),
+  },
+  {
+    path: "login",
+    page: (
+      <ProtectedRouteNonAuth>
+        <LoginUser />
+      </ProtectedRouteNonAuth>
+    ),
+  },
+  {
+    path: "register",
+    page: (
+      <ProtectedRouteNonAuth>
+        <RegisterPage />
+      </ProtectedRouteNonAuth>
+    ),
+  },
+  {
+    path: "admin/login",
+    page: (
+      <ProtectedRouteNonAuthAdmin>
+        <LoginAdmin />
+      </ProtectedRouteNonAuthAdmin>
+    ),
+  },
+  {
+    path: "/cart",
+    page: (
+      <ProtectedRouteAuth>
+        <CartPage />
+      </ProtectedRouteAuth>
+    ),
+  },
+  {
+    path: "/order/:orderId",
+    page: (
+      <ProtectedRouteAuth>
+        <OrderPage />
+      </ProtectedRouteAuth>
+    ),
+  },
+  {
+    path: "/admin",
+    page: (
+      <ProtectedRouteAdmin>
+        <Admin />
+      </ProtectedRouteAdmin>
+    ),
+  },
+  // {
+  // 	path: "/test",
+  // 	page: <Test />,
+  // },
 ];
 
 export default routes;
