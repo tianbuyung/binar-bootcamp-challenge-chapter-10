@@ -10,6 +10,7 @@ import OrderPage from "./pages/order";
 import ProductListPage from "./pages/product-list";
 import { useNavigate } from "react-router-dom";
 
+// ! bug = masih bisa tembus di beberapa halaman
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
 	const cekUser = async () => {
