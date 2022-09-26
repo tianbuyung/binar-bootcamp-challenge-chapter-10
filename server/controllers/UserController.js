@@ -56,7 +56,7 @@ const login = async (req, res) => {
 			httpOnly: true, // The cookie only accessible by the web server
 			signed: true, // Indicates if the cookie should be signed
 			secure: true, // Indicates if the cookie should be secure
-			samesite: "lax",
+			samesite: "none",
 		};
 
 		res.cookie("token", token, options);
