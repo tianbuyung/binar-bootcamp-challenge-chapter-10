@@ -1,45 +1,52 @@
 import BaseService from "./BaseService";
 
 export default class ProductService extends BaseService {
-	addProduct = async (data) => {
-		const options = {
-			method: "POST",
-			body: JSON.stringify(data),
-		};
+  addProduct = async (data) => {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(data),
+    };
 
-		return await this.fetch("/admin/products", options, true);
-	};
+    return await this.fetch("/admin/products", options, true);
+  };
 
-	getAllProducts = async (query) => {
-		const options = {
-			method: "GET",
-		};
+  getAllProducts = async (query) => {
+    const options = {
+      method: "GET",
+    };
 
-		return await this.fetch("/admin/products" + query, options, true);
-	};
+    return await this.fetch("/admin/products" + query, options, true);
+  };
 
-	getProductDetailUser = async (id) => {
-		const options = {
-			method: "GET",
-		};
+  getProductDetailUser = async (id) => {
+    const options = {
+      method: "GET",
+    };
 
-		return await this.fetch("/product/" + id, options, false);
-	};
+    return await this.fetch("/product/" + id, options, false);
+  };
 
-	editProduct = async (data, id) => {
-		const options = {
-			method: "PUT",
-			body: JSON.stringify(data),
-		};
+  getProductPopular = async () => {
+    const options = {
+      method: "GET",
+    };
+    return await this.fetch("/product/popular", options, false);
+  };
 
-		return await this.fetch(`/admin/products/${id}`, options, true);
-	};
+  editProduct = async (data, id) => {
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(data),
+    };
 
-	deleteProduct = async (id) => {
-		const options = {
-			method: "DELETE",
-		};
+    return await this.fetch(`/admin/products/${id}`, options, true);
+  };
 
-		return await this.fetch(`/admin/products/${id}`, options, true);
-	};
+  deleteProduct = async (id) => {
+    const options = {
+      method: "DELETE",
+    };
+
+    return await this.fetch(`/admin/products/${id}`, options, true);
+  };
 }

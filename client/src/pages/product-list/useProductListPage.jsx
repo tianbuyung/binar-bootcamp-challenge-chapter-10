@@ -3,15 +3,15 @@ import { useParams } from "react-router-dom";
 import CategoryService from "../../services/CategoryService";
 const categoryService = new CategoryService()
 const SIZE = 8;
-const useProductListPage  = () => {
+const useProductListPage = () => {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0)
-    const { id } = useParams()
+    const { categoryId } = useParams()
     useEffect(() => {
         const getCategoryProducts = async () => {
             try {
-                const query =  `${id}?page=${page}&size=${SIZE}`
+                const query = `${categoryId}?page=${page}&size=${SIZE}`
                 const result = await categoryService.getProductsCategories({ query })
                 setTotalPage(result?.data?.totalPage)
                 setProducts(result?.data?.rows)
@@ -19,10 +19,10 @@ const useProductListPage  = () => {
                 //
             }
         }
-        if(page) {
+        if (page) {
             getCategoryProducts()
         }
-       
+
     }, [page])
     return {
         products,

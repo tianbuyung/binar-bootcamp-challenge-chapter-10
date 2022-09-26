@@ -1,11 +1,11 @@
 import BaseService from "./BaseService";
 
 export default class UserService extends BaseService {
-  getUser = async (email) => {
+  getUser = async () => {
     const options = {
       method: "GET",
     };
 
-    return await this.fetch("/users/" + email, options, true);
+    return await this.fetch("/users", options, true);
   };
 }

@@ -121,7 +121,7 @@ const routes = [
 		page: <ProductDetailPage />,
 	},
 	{
-		path: "product/category/:product_id",
+		path: "product/category/:categoryId",
 		page: <ProductListPage />,
 	},
 	{
