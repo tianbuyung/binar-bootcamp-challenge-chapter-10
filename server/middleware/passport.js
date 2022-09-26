@@ -1,7 +1,6 @@
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
 const Model = require("../models");
-const hashPassword = require("../utils/hashPassword");
 const { User, Admin } = Model;
 
 const cookieExtractor = (req) => {
@@ -13,9 +12,22 @@ const cookieExtractor = (req) => {
 	return jwt;
 };
 
+const cookieExtractorAdmin = (req) => {
+	let jwt = null;
+
+	if (req && req.cookies) {
+		jwt = req.signedCookies.tokenAdmin;
+	}
+	return jwt;
+};
+
 const opts = {};
 opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.KEY;
+
+const optsAdmin = {};
+optsAdmin.secretOrKey = process.env.KEY;
+optsAdmin.jwtFromRequest = cookieExtractorAdmin;
 
 passport.use(
 	"user-role",
@@ -25,7 +37,6 @@ passport.use(
 				return done(null, user);
 			})
 			.catch((err) => {
-				console.log("error passport user : ", err);
 				return done(err, false);
 			});
 	})
@@ -33,7 +44,7 @@ passport.use(
 
 passport.use(
 	"admin-role",
-	new JwtStrategy(opts, function (jwt_payload, done) {
+	new JwtStrategy(optsAdmin, function (jwt_payload, done) {
 		return Admin.findOne({ where: { email: jwt_payload.id } })
 			.then((admin) => {
 				return done(null, admin);

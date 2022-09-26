@@ -1,5 +1,5 @@
 import BaseService from "./BaseService";
-
+import { API } from "../configs/config";
 export default class AuthService extends BaseService {
 	async customFetch(url, options) {
 		const response = await fetch(url, options);
@@ -15,7 +15,7 @@ export default class AuthService extends BaseService {
 			credentials: "include",
 		};
 
-		return await this.customFetch("users/login", options);
+		return await this.customFetch(API + "/users/login", options);
 	};
 
 	loginAdmin = async (data) => {
@@ -27,7 +27,7 @@ export default class AuthService extends BaseService {
 			credentials: "include",
 		};
 
-		return await this.customFetch("/admin/login", options);
+		return await this.customFetch(API + "/admin", options);
 	};
 
 	register = async (data) => {
@@ -39,6 +39,8 @@ export default class AuthService extends BaseService {
 			credentials: "include",
 		};
 
-		return await this.customFetch("users/register", options);
+		return await this.customFetch(API + "/users/register", options);
 	};
+
+	// ? buat utk verify user dan admin?
 }

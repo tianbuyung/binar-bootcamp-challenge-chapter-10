@@ -30,7 +30,15 @@ const loginAdmin = async (req, res) => {
 		const secret = process.env.KEY;
 		const token = jwt.sign(payload, secret, { expiresIn: "1 hour" });
 
-		res.cookie("token", token, { maxAge: 3600 * 1000, samesite: false });
+		let options = {
+			maxAge: 1000 * 60 * 60, // would expire after 60 minutes
+			httpOnly: true, // The cookie only accessible by the web server
+			signed: true, // Indicates if the cookie should be signed
+			secure: true, // Indicates if the cookie should be secure
+			samesite: "lax",
+		};
+
+		res.cookie("tokenAdmin", token, options);
 
 		return await res.status(200).send({
 			message: "Login successful",
@@ -44,7 +52,7 @@ const loginAdmin = async (req, res) => {
 };
 
 const verifyJwt = (req, res) => {
-	const token = req.signedCookies.token;
+	const token = req.signedCookies.tokenAdmin;
 	jwt.verify(token, process.env.KEY, (err, result) => {
 		if (err) {
 			res.status(403).json({
@@ -61,7 +69,7 @@ const verifyJwt = (req, res) => {
 
 const logoutAdmin = async (req, res) => {
 	try {
-		res.clearCookies("token");
+		res.cookie("tokenAdmin", "");
 
 		return await res.status(200).send({
 			message: "Successfully logged out",
