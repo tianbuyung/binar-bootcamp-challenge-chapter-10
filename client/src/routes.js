@@ -29,6 +29,7 @@ const ProtectedRouteNonAuth = ({ children }) => {
 	};
 
 	cekUser();
+	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
@@ -48,6 +49,7 @@ const ProtectedRouteAuth = ({ children }) => {
 		}
 	};
 	cekUser();
+	return children;
 };
 
 // ! Error

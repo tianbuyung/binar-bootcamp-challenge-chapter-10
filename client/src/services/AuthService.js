@@ -27,7 +27,7 @@ export default class AuthService extends BaseService {
 			credentials: "include",
 		};
 
-		return await this.customFetch("/admin/login", options);
+		return await this.customFetch("/admin", options);
 	};
 
 	register = async (data) => {
@@ -41,4 +41,6 @@ export default class AuthService extends BaseService {
 
 		return await this.customFetch("users/register", options);
 	};
+
+	// ? buat utk verify user dan admin?
 }

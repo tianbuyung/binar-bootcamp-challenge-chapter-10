@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
+import Navbar from "../../components/navbar";
 
 const authservice = new AuthService();
 const LoginUser = () => {
@@ -30,33 +31,39 @@ const LoginUser = () => {
 	};
 
 	return (
-		<Container>
-			<h1>Login User</h1>
-			<Form onSubmit={login} align="left">
-				<Forms
-					label={"Email"}
-					name={"email"}
-					type={"email"}
-					placeholder={"Masukkan email Anda"}
-					onChange={(e) => {
-						setUser({ ...user, email: e.target.value });
-					}}
-				/>
-				<Forms
-					label={"Password"}
-					name={"password"}
-					type={"password"}
-					placeholder={"Masukkan password Anda"}
-					onChange={(e) => {
-						setUser({ ...user, password: e.target.value });
-					}}
-				/>
+		<>
+			<Navbar variant={"dark"} bg={"dark"} />
+			<Container>
+				<h1>Login User</h1>
+				<Form onSubmit={login} align="left">
+					<Forms
+						label={"Email"}
+						name={"email"}
+						type={"email"}
+						placeholder={"Masukkan email Anda"}
+						onChange={(e) => {
+							setUser({ ...user, email: e.target.value });
+						}}
+					/>
+					<Forms
+						label={"Password"}
+						name={"password"}
+						type={"password"}
+						placeholder={"Masukkan password Anda"}
+						onChange={(e) => {
+							setUser({
+								...user,
+								password: e.target.value,
+							});
+						}}
+					/>
 
-				<Button title={"login"} type={"submit"}>
-					Login
-				</Button>
-			</Form>
-		</Container>
+					<Button title={"login"} type={"submit"}>
+						Login
+					</Button>
+				</Form>
+			</Container>
+		</>
 	);
 };
 
