@@ -30,13 +30,13 @@ const ProfilePage = () => {
     fetchGetUserHandler();
   }, []);
 
-  const socialMedias = [
-    { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
-    { name: "Github", icon: "bi bi-github", data: "dummy" },
-    { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
-    { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
-    { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
-  ];
+  // const socialMedias = [
+  //   { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
+  //   { name: "Github", icon: "bi bi-github", data: "dummy" },
+  //   { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
+  //   { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
+  //   { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
+  // ];
 
   return (
     <>
@@ -67,7 +67,7 @@ const ProfilePage = () => {
                 </div>
               </Card.Body>
             </Card>
-            <Card className="mt-3">
+            {/* <Card className="mt-3">
               <ListGroup className="list-group-flush">
                 {socialMedias.map((socialMedia, index) => {
                   return (
@@ -83,7 +83,7 @@ const ProfilePage = () => {
                   );
                 })}
               </ListGroup>
-            </Card>
+            </Card> */}
           </Col>
           <Col md={8}>
             <Card className="mb-3">
