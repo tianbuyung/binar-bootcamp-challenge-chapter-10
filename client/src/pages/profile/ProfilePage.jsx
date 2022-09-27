@@ -17,12 +17,15 @@ const userService = new UserService();
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState("");
+  const [badge, setBadge] = useState("");
 
   useEffect(() => {
     const fetchGetUserHandler = async () => {
       try {
-        const data = await userService.getUser();
-        setProfile(data);
+        const getUser = await userService.getUser();
+        const getBadge = await userService.getBadge();
+        setProfile(getUser);
+        setBadge(getBadge);
       } catch (error) {
         //
       }
@@ -103,6 +106,24 @@ const ProfilePage = () => {
                   </Col>
                   <Col sm={9} className="text-secondary">
                     {profile.user?.email}
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={3}>
+                    <h6 className="mb-0">Total Transactions</h6>
+                  </Col>
+                  <Col sm={9} className="text-secondary">
+                    Rp. {badge.results?.map((result) => result.totalShop)}
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={3}>
+                    <h6 className="mb-0">Badge</h6>
+                  </Col>
+                  <Col sm={9} className="text-secondary">
+                    {badge?.badge}
                   </Col>
                 </Row>
                 <hr />

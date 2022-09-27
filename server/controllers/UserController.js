@@ -140,16 +140,16 @@ const getBadgeByUser = async (req, res) => {
     GROUP BY "Cart"."UserId";`);
 
     let val = await results[0].totalShop;
-    let badge = "none";
+    let badge = "None";
 
     if (val > 100000000) {
-      badge = "ruby diamond";
+      badge = "Ruby Diamond";
     } else if (val > 10000000) {
-      badge = "diamond";
+      badge = "Diamond";
     } else if (val > 1000000) {
-      badge = "gold";
+      badge = "Gold";
     } else if (val > 100000) {
-      badge = "silver";
+      badge = "Silver";
     }
 
     res.status(200).json({
