@@ -99,7 +99,9 @@ const HomePage = () => {
                             className="text-white text-decoration-none"
                             to={`/product/category/${category.id}`}
                           >
-                            Lihat Semua
+                            {category?.Products?.length < 5
+                              ? ""
+                              : "Lihat Semua"}
                           </Link>
                         </Col>
                       </Row>
