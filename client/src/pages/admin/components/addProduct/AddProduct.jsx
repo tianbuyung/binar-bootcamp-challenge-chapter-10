@@ -65,13 +65,19 @@ const AddProduct = ({ setIsFetching }) => {
 
     const data = await productService.addProduct(body);
     alert(data.message);
-    setIsFetching(true);
-
-    setEnteredProductName("");
-    setEnteredProductPrice("");
-    setEnteredProductCategory("");
-    setEnteredProductImage("");
-    setValidated(false);
+    if (data.message === "The name of product is already exist!") {
+      setEnteredProductName(enteredProductName);
+      setEnteredProductPrice(enteredProductPrice);
+      setEnteredProductCategory(enteredProductCategory);
+      setEnteredProductImage(enteredProductImage);
+    } else {
+      setIsFetching(true);
+      setEnteredProductName("");
+      setEnteredProductPrice("");
+      setEnteredProductCategory("");
+      setEnteredProductImage("");
+      setValidated(false);
+    }
   };
 
   const productNameChangeHandler = (event) => {

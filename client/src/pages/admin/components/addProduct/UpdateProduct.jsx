@@ -65,10 +65,16 @@ const UpdateProducts = (props) => {
 
     const data = await productService.editProduct(body, product.id);
     alert(data.message);
-    setIsFetching(true);
-
-    setValidated(false);
-    setShow(false);
+    if (data.message === "Validation error") {
+      setEnteredProductName(enteredProductName);
+      setEnteredProductPrice(enteredProductPrice);
+      setEnteredProductCategory(enteredProductCategory);
+      setEnteredProductImage(enteredProductImage);
+    } else {
+      setIsFetching(true);
+      setValidated(false);
+      setShow(false);
+    }
   };
 
   const productNameChangeHandler = (event) => {

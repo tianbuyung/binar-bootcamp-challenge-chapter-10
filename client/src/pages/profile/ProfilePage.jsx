@@ -17,12 +17,15 @@ const userService = new UserService();
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState("");
+  const [badge, setBadge] = useState("");
 
   useEffect(() => {
     const fetchGetUserHandler = async () => {
       try {
-        const data = await userService.getUser();
-        setProfile(data);
+        const getUser = await userService.getUser();
+        const getBadge = await userService.getBadge();
+        setProfile(getUser);
+        setBadge(getBadge);
       } catch (error) {
         //
       }
@@ -30,13 +33,13 @@ const ProfilePage = () => {
     fetchGetUserHandler();
   }, []);
 
-  const socialMedias = [
-    { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
-    { name: "Github", icon: "bi bi-github", data: "dummy" },
-    { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
-    { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
-    { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
-  ];
+  // const socialMedias = [
+  //   { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
+  //   { name: "Github", icon: "bi bi-github", data: "dummy" },
+  //   { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
+  //   { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
+  //   { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
+  // ];
 
   return (
     <>
@@ -67,7 +70,7 @@ const ProfilePage = () => {
                 </div>
               </Card.Body>
             </Card>
-            <Card className="mt-3">
+            {/* <Card className="mt-3">
               <ListGroup className="list-group-flush">
                 {socialMedias.map((socialMedia, index) => {
                   return (
@@ -83,7 +86,7 @@ const ProfilePage = () => {
                   );
                 })}
               </ListGroup>
-            </Card>
+            </Card> */}
           </Col>
           <Col md={8}>
             <Card className="mb-3">
@@ -103,6 +106,24 @@ const ProfilePage = () => {
                   </Col>
                   <Col sm={9} className="text-secondary">
                     {profile.user?.email}
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={3}>
+                    <h6 className="mb-0">Total Transactions</h6>
+                  </Col>
+                  <Col sm={9} className="text-secondary">
+                    Rp. {badge.results?.map((result) => result.totalShop)}
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={3}>
+                    <h6 className="mb-0">Badge</h6>
+                  </Col>
+                  <Col sm={9} className="text-secondary">
+                    {badge?.badge}
                   </Col>
                 </Row>
                 <hr />
