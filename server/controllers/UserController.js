@@ -130,16 +130,16 @@ const createUser = async (req, res) => {
 };
 
 const getBadgeByUser = async (req, res) => {
+  const UserId = req.user.id;
   try {
-    const UserId = req.user.id;
     const [results, metadata] = await db.sequelize
-      .query(`SELECT "Cart"."UserId" AS "userId", sum("totalOrderDetail") AS "totalShop"
+      .query(`SELECT "Cart"."UserId" AS "userId", sum("totalOrder") AS "totalShop"
     FROM "Orders" AS "Order"
-    INNER JOIN "Carts" AS "Cart" ON "Order"."CartId" = "Cart"."id" AND "Cart"."UserId" = ${UserId}
-    LEFT OUTER JOIN "OrderDetails" AS "OrderDetails" ON "Order"."id" = "OrderDetails"."OrderId"
+    JOIN "Carts" AS "Cart" ON "Order"."CartId" = "Cart"."id" AND "Cart"."UserId" = ${UserId}
     GROUP BY "Cart"."UserId";`);
 
     let val = await results[0].totalShop;
+    console.log(val);
     let badge = "None";
 
     if (val > 100000000) {
@@ -158,8 +158,16 @@ const getBadgeByUser = async (req, res) => {
       badge,
     });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({
       message: error.message,
+      results: [
+        {
+          UserId,
+          totalShop: 0,
+        },
+      ],
+      badge: "None",
     });
   }
 };
