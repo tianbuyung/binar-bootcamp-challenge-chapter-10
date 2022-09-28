@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const db = require("../models/index");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -128,4 +129,54 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { login, verifyJwt, createUser, logout, getUserById };
+const getBadgeByUser = async (req, res) => {
+  const UserId = req.user.id;
+  try {
+    const [results, metadata] = await db.sequelize
+      .query(`SELECT "Cart"."UserId" AS "userId", sum("totalOrder") AS "totalShop"
+    FROM "Orders" AS "Order"
+    JOIN "Carts" AS "Cart" ON "Order"."CartId" = "Cart"."id" AND "Cart"."UserId" = ${UserId}
+    GROUP BY "Cart"."UserId";`);
+
+    let val = await results[0].totalShop;
+    console.log(val);
+    let badge = "None";
+
+    if (val > 100000000) {
+      badge = "Ruby Diamond";
+    } else if (val > 10000000) {
+      badge = "Diamond";
+    } else if (val > 1000000) {
+      badge = "Gold";
+    } else if (val > 100000) {
+      badge = "Silver";
+    }
+
+    res.status(200).json({
+      message: "Successfully get detail a badge this user",
+      results,
+      badge,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      message: error.message,
+      results: [
+        {
+          UserId,
+          totalShop: 0,
+        },
+      ],
+      badge: "None",
+    });
+  }
+};
+
+module.exports = {
+  login,
+  verifyJwt,
+  createUser,
+  logout,
+  getUserById,
+  getBadgeByUser,
+};

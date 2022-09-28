@@ -31,8 +31,11 @@ const ListProduct = ({ isFetching, setIsFetching }) => {
   };
 
   const handleDelete = async (id) => {
-    const data = await productService.deleteProduct(id);
-    alert(data.message);
+    if (window.confirm(`Are you sure you want to delete this product?`)) {
+      const data = await productService.deleteProduct(id);
+      alert(data.message);
+      fetchGetProductsHandler(`?page=${currentPage}`);
+    }
   };
 
   return (
