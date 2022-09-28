@@ -1,17 +1,22 @@
+import { useEffect, useState } from "react";
+
+import AuthService from "../services/AuthService";
+
+const authservice = new AuthService();
 const useAuth = () => {
-	const isLogin = async () => {
-		const res = await fetch("/users/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+	const [isLogin, setIsLogin] = useState(false);
+	const checkLogin = async () => {
+		const res = await authservice.verifyUser();
 
 		if (res.status === 200) {
-			return isLogin;
+			setIsLogin(true);
 		} else if (res.status === 403) {
 			return false;
 		}
 	};
+	useEffect(() => {
+		checkLogin();
+	}, []);
 	return {
 		isLogin,
 	};

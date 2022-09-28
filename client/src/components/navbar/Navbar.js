@@ -41,7 +41,7 @@ const NavbarComponent = ({ variant, bg }) => {
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-				{isLogin() ? (
+				{isLogin ? (
 					<>
 						<Navbar.Brand>
 							<div

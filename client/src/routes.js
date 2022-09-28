@@ -8,57 +8,42 @@ import Admin from "./pages/admin";
 import CartPage from "./pages/cart";
 import OrderPage from "./pages/order";
 import ProductListPage from "./pages/product-list";
-import { API } from "./configs/config";
+import AuthService from "./services/AuthService";
 
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // ! bug = masih bisa tembus di beberapa halaman
+const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/users/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyUser();
 
-		verify
-			.then((res) => {
-				if (res.status === 200) {
-					navigate("/", { replace: true });
-				}
-			})
-			.catch((err) => {
-				console.log("error verify user = ", err);
-			});
-	};
-
-	cekUser();
+			if (verify.status === 200) {
+				navigate("/", { replace: true });
+			}
+		};
+		cekUser();
+	});
 
 	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
 	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/users/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
 
-		verify
-			.then((res) => {
-				if (res.status === 403) {
-					navigate("/login", { replace: true });
-				}
-			})
-			.catch((err) => {
-				console.log("error verify user = ", err);
-			});
-	};
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyUser();
 
-	cekUser();
+			if (verify.status === 403) {
+				navigate("/", { replace: true });
+			}
+		};
+		cekUser();
+	});
 
 	return children;
 };
@@ -66,49 +51,34 @@ const ProtectedRouteAuth = ({ children }) => {
 // ! Error
 const ProtectedRouteAdmin = ({ children }) => {
 	const navigate = useNavigate();
-	const cekAdmin = () => {
-		const verify = fetch(API + "/admin/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+	useEffect(() => {
+		const cekAdmin = async () => {
+			const verify = await authservice.verifyAdmin();
 
-		verify
-			.then((res) => {
-				if (res.status === 403) {
-					navigate("/admin/login");
-				}
-			})
-			.catch((err) => {
-				console.log("error verify admin = ", err);
-			});
-	};
+			if (verify.status === 403) {
+				navigate("/admin/login", { replace: true });
+			}
+		};
 
-	cekAdmin();
+		cekAdmin();
+	});
 	return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
 	const navigate = useNavigate();
-	const cekUser = () => {
-		const verify = fetch(API + "/admin/verify", {
-			method: "GET",
-			redirect: "follow",
-			credentials: "include",
-		});
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyAdmin();
 
-		verify
-			.then((res) => {
-				if (res.status === 200) {
-					navigate("/admin");
-				}
-			})
-			.catch((err) => {
-				console.log("error verify admin = ", err);
-			});
-	};
+			if (verify.status === 200) {
+				navigate("/admin", { replace: true });
+			}
+		};
 
-	cekUser();
+		cekUser();
+	});
+
 	return children;
 };
 const routes = [

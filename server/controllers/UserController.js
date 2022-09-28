@@ -46,13 +46,13 @@ const login = async (req, res) => {
     const secret = process.env.KEY;
     const token = jwt.sign(payload, secret);
 
-    let options = {
-      maxAge: 1000 * 60 * 60, // would expire after 60 minutes
-      httpOnly: true, // The cookie only accessible by the web server
-      signed: true, // Indicates if the cookie should be signed
-      secure: true, // Indicates if the cookie should be secure
-      samesite: "lax",
-    };
+		let options = {
+			maxAge: 1000 * 60 * 60, // would expire after 60 minutes
+			httpOnly: true, // The cookie only accessible by the web server
+			signed: true, // Indicates if the cookie should be signed
+			secure: true, // Indicates if the cookie should be secure
+			samesite: "none",
+		};
 
     res.cookie("token", token, options);
 

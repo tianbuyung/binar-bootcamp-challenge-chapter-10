@@ -2,6 +2,10 @@ import BaseService from "./BaseService";
 import { API } from "../configs/config";
 export default class AuthService extends BaseService {
 	async customFetch(url, options) {
+		options.headers = { "Content-Type": "application/json" };
+		options.credentials = "include";
+		options.redirect = "follow";
+
 		const response = await fetch(url, options);
 		return response;
 	}
@@ -10,9 +14,6 @@ export default class AuthService extends BaseService {
 		const options = {
 			method: "POST",
 			body: JSON.stringify(data),
-			headers: { "Content-Type": "application/json" },
-			redirect: "follow",
-			credentials: "include",
 		};
 
 		return await this.customFetch(API + "/users/login", options);
@@ -22,9 +23,6 @@ export default class AuthService extends BaseService {
 		const options = {
 			method: "POST",
 			body: JSON.stringify(data),
-			headers: { "Content-Type": "application/json" },
-			redirect: "follow",
-			credentials: "include",
 		};
 
 		return await this.customFetch(API + "/admin", options);
@@ -34,13 +32,25 @@ export default class AuthService extends BaseService {
 		const options = {
 			method: "POST",
 			body: JSON.stringify(data),
-			headers: { "Content-Type": "application/json" },
-			redirect: "follow",
-			credentials: "include",
 		};
 
 		return await this.customFetch(API + "/users", options);
 	};
 
 	// ? buat utk verify user dan admin?
+	verifyUser = async () => {
+		const options = {
+			method: "GET",
+		};
+
+		return await this.customFetch(API + "/users/verify", options);
+	};
+
+	verifyAdmin = async () => {
+		const options = {
+			method: "GET",
+		};
+
+		return await this.customFetch(API + "/admin/verify", options);
+	};
 }
