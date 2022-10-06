@@ -19,12 +19,14 @@ const Profile = (props) => {
               {props.profile.user?.address}
             </p>
             <EditProfile
+              id={props.profile.user?.id}
               name={props.profile.user?.name}
               address={props.profile.user?.address}
               phoneNumber={props.profile.user?.phoneNumber}
               twitter={props.profile.user?.twitter}
               instagram={props.profile.user?.instagram}
               facebook={props.profile.user?.facebook}
+              setIsFetching={props.setIsFetching}
             />
           </div>
         </div>

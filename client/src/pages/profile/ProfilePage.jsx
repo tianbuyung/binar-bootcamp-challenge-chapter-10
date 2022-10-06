@@ -14,6 +14,7 @@ const userService = new UserService();
 const ProfilePage = () => {
   const [profile, setProfile] = useState("");
   const [badge, setBadge] = useState("");
+  const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     const fetchGetUserHandler = async () => {
@@ -27,7 +28,7 @@ const ProfilePage = () => {
       }
     };
     fetchGetUserHandler();
-  }, []);
+  }, [isfetching]);
 
   const socialMedias = [
     {
@@ -62,7 +63,7 @@ const ProfilePage = () => {
         <BreadcrumbComponent data={breadcrumbs} />
         <Row className="gutters-sm mb-3">
           <Col md={4}>
-            <ProfilePicture profile={profile} />
+            <ProfilePicture profile={profile} setIsFetching={setIsFetching} />
           </Col>
           <Col md={8}>
             <ProfileData profile={profile} badge={badge} />
