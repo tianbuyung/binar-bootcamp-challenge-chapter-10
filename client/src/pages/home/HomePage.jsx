@@ -1,12 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-	Button,
-	Card,
-	Col,
-	Container,
-	Row,
-	Placeholder,
-} from "react-bootstrap";
+import { Card, Col, Container, Row, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar";
 
@@ -218,7 +211,7 @@ const HomePage = () => {
 											<Card.Body>
 												<Placeholder
 													as={Card.Title}
-													animation="glow"
+													animation="wave"
 												>
 													<Placeholder
 														xs={12}
@@ -226,7 +219,7 @@ const HomePage = () => {
 												</Placeholder>
 												<Placeholder
 													as={Card.Text}
-													animation="glow"
+													animation="wave"
 												>
 													<Placeholder
 														xs={12}
@@ -244,6 +237,79 @@ const HomePage = () => {
 						<h2 className="text-start h2 mt-3">
 							Jelajahi Produk Kami
 						</h2>
+						<div className="my-3 p-3 bg-secondary rounded">
+							<Row className="align-items-center">
+								<Col
+									lg={2}
+									xl={2}
+									className="text-start text-white"
+								>
+									<h3>
+										<Placeholder
+											xs={6}
+											animation="wave"
+										/>
+									</h3>
+								</Col>
+								<Col lg={"auto"} xl={"10"}>
+									<Row>
+										<Col className="text-end my-3">
+											<Placeholder
+												xs={3}
+												animation="wave"
+											/>
+										</Col>
+									</Row>
+									<Row xs={1} md={5} className="g-4">
+										{Array.from(new Array(5)).map(
+											(_, i) => (
+												<Card
+													style={{
+														height: "400px",
+													}}
+												>
+													<Card.Img
+														variant="top"
+														src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
+													/>
+													<Card.Body>
+														<Placeholder
+															as={
+																Card.Title
+															}
+															animation="wave"
+														>
+															<Placeholder
+																xs={
+																	12
+																}
+															/>
+														</Placeholder>
+														<Placeholder
+															as={
+																Card.Text
+															}
+															animation="wave"
+														>
+															<Placeholder
+																xs={
+																	12
+																}
+															/>{" "}
+															<Placeholder
+																xs={
+																	7
+																}
+															/>{" "}
+														</Placeholder>
+													</Card.Body>
+												</Card>
+											)
+										)}
+									</Row>
+								</Col>
+							</Row>
+						</div>
 					</>
 				)}
 			</Container>
