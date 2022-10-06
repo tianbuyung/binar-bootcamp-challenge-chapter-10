@@ -18,6 +18,15 @@ const EditProfile = (props) => {
           <Modal.Header>Edit Profile</Modal.Header>
           <Modal.Body>
             <FormEdit label="Full Name" type="text" value={props.name} />
+            <FormEdit label="Address" type="text" value={props.address} />
+            <FormEdit
+              label="Phone Number"
+              type="text"
+              value={props.phoneNumber}
+            />
+            <FormEdit label="Twitter" type="text" value={props.twitter} />
+            <FormEdit label="Instagram" type="text" value={props.instagram} />
+            <FormEdit label="Facebook" type="text" value={props.facebook} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

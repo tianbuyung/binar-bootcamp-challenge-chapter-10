@@ -11,7 +11,6 @@ const ShowData = (props) => {
           {props.data}
         </Col>
       </Row>
-      <hr />
     </>
   );
 };

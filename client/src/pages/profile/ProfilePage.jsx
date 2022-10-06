@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import Navbar from "../../components/navbar";
 import UserService from "../../services/UserService";
-import ProfileData from "./components/ProfileData";
+import ProfileData from "./components/ProfileData/ProfileData";
 import ProfilePicture from "./components/ProfilePicture";
 import SocialMedia from "./components/SocialMedia";
 
@@ -30,11 +30,24 @@ const ProfilePage = () => {
   }, []);
 
   const socialMedias = [
-    { name: "Website", icon: "bi bi-globe", data: "https://dummy.com" },
-    { name: "Github", icon: "bi bi-github", data: "dummy" },
-    { name: "Twitter", icon: "bi bi-twitter", data: "@dummy" },
-    { name: "Instagram", icon: "bi bi-instagram", data: "dummy" },
-    { name: "Facebook", icon: "bi bi-facebook", data: "dummy" },
+    {
+      name: "Twitter",
+      icon: "bi bi-twitter",
+      data: profile.user?.twitter,
+      link: `https://twitter.com/${profile.user?.twitter}`,
+    },
+    {
+      name: "Instagram",
+      icon: "bi bi-instagram",
+      data: profile.user?.instagram,
+      link: `https://www.instagram.com/${profile.user?.instagram}`,
+    },
+    {
+      name: "Facebook",
+      icon: "bi bi-facebook",
+      data: profile.user?.facebook,
+      link: `https://www.facebook.com/${profile.user?.facebook}`,
+    },
   ];
 
   const breadcrumbs = [
@@ -47,14 +60,19 @@ const ProfilePage = () => {
       <Navbar variant={"dark"} bg={"dark"} />
       <Container className="main-body">
         <BreadcrumbComponent data={breadcrumbs} />
-        <Row className="gutters-sm">
-          <Col md={4} className="mb-3">
+        <Row className="gutters-sm mb-3">
+          <Col md={4}>
             <ProfilePicture profile={profile} />
           </Col>
-          <Col md={5}>
+          <Col md={8}>
             <ProfileData profile={profile} badge={badge} />
           </Col>
-          <Col md={3}>
+        </Row>
+        <Row className="gutters-sm mb-3">
+          <Col md={12}>Menu untuk History</Col>
+        </Row>
+        <Row className="gutters-sm">
+          <Col md={12}>
             <SocialMedia socialMedias={socialMedias} />
           </Col>
         </Row>

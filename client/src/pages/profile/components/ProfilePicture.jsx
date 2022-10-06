@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import EditProfile from "./EditProfile";
+import EditProfile from "./EditProfile/EditProfile";
 
 const Profile = (props) => {
   return (
@@ -16,9 +16,16 @@ const Profile = (props) => {
             <h4>{props.profile.user?.name}</h4>
             <p className="text-secondary mb-1">{props.profile.user?.email}</p>
             <p className="text-muted font-size-sm">
-              Bay Area, San Francisco, CA
+              {props.profile.user?.address}
             </p>
-            <EditProfile name={props.profile.user?.name} />
+            <EditProfile
+              name={props.profile.user?.name}
+              address={props.profile.user?.address}
+              phoneNumber={props.profile.user?.phoneNumber}
+              twitter={props.profile.user?.twitter}
+              instagram={props.profile.user?.instagram}
+              facebook={props.profile.user?.facebook}
+            />
           </div>
         </div>
       </Card.Body>

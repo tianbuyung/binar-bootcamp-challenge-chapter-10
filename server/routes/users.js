@@ -17,10 +17,16 @@ router.get(
 
 router.get("/verify", UserController.verifyJwt);
 
-router.post("/logout", UserController.logout);
-
 router.post("/", UserController.createUser);
 
+router.post("/logout", UserController.logout);
+
 router.post("/login", UserController.login);
+
+router.put(
+  "/edit",
+  passport.authenticate("user-role", { session: false }),
+  UserController.editUser
+);
 
 module.exports = router;
