@@ -78,7 +78,7 @@ const EditProfile = (props) => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Form onSubmit={updateUserHandler}>
-          <Modal.Header>Edit Profile</Modal.Header>
+          <Modal.Header closeButton>Edit Profile</Modal.Header>
           <Modal.Body>
             <FormEdit
               label="Full Name"

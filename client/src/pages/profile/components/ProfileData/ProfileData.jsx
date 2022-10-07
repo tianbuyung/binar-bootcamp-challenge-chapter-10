@@ -18,7 +18,7 @@ const Identity = (props) => {
           data={`Rp. ${props.badge.results?.map((result) => result.totalShop)}`}
         />
         <hr />
-        <ShowData label="Badge" data={props.badge?.badge} />
+        <ShowData label="Badge" data={`${props.badge?.badge} Member`} />
       </Card.Body>
     </Card>
   );

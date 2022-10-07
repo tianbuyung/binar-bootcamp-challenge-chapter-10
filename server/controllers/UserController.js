@@ -141,7 +141,7 @@ const getBadgeByUser = async (req, res) => {
 
     let val = await results[0].totalShop;
     console.log(val);
-    let badge = "None";
+    let badge = "Basic";
 
     if (val > 100000000) {
       badge = "Ruby Diamond";
@@ -168,7 +168,7 @@ const getBadgeByUser = async (req, res) => {
           totalShop: 0,
         },
       ],
-      badge: "None",
+      badge: "Basic",
     });
   }
 };

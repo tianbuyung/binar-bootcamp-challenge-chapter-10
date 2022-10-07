@@ -16,7 +16,7 @@ const Profile = (props) => {
             <h4>{props.profile.user?.name}</h4>
             <p className="text-secondary mb-1">{props.profile.user?.email}</p>
             <p className="text-muted font-size-sm">
-              {props.profile.user?.address}
+              {props.badge?.badge} Member
             </p>
             <EditProfile
               id={props.profile.user?.id}

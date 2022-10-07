@@ -3,9 +3,9 @@ import { Col, Container, Row } from "react-bootstrap";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import Navbar from "../../components/navbar";
 import UserService from "../../services/UserService";
-import ProfileData from "./components/ProfileData/ProfileData";
 import ProfilePicture from "./components/ProfilePicture";
 import SocialMedia from "./components/SocialMedia";
+import ProfileMenu from "./components/ProfileMenu";
 
 import "./ProfilePage.css";
 
@@ -61,16 +61,19 @@ const ProfilePage = () => {
       <Navbar variant={"dark"} bg={"dark"} />
       <Container className="main-body">
         <BreadcrumbComponent data={breadcrumbs} />
-        <Row className="gutters-sm mb-3">
-          <Col md={4}>
-            <ProfilePicture profile={profile} setIsFetching={setIsFetching} />
-          </Col>
-          <Col md={8}>
-            <ProfileData profile={profile} badge={badge} />
+        <Row className="gutters-sm mb-3 justify-content-center">
+          <Col md={12}>
+            <ProfilePicture
+              profile={profile}
+              badge={badge}
+              setIsFetching={setIsFetching}
+            />
           </Col>
         </Row>
         <Row className="gutters-sm mb-3">
-          <Col md={12}>Menu untuk History</Col>
+          <Col md={12}>
+            <ProfileMenu profile={profile} badge={badge} />
+          </Col>
         </Row>
         <Row className="gutters-sm">
           <Col md={12}>
