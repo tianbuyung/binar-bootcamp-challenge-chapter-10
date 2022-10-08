@@ -146,7 +146,7 @@ const CartPage = () => {
 			) : (
 				<Container>
 					<h1 className="mt-3 mb-3">My Cart</h1>
-					<Row xs={1} md={2} align="center">
+					<Row xs={1} md={2}>
 						<Col>
 							{Array.from(new Array(3)).map((_, i) => (
 								<Stack
@@ -154,46 +154,39 @@ const CartPage = () => {
 									gap={3}
 									className="mb-3 p-3 border"
 								>
-									<div>
-										<img
-											src={NO_IMAGE}
-											className="img-thumbnail"
-											alt={"loading"}
-											width="100"
-											height="auto"
-										/>
-									</div>
-									<div>
-										<Placeholder
-											sm={5}
-											animation="wave"
-											as={"div"}
-										/>
-									</div>
-									<div>
-										<p>
-											<Placeholder lg={10} />
-											<Placeholder.Button
-												lg={5}
-												animation="wave"
-												variant="danger"
-											/>
-										</p>
-									</div>
+									<img
+										src={NO_IMAGE}
+										className="img-thumbnail"
+										alt={"loading"}
+										width="100"
+										height="auto"
+									/>
+									<Placeholder size="lg" lg={5} />
+									<Placeholder.Button
+										size="lg"
+										lg={1}
+										variant="danger"
+									/>
 								</Stack>
 							))}
 						</Col>
 						<Col>
 							<Card style={{ width: "100%" }}>
 								<Card.Body>
-									<Card.Title>
-										<Placeholder lg={5} />
-									</Card.Title>
-									<Card.Text>
+									<Placeholder
+										as={Card.Title}
+										animation="glow"
+									>
+										<Placeholder lg={6} />
+									</Placeholder>
+									<Placeholder
+										as={Card.Text}
+										animation="glow"
+									>
 										<Placeholder lg={2} />
-									</Card.Text>
+									</Placeholder>
 									<Placeholder.Button
-										lg={2}
+										lg={3}
 										variant={"primary"}
 									/>
 								</Card.Body>

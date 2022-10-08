@@ -243,13 +243,14 @@ const HomePage = () => {
 									lg={2}
 									xl={2}
 									className="text-start text-white"
-								>
-									<h3>
-										<Placeholder
-											xs={6}
-											animation="wave"
-										/>
-									</h3>
+									>
+										
+									<Placeholder
+										md={6}
+										as={"h3"}
+										animation="wave"
+										variant="primary"
+									/>
 								</Col>
 								<Col lg={"auto"} xl={"10"}>
 									<Row>

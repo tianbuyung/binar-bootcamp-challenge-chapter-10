@@ -2,8 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import { Placeholder } from "react-bootstrap";
-import { useState } from "react";
+import { Col, Placeholder, Row } from "react-bootstrap";
 
 import useProductDetailPage from "./useProductDetailPage";
 import Navbar from "../../components/navbar";
@@ -14,11 +13,11 @@ import ShareButton from "./components/ShareButton";
 const NO_IMAGE =
 	"https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
+
 const ProductDetailPage = () => {
 	const navigate = useNavigate();
 	const { product_id } = useParams();
-	const { product } = useProductDetailPage({ id: product_id });
-	const loading = useProductDetailPage({ id: product_id }).loading;
+	const { product, loading } = useProductDetailPage({ id: product_id });
 
 	const breadcrumbs = [
 		{ title: "Home", isActive: false, href: "/" },
@@ -52,77 +51,83 @@ const ProductDetailPage = () => {
 			<Container>
 				<BreadcrumbComponent data={breadcrumbs} />
 				{!loading ? (
-					<Card style={{ width: "100%" }}>
-						<Card.Img
-							style={{
-								width: 400,
-								height: "auto",
-								margin: "auto",
-							}}
-							variant="top"
-							src={product?.image || NO_IMAGE}
-						/>
-						<Card.Body>
-							<Card.Title>{product?.name}</Card.Title>
-							<Card.Text>
-								Category: {product?.Category?.name}
-							</Card.Text>
-							<Card.Text>
-								Price: Rp. {product?.price}K
-							</Card.Text>
+					<Row xs={1} md={2} className="align-items-center p-2">
+						<Col>
+							<img
+								tyle={{
+									width: "auto",
+									height: "auto",
+									margin: "auto",
+								}}
+								src={product?.image || NO_IMAGE}
+								alt={product?.name || "gambar"}
+							/>
+						</Col>
+						<Col style={{ textAlign: "left" }}>
+							<h2>{product?.name}</h2>
+							<h3>{product?.Category?.name}</h3>
+							<h3>Rp. {product?.price}K</h3>
+							<br />
 							<Button
 								variant="primary"
 								onClick={addCartDetail}
-								className="mb-3"
+								className="mb-3 btn-lg w-100"
 							>
 								Buy
 							</Button>
-							<Card.Text>
-								Share:{" "}
-								<ShareButton
-									name={product?.name}
-									id={product?.id}
-									class="m-2"
-								/>
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				) : (
-					<Card style={{ width: "100%" }}>
-						<Card.Img
-							style={{
-								width: 400,
-								height: "auto",
-								margin: "auto",
-							}}
-							variant="top"
-							src={NO_IMAGE}
-						/>
-						<Card.Body>
-							<Card.Title>
-								<Placeholder xs={5} />
-							</Card.Title>
-							<Card.Text>
-								<Placeholder xs={8} />
-							</Card.Text>
-							<Card.Text>
-								<Placeholder xs={7} />
-							</Card.Text>
-							<Placeholder.Button
-								variant="primary"
-								xs={2}
+							<br />
+							Share:{" "}
+							<ShareButton
+								name={product?.name}
+								id={product?.id}
+								className="m-2"
 							/>
-							<br />
-							<br />
-							<Card.Text>
-								Share:{" "}
-								<ShareButton
-									name={product?.name}
-									id={product?.id}
+						</Col>
+					</Row>
+				) : (
+					<Row xs={1} md={2} className="align-items-center">
+						<Col>
+							<img
+								tyle={{
+									width: 400,
+									height: "auto",
+									margin: "auto",
+								}}
+								src={NO_IMAGE}
+								alt={"gambar"}
+							/>
+						</Col>
+						<Col style={{ textAlign: "left" }}>
+							<Placeholder as={"h2"} animation="glow">
+								<Placeholder lg={12} size="lg" />
+							</Placeholder>
+							<Placeholder as={"h3"} animation="glow">
+								<Placeholder lg={6} size="lg" />
+							</Placeholder>
+							<Placeholder as={"h3"} animation="glow">
+								<Placeholder lg={6} size="lg" />
+							</Placeholder>
+							<Placeholder.Button
+								size="lg"
+								lg={12}
+								variant="primary"
+							/>
+							{""}
+							<Placeholder as={"h3"} animation="glow">
+								<Placeholder lg={2} size="md" />{" "}
+								<Placeholder
+									lg={1}
+									size="md"
+									bg="secondary"
+								/>{" "}
+								<Placeholder
+									lg={1}
+									size="md"
+									bg="info"
 								/>
-							</Card.Text>
-						</Card.Body>
-					</Card>
+							</Placeholder>
+						</Col>
+					</Row>
 				)}
 			</Container>
 		</div>
