@@ -2,17 +2,15 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 
-import { API } from "../../configs/config";
+import AuthService from "../../services/AuthService";
+
+const authservice = new AuthService();
 const NavbarAdmin = () => {
 	const navigate = useNavigate();
 
 	const adminLogout = async () => {
 		try {
-			const getData = await fetch(API + "/admin/logout", {
-				method: "POST",
-				redirect: "follow",
-				credentials: "include",
-			});
+			const getData = await authservice.logoutAdmin();
 
 			if (getData.status === 200) {
 				const message = await getData.json();

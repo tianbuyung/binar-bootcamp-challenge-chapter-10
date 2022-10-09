@@ -49,11 +49,10 @@ const login = async (req, res) => {
 
 		let options = {
 			maxAge: 1000 * 60 * 60, // would expire after 60 minutes
-			// httpOnly: true,
+			httpOnly: true,
 			signed: true, // Indicates if the cookie should be signed
 			secure: true,
 			samesite: "none",
-			proxy: "true",
 		};
 
 		res.cookie("token", token, options);

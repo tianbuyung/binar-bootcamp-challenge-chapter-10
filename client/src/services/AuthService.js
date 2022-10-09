@@ -37,7 +37,6 @@ export default class AuthService extends BaseService {
 		return await this.customFetch(API + "/users", options);
 	};
 
-	// ? buat utk verify user dan admin?
 	verifyUser = async () => {
 		const options = {
 			method: "GET",
@@ -52,5 +51,21 @@ export default class AuthService extends BaseService {
 		};
 
 		return await this.customFetch(API + "/admin/verify", options);
+	};
+
+	logoutAdmin = async () => {
+		const options = {
+			method: "POST",
+		};
+
+		return await this.customFetch(API + "/admin/logout", options);
+	};
+
+	logoutUser = async () => {
+		const options = {
+			method: "POST",
+		};
+
+		return await this.customFetch(API + "/users/logout", options);
 	};
 }

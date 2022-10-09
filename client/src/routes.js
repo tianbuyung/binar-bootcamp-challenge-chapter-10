@@ -10,22 +10,32 @@ import OrderPage from "./pages/order";
 import ProductListPage from "./pages/product-list";
 import AuthService from "./services/AuthService";
 
+import { useSelector, useDispatch } from "react-redux";
+import { cekUser, cekAdmin } from "./features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-// ! bug = masih bisa tembus di beberapa halaman
 const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyUser();
+	// useEffect(() => {
+	// 	const cekUser = async () => {
+	// 		const verify = await authservice.verifyUser();
 
-			if (verify.status === 200) {
-				navigate("/", { replace: true });
-			}
-		};
-		cekUser();
+	// 		if (verify.status === 200) {
+	// 			navigate("/", { replace: true });
+	// 		}
+	// 	};
+	// 	cekUser();
+	// });
+
+	const dispatch = useDispatch();
+	const isUser = useSelector((state) => state.isUser);
+	useEffect(() => {
+		dispatch(cekUser());
+		if (isUser === false) {
+			navigate("/", { replace: true });
+		}
 	});
 
 	return children;
