@@ -9,9 +9,10 @@ import CartPage from "./pages/cart";
 import OrderPage from "./pages/order";
 import ProductListPage from "./pages/product-list";
 import AuthService from "./services/AuthService";
+// import { cekUser, cekAdmin } from "./features/authSlice";
+import { cekUser } from "./features/authSlice";
 
 import { useSelector, useDispatch } from "react-redux";
-import { cekUser, cekAdmin } from "./features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -30,14 +31,11 @@ const ProtectedRouteNonAuth = ({ children }) => {
 	// });
 
 	const dispatch = useDispatch();
-	const isUser = useSelector((state) => state.isUser);
+	const isUser = useSelector((state) => state.users);
 	useEffect(() => {
 		dispatch(cekUser());
-		if (isUser === false) {
-			navigate("/", { replace: true });
-		}
+		console.log("cek data = ", isUser.isUser);
 	});
-
 	return children;
 };
 
