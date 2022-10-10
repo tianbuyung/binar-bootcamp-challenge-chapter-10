@@ -5,8 +5,7 @@ import AuthService from "../services/AuthService";
 const authservice = new AuthService();
 
 export const cekUser = createAsyncThunk("users/verify", async () => {
-	const user = await authservice.verifyUser();
-	return user;
+	return await authservice.verifyUser();
 });
 
 const authSlice = createSlice({
@@ -17,40 +16,42 @@ const authSlice = createSlice({
 		isUser: false,
 	},
 	// ! coba dulu
-	reducers: {
-		// cekUser: async (state) => {
-		// 	const verify = await authservice.verifyUser();
-		// if (verify.status === 200) {
-		// 	state.isAdmin = true;
-		// }
-		// },
-		// cekAdmin: async (state) => {
-		// const verify = await authservice.verifyAdmin();
-		// if (verify.status === 200) {
-		// 	state.isAdmin = true;
-		// }
-		// },
-		// logoutAdmin: async (state) => {
-		// 	const cekLogout = await authservice.logoutAdmin();
-		// 	if (cekLogout.status === 200) {
-		// 		state.isAdmin = false;
-		// 	}
-		// },
-		// logoutUser: async (state) => {
-		// 	const cekLogout = await authservice.logoutUser();
-		// 	if (cekLogout.status === 200) {
-		// 		state.isUser = false;
-		// 	}
-		// },
-		reducers: {},
-		extraReducers(builder) {
-			builder.addCase(cekUser.fulfilled, (state, action) => {
-				console.log("cek action = ", action.payload.status);
-				if (action.payload.status === 403) {
-					state.isUser = true;
-				}
-			});
-		},
+	// reducers: {
+	// cekUser: async (state) => {
+	// 	const verify = await authservice.verifyUser();
+	// if (verify.status === 200) {
+	// 	state.isAdmin = true;
+	// }
+	// },
+	// cekAdmin: async (state) => {
+	// const verify = await authservice.verifyAdmin();
+	// if (verify.status === 200) {
+	// 	state.isAdmin = true;
+	// }
+	// },
+	// logoutAdmin: async (state) => {
+	// 	const cekLogout = await authservice.logoutAdmin();
+	// 	if (cekLogout.status === 200) {
+	// 		state.isAdmin = false;
+	// 	}
+	// },
+	// logoutUser: async (state) => {
+	// 	const cekLogout = await authservice.logoutUser();
+	// 	if (cekLogout.status === 200) {
+	// 		state.isUser = false;
+	// 	}
+	// }
+	reducers: (state, action) => {
+		
+	},
+	extraReducers: (builder) => {
+		builder.addCase(cekUser.fulfilled, (state, action) => {
+			if (action.payload.status === 403) {
+				state.isUser = false;
+			} else {
+				state.isUser = true;
+			}
+		});
 	},
 });
 

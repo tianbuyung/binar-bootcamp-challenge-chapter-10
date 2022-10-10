@@ -34,8 +34,8 @@ const ProtectedRouteNonAuth = ({ children }) => {
 	const isUser = useSelector((state) => state.users);
 	useEffect(() => {
 		dispatch(cekUser());
-		console.log("cek data = ", isUser.isUser);
-	});
+		console.log("cek data = ", isUser);
+	}, []);
 	return children;
 };
 
