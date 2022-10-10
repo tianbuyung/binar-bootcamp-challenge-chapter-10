@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 
 import AuthService from "../services/AuthService";
 
@@ -10,11 +9,12 @@ export const cekUser = createAsyncThunk("users/verify", async () => {
 });
 
 const authSlice = createSlice({
-	name: "cekLogin",
+	name: "auth",
 	initialState: {
 		// isLogin: false,
 		isAdmin: false,
 		isUser: false,
+		isLoading: true,
 	},
 	// ! coba dulu
 	// reducers: {
@@ -44,13 +44,23 @@ const authSlice = createSlice({
 	// }
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(cekUser.fulfilled, (state, action) => {
-			if (action.payload.status === 403) {
-				state.isUser = true;
-			} else {
-				state.isUser = true;
-			}
-		});
+		builder
+			.addCase(cekUser.pending, (state, action) => {
+				state.isUser = false;
+				state.isLoading = true;
+			})
+			.addCase(cekUser.fulfilled, (state, action) => {
+				if (action.payload.status === 403) {
+					state.isUser = false;
+					state.isLoading = false;
+				} else {
+					state.isUser = true;
+				}
+			})
+			.addCase(cekUser.rejected, (state, action) => {
+				state.isUser = false;
+				state.isLoading = false;
+			});
 	},
 });
 

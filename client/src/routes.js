@@ -19,23 +19,21 @@ import { useEffect } from "react";
 const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
 	const navigate = useNavigate();
-	// useEffect(() => {
-	// 	const cekUser = async () => {
-	// 		const verify = await authservice.verifyUser();
-
-	// 		if (verify.status === 200) {
-	// 			navigate("/", { replace: true });
-	// 		}
-	// 	};
-	// 	cekUser();
-	// });
 
 	const dispatch = useDispatch();
 	const isUser = useSelector((state) => state.users);
 	useEffect(() => {
-		dispatch(cekUser());
-		console.log("cek data = ", isUser);
-	}, []);
+		if (isUser.isLoading === true) {
+			dispatch(cekUser());
+		}
+
+		if (isUser.isUser === true) {
+			navigate("/profile", { replace: true });
+		}
+
+		console.log("cek isUser = ", isUser);
+	}, [isUser]);
+
 	return children;
 };
 
