@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 import AuthService from "../services/AuthService";
 
@@ -17,11 +18,11 @@ const authSlice = createSlice({
 	},
 	// ! coba dulu
 	// reducers: {
-	// cekUser: async (state) => {
-	// 	const verify = await authservice.verifyUser();
-	// if (verify.status === 200) {
-	// 	state.isAdmin = true;
-	// }
+	// 	cekUser: (state) => {
+	// 		if (state.isUser === false) {
+	// 			state.isUser = true;
+	// 		}
+	// 	},
 	// },
 	// cekAdmin: async (state) => {
 	// const verify = await authservice.verifyAdmin();
@@ -41,13 +42,11 @@ const authSlice = createSlice({
 	// 		state.isUser = false;
 	// 	}
 	// }
-	reducers: (state, action) => {
-		
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(cekUser.fulfilled, (state, action) => {
 			if (action.payload.status === 403) {
-				state.isUser = false;
+				state.isUser = true;
 			} else {
 				state.isUser = true;
 			}

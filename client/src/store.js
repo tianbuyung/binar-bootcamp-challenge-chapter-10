@@ -7,5 +7,5 @@ export default configureStore({
 		users: userReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(logger),
+		getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });
