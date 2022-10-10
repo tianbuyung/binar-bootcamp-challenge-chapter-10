@@ -1,15 +1,17 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import Navbar from "../../components/navbar";
+import { useRouter } from 'next/router'
 
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
-	let navigate = useNavigate();
+	// let navigate = useNavigate();
+	 const router = useRouter()
 
 	const login = async (e) => {
 		e.preventDefault();
@@ -19,7 +21,8 @@ const LoginUser = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				navigate("../profile", { replace: true });
+				// navigate("../profile", { replace: true });
+				router.push('/')
 			} else {
 				const message = await getData.json();
 				alert(await message.message);

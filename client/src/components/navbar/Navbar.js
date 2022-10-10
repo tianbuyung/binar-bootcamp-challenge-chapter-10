@@ -1,12 +1,10 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-
+import Link from "next/link";
 import { API } from "../../configs/config";
 const NavbarComponent = ({ variant, bg }) => {
   const { isLogin } = useAuth();
-  const navigate = useNavigate();
 
   const userLogout = async () => {
     try {
@@ -19,7 +17,7 @@ const NavbarComponent = ({ variant, bg }) => {
       if (getData.status === 200) {
         const message = await getData.json();
         alert(message.message);
-        navigate("../login", { replace: true });
+        // navigate("../login", { replace: true });
       } else {
         const message = await getData.json();
         alert(message.message);
@@ -33,25 +31,16 @@ const NavbarComponent = ({ variant, bg }) => {
   return (
     <Navbar variant={variant} bg={bg} expand="lg">
       <Container>
-        <Navbar.Brand onClick={() => navigate("/")} className="cursor-pointer">
-          Home
-        </Navbar.Brand>
+        <Navbar.Brand className="cursor-pointer">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
         {isLogin ? (
           <>
             <Navbar.Brand>
-              <div className="cursor-pointer" onClick={() => navigate("/cart")}>
-                Cart
-              </div>
+              <div className="cursor-pointer">Cart</div>
             </Navbar.Brand>
             <Navbar.Brand>
-              <div
-                className="cursor-pointer"
-                onClick={() => navigate("/profile")}
-              >
-                Profile
-              </div>
+              <div className="cursor-pointer">Profile</div>
             </Navbar.Brand>
             <Navbar.Brand>
               <div className="cursor-pointer" onClick={userLogout}>
@@ -62,20 +51,14 @@ const NavbarComponent = ({ variant, bg }) => {
         ) : (
           <>
             <Navbar.Brand>
-              <div
-                className="cursor-pointer"
-                onClick={() => navigate("/login")}
-              >
+              <div className="cursor-pointer">
+                {/* <Link as="/login" href="/login"> */}
                 Login
+                {/* </Link> */}
               </div>
             </Navbar.Brand>
             <Navbar.Brand>
-              <div
-                className="cursor-pointer"
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </div>
+              <div className="cursor-pointer">Register</div>
             </Navbar.Brand>
           </>
         )}

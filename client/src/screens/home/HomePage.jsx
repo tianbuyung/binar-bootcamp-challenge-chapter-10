@@ -1,22 +1,33 @@
 import { useCallback, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
 import ProductService from "../../services/ProductService";
-
+import AuthService from "../../services/AuthService";
 const categoryService = new CategoryService();
 const productService = new ProductService();
 
-const HomePage = () => {
-  const [loading, setLoading] = useState(true);
-  const [getCategory, setGetCategory] = useState([]);
+
+
+const fetchGetCategoryHandlerServer = async () => {
+    try {
+      return await categoryService.getAllCategories();
+    } catch (error) {
+      // silent e
+    }
+  }
+
+const HomePage = (props) => { 
+  const [loading, setLoading] = useState(false);
+  const [getCategory, _] = useState(props.getCategoryProps);
   const [getProductPopular, setGetProductPopular] = useState([]);
 
-  const fetchGetCategoryHandler = useCallback(async () => {
+
+  const fetchGetProductPopularHandler = useCallback(async () => {
     try {
-      const data = await categoryService.getAllCategories();
-      setGetCategory(data.categories);
+      const data = await productService.getProductPopular();
+      setGetProductPopular(data.productPopuler);
       setLoading(false);
     } catch (error) {
       // silent e
@@ -24,19 +35,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    fetchGetCategoryHandler();
-  }, [fetchGetCategoryHandler]);
-
-  const fetchGetProductPopularHandler = useCallback(async () => {
-    try {
-      const data = await productService.getProductPopular();
-      setGetProductPopular(data.productPopuler);
-    } catch (error) {
-      // silent e
-    }
-  }, []);
-
-  useEffect(() => {
+    setLoading(true)
     fetchGetProductPopularHandler();
   }, [fetchGetProductPopularHandler]);
 
@@ -53,7 +52,8 @@ const HomePage = () => {
                   return (
                     <Col key={productPopuler?.Product?.id}>
                       <Link
-                        to={`product/${productPopuler?.Product?.id}`}
+                        as={`product/${productPopuler?.Product?.id}`}
+                        href="/product/[slug]"
                         className="text-black text-decoration-none"
                       >
                         <Card
@@ -97,7 +97,8 @@ const HomePage = () => {
                         <Col className="text-end my-3">
                           <Link
                             className="text-white text-decoration-none"
-                            to={`/product/category/${category.id}`}
+                            as={`/product/category/${category.id}`}
+                            href="/product/category/[slug]"
                           >
                             Lihat Semua
                           </Link>
@@ -107,7 +108,8 @@ const HomePage = () => {
                         {category?.Products?.slice(0, 5).map((product) => (
                           <Col key={product.id}>
                             <Link
-                              to={`product/${product.id}`}
+                              as={`/product/${product.id}`}
+                              href="/product/[slug]"
                               className="text-black text-decoration-none"
                             >
                               <Card
@@ -145,4 +147,18 @@ const HomePage = () => {
   );
 };
 
+HomePage.getInitialProps = async () => {
+    const authService = new AuthService();
+    const props = {
+      getCategoryProps: []
+    }
+    try {
+      const data = await fetchGetCategoryHandlerServer();
+        props.getCategoryProps = data?.categories; 
+      return props
+    } catch(e) {
+      // silent e
+      return props
+    }
+}
 export default HomePage;

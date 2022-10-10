@@ -1,13 +1,13 @@
-import HomePage from "./pages/home";
-import ProductDetailPage from "./pages/product-detail";
-import ProfilePage from "./pages/profile";
-import LoginUser from "./pages/login/LoginUser";
-import LoginAdmin from "./pages/login-admin";
-import RegisterPage from "./pages/register";
-import Admin from "./pages/admin";
-import CartPage from "./pages/cart";
-import OrderPage from "./pages/order";
-import ProductListPage from "./pages/product-list";
+import HomePage from "./screens/home";
+import ProductDetailPage from "./screens/product-detail";
+import ProfilePage from "./screens/profile";
+import LoginUser from "./screens/login/LoginUser";
+import LoginAdmin from "./screens/login-admin";
+import RegisterPage from "./screens/register";
+import Admin from "./screens/admin";
+import CartPage from "./screens/cart";
+import OrderPage from "./screens/order";
+import ProductListPage from "./screens/product-list";
 import { API } from "./configs/config";
 
 import { useNavigate } from "react-router-dom";

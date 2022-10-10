@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+        "@screens/*": ["./screens/*.js"],
+        "@components/*": ["./components/*.js"]
+    }
+    
+  },
+   "include": [
+    "."
+  ],
+  "exclude": ["node_modules"]
+}
