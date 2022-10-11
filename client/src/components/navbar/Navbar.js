@@ -1,39 +1,44 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useAuth, useLogout } from "../../hooks/useAuth";
-// import AuthService from "../../services/AuthService";
+import { logout } from "../../features/authSlice";
+import AuthService from "../../services/AuthService";
 
-// const authservice = new AuthService();
+const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
-	const { isLogin } = useAuth();
+	const isUser = useAuth();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-	const Logout = () => {
-		const { isLogin } = useLogout();
-		if (isLogin.isUser === false) {
-			alert(isLogin.message);
-			navigate("../login", { replace: true });
-		} else {
-			alert(isLogin.message);
-		}
-
-		// try {
-		// 	const getData = await authservice.logoutUser();
-
-		// 	if (getData.status === 200) {
-		// 		const message = await getData.json();
-		// alert(message.message);
-		// navigate("../login", { replace: true });
-		// 	} else {
-		// 		const message = await getData.json();
-		// 		alert(message.message);
-		// 	}
-		// } catch (err) {
-		// 	alert("Error! Please try again");
-		// 	console.log("error while send api : " + err.message);
+	const userLogout = async () => {
+		// ? why tidak bisa?
+		// const { isLogin } = useLogout();
+		// if (isLogin.isUser === false) {
+		// 	alert(isLogin.message);
+		// 	navigate("../login", { replace: true });
+		// } else {
+		// 	alert(isLogin.message);
 		// }
+
+		try {
+			const getData = await authservice.logoutUser();
+
+			if (getData.status === 200) {
+				const message = await getData.json();
+				alert(message.message);
+				dispatch(logout());
+				navigate("../login", { replace: true });
+			} else {
+				const message = await getData.json();
+				alert(message.message);
+			}
+		} catch (err) {
+			alert("Error! Please try again");
+			console.log("error while send api : " + err.message);
+		}
 	};
 
 	return (
@@ -47,7 +52,7 @@ const NavbarComponent = ({ variant, bg }) => {
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-				{isLogin ? (
+				{isUser ? (
 					<>
 						<Navbar.Brand>
 							<div
@@ -68,7 +73,7 @@ const NavbarComponent = ({ variant, bg }) => {
 						<Navbar.Brand>
 							<div
 								className="cursor-pointer"
-								onClick={Logout}
+								onClick={userLogout}
 							>
 								Logout
 							</div>

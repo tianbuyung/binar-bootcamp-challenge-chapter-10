@@ -5,7 +5,7 @@ import {
 	cekUser,
 	cekAdmin,
 	logoutAdmin,
-	logoutUser,
+	// logoutUser,
 } from "../features/authSlice";
 
 const useAuth = () => {
@@ -38,20 +38,20 @@ const useAuthAdmin = () => {
 	return isAdmin.isAdmin;
 };
 
-const useLogout = () => {
-	const dispatch = useDispatch();
-	const isUser = useSelector((state) => {
-		return state.auth;
-	});
+// const useLogout = () => {
+// 	const dispatch = useDispatch();
+// 	const isUser = useSelector((state) => {
+// 		return state.auth;
+// 	});
 
-	useEffect(() => {
-		if (isUser.isLoading === true) {
-			dispatch(logoutUser());
-		}
-	}, [isUser]);
+// 	useEffect(() => {
+// 		if (isUser.isLoading === true) {
+// 			dispatch(logoutUser());
+// 		}
+// 	}, [isUser]);
 
-	return isUser;
-};
+// 	return isUser;
+// };
 
 const useLogoutAdmin = () => {
 	const dispatch = useDispatch();
@@ -68,4 +68,4 @@ const useLogoutAdmin = () => {
 	return isAdmin;
 };
 
-export { useAuth, useAuthAdmin, useLogout, useLogoutAdmin };
+export { useAuth, useAuthAdmin, useLogoutAdmin };

@@ -18,11 +18,11 @@ export const logoutAdmin = createAsyncThunk("admin/logout", async () => {
 	return { cekData, res };
 });
 
-export const logoutUser = createAsyncThunk("users/logout", async () => {
-	const cekData = await authservice.logoutAdmin();
-	const res = await cekData.json();
-	return { cekData, res };
-});
+// export const logoutUser = createAsyncThunk("users/logout", async () => {
+// 	const cekData = await authservice.logoutAdmin();
+// 	const res = await cekData.json();
+// 	return { cekData, res };
+// });
 
 const authSlice = createSlice({
 	name: "auth",
@@ -32,7 +32,11 @@ const authSlice = createSlice({
 		isLoading: true,
 		response: "",
 	},
-	reducers: {},
+	reducers: {
+		logout: (state) => {
+			state.isUser = false;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(cekUser.pending, (state, action) => {
@@ -53,27 +57,27 @@ const authSlice = createSlice({
 			})
 
 			// ! logout User
-			.addCase(logoutUser.pending, (state, action) => {
-				state.isUser = true;
-				state.isLoading = true;
-			})
-			.addCase(logoutUser.fulfilled, (state, action) => {
-				const payload = action.payload;
-				const message = payload.res.messages;
-				state.isLoading = false;
+			// .addCase(logoutUser.pending, (state, action) => {
+			// 	state.isUser = true;
+			// 	state.isLoading = true;
+			// })
+			// .addCase(logoutUser.fulfilled, (state, action) => {
+			// 	const payload = action.payload;
+			// 	const message = payload.res.messages;
+			// 	state.isLoading = false;
 
-				if (payload.cekData.status === 403) {
-					state.isUser = true;
-					state.response = message;
-				} else {
-					state.isUser = false;
-					state.response = message;
-				}
-			})
-			.addCase(logoutUser.rejected, (state, action) => {
-				state.isUser = true;
-				state.isLoading = true;
-			})
+			// 	if (payload.cekData.status === 403) {
+			// 		state.isUser = true;
+			// 		state.response = message;
+			// 	} else {
+			// 		state.isUser = false;
+			// 		state.response = message;
+			// 	}
+			// })
+			// .addCase(logoutUser.rejected, (state, action) => {
+			// 	state.isUser = true;
+			// 	state.isLoading = true;
+			// })
 
 			// ! cekAdmin
 			.addCase(cekAdmin.pending, (state, action) => {
@@ -118,6 +122,6 @@ const authSlice = createSlice({
 	},
 });
 
-// export const { user, cekAdmin } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
