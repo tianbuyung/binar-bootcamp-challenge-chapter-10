@@ -38,7 +38,7 @@ const ProtectedRouteAuth = ({ children }) => {
 const ProtectedRouteAdmin = ({ children }) => {
 	const navigate = useNavigate();
 
-	const { isAdmin } = useAuthAdmin();
+	const isAdmin = useAuthAdmin();
 
 	if (isAdmin === false) {
 		navigate("/admin/login", { replace: true });
@@ -48,7 +48,7 @@ const ProtectedRouteAdmin = ({ children }) => {
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
 	const navigate = useNavigate();
-	const { isAdmin } = useAuthAdmin();
+	const isAdmin = useAuthAdmin();
 
 	if (isAdmin === true) {
 		navigate("/admin", { replace: true });

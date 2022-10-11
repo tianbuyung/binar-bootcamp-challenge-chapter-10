@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { useAuth, useLogout } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { logout } from "../../features/authSlice";
 import AuthService from "../../services/AuthService";
 
@@ -14,15 +14,6 @@ const NavbarComponent = ({ variant, bg }) => {
 	const dispatch = useDispatch();
 
 	const userLogout = async () => {
-		// ? why tidak bisa?
-		// const { isLogin } = useLogout();
-		// if (isLogin.isUser === false) {
-		// 	alert(isLogin.message);
-		// 	navigate("../login", { replace: true });
-		// } else {
-		// 	alert(isLogin.message);
-		// }
-
 		try {
 			const getData = await authservice.logoutUser();
 

@@ -1,12 +1,15 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { logoutAdmin } from "../../features/authSlice";
 import AuthService from "../../services/AuthService";
 
 const authservice = new AuthService();
 const NavbarAdmin = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const adminLogout = async () => {
 		try {
@@ -15,6 +18,7 @@ const NavbarAdmin = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
+				dispatch(logoutAdmin());
 				navigate("/admin/login", { replace: true });
 			} else {
 				const message = await getData.json();
