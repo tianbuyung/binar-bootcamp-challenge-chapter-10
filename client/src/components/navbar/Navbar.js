@@ -2,30 +2,38 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
-import AuthService from "../../services/AuthService";
+import { useAuth, useLogout } from "../../hooks/useAuth";
+// import AuthService from "../../services/AuthService";
 
-const authservice = new AuthService();
+// const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
 	const { isLogin } = useAuth();
 	const navigate = useNavigate();
 
-	const userLogout = async () => {
-		try {
-			const getData = await authservice.logoutUser();
-
-			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
-				navigate("../login", { replace: true });
-			} else {
-				const message = await getData.json();
-				alert(message.message);
-			}
-		} catch (err) {
-			alert("Error! Please try again");
-			console.log("error while send api : " + err.message);
+	const Logout = () => {
+		const { isLogin } = useLogout();
+		if (isLogin.isUser === false) {
+			alert(isLogin.message);
+			navigate("../login", { replace: true });
+		} else {
+			alert(isLogin.message);
 		}
+
+		// try {
+		// 	const getData = await authservice.logoutUser();
+
+		// 	if (getData.status === 200) {
+		// 		const message = await getData.json();
+		// alert(message.message);
+		// navigate("../login", { replace: true });
+		// 	} else {
+		// 		const message = await getData.json();
+		// 		alert(message.message);
+		// 	}
+		// } catch (err) {
+		// 	alert("Error! Please try again");
+		// 	console.log("error while send api : " + err.message);
+		// }
 	};
 
 	return (
@@ -60,7 +68,7 @@ const NavbarComponent = ({ variant, bg }) => {
 						<Navbar.Brand>
 							<div
 								className="cursor-pointer"
-								onClick={userLogout}
+								onClick={Logout}
 							>
 								Logout
 							</div>

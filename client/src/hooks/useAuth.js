@@ -1,25 +1,71 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import AuthService from "../services/AuthService";
+import {
+	cekUser,
+	cekAdmin,
+	logoutAdmin,
+	logoutUser,
+} from "../features/authSlice";
 
-const authservice = new AuthService();
 const useAuth = () => {
-	const [isLogin, setIsLogin] = useState(false);
-	const checkLogin = async () => {
-		const res = await authservice.verifyUser();
+	const dispatch = useDispatch();
+	const isUser = useSelector((state) => {
+		return state.auth;
+	});
 
-		if (res.status === 200) {
-			setIsLogin(true);
-		} else if (res.status === 403) {
-			return false;
-		}
-	};
 	useEffect(() => {
-		checkLogin();
-	}, []);
-	return {
-		isLogin,
-	};
+		if (isUser.isLoading === true) {
+			dispatch(cekUser());
+		}
+	}, [isUser]);
+
+	return isUser.isUser;
 };
 
-export default useAuth;
+const useAuthAdmin = () => {
+	const dispatch = useDispatch();
+	const isAdmin = useSelector((state) => {
+		return state.auth;
+	});
+
+	useEffect(() => {
+		if (isAdmin.isLoading === true) {
+			dispatch(cekAdmin());
+		}
+	}, [isAdmin]);
+
+	return isAdmin.isAdmin;
+};
+
+const useLogout = () => {
+	const dispatch = useDispatch();
+	const isUser = useSelector((state) => {
+		return state.auth;
+	});
+
+	useEffect(() => {
+		if (isUser.isLoading === true) {
+			dispatch(logoutUser());
+		}
+	}, [isUser]);
+
+	return isUser;
+};
+
+const useLogoutAdmin = () => {
+	const dispatch = useDispatch();
+	const isAdmin = useSelector((state) => {
+		return state.auth;
+	});
+
+	useEffect(() => {
+		if (isAdmin.isLoading === true) {
+			dispatch(logoutAdmin());
+		}
+	}, [isAdmin]);
+
+	return isAdmin;
+};
+
+export { useAuth, useAuthAdmin, useLogout, useLogoutAdmin };

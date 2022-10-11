@@ -8,40 +8,30 @@ export const cekUser = createAsyncThunk("users/verify", async () => {
 	return await authservice.verifyUser();
 });
 
+export const cekAdmin = createAsyncThunk("admin/verify", async () => {
+	return await authservice.verifyAdmin();
+});
+
+export const logoutAdmin = createAsyncThunk("admin/logout", async () => {
+	const cekData = await authservice.logoutAdmin();
+	const res = await cekData.json();
+	return { cekData, res };
+});
+
+export const logoutUser = createAsyncThunk("users/logout", async () => {
+	const cekData = await authservice.logoutAdmin();
+	const res = await cekData.json();
+	return { cekData, res };
+});
+
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
-		// isLogin: false,
 		isAdmin: false,
 		isUser: false,
 		isLoading: true,
+		response: "",
 	},
-	// ! coba dulu
-	// reducers: {
-	// 	cekUser: (state) => {
-	// 		if (state.isUser === false) {
-	// 			state.isUser = true;
-	// 		}
-	// 	},
-	// },
-	// cekAdmin: async (state) => {
-	// const verify = await authservice.verifyAdmin();
-	// if (verify.status === 200) {
-	// 	state.isAdmin = true;
-	// }
-	// },
-	// logoutAdmin: async (state) => {
-	// 	const cekLogout = await authservice.logoutAdmin();
-	// 	if (cekLogout.status === 200) {
-	// 		state.isAdmin = false;
-	// 	}
-	// },
-	// logoutUser: async (state) => {
-	// 	const cekLogout = await authservice.logoutUser();
-	// 	if (cekLogout.status === 200) {
-	// 		state.isUser = false;
-	// 	}
-	// }
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
@@ -50,16 +40,80 @@ const authSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(cekUser.fulfilled, (state, action) => {
+				state.isLoading = false;
 				if (action.payload.status === 403) {
 					state.isUser = false;
-					state.isLoading = false;
 				} else {
 					state.isUser = true;
 				}
 			})
 			.addCase(cekUser.rejected, (state, action) => {
 				state.isUser = false;
+				state.isLoading = true;
+			})
+
+			// ! logout User
+			.addCase(logoutUser.pending, (state, action) => {
+				state.isUser = true;
+				state.isLoading = true;
+			})
+			.addCase(logoutUser.fulfilled, (state, action) => {
+				const payload = action.payload;
+				const message = payload.res.messages;
 				state.isLoading = false;
+
+				if (payload.cekData.status === 403) {
+					state.isUser = true;
+					state.response = message;
+				} else {
+					state.isUser = false;
+					state.response = message;
+				}
+			})
+			.addCase(logoutUser.rejected, (state, action) => {
+				state.isUser = true;
+				state.isLoading = true;
+			})
+
+			// ! cekAdmin
+			.addCase(cekAdmin.pending, (state, action) => {
+				state.isAdmin = false;
+				state.isLoading = true;
+			})
+			.addCase(cekAdmin.fulfilled, (state, action) => {
+				state.isLoading = false;
+				if (action.payload.status === 403) {
+					state.isAdmin = false;
+				} else {
+					state.isAdmin = true;
+				}
+			})
+			.addCase(cekAdmin.rejected, (state, action) => {
+				state.isAdmin = false;
+				state.isLoading = true;
+			})
+
+			// ! logout Admin
+			.addCase(logoutAdmin.pending, (state, action) => {
+				state.isAdmin = true;
+				state.isLoading = true;
+			})
+			.addCase(logoutAdmin.fulfilled, (state, action) => {
+				const payload = action.payload;
+				const message = payload.res.messages;
+				state.isLoading = false;
+
+				if (payload.cekData.status === 403) {
+					state.isAdmin = true;
+					state.response = message;
+				} else {
+					state.isAdmin = false;
+					state.response = message;
+				}
+			})
+			.addCase(logoutAdmin.rejected, (state, action) => {
+				state.isAdmin = true;
+				state.isLoading = true;
 			});
 	},
 });
