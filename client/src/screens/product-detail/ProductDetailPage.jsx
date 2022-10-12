@@ -1,16 +1,9 @@
 import Navbar from "../../components/navbar";
 import useProductDetailPage from "./useProductDetailPage";
-<<<<<<< HEAD:client/src/screens/product-detail/ProductDetailPage.jsx
 // import { useNavigate, useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container'
-=======
-import { useNavigate, useParams } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
->>>>>>> origin/main:client/src/pages/product-detail/ProductDetailPage.jsx
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";
@@ -47,7 +40,7 @@ const ProductDetailPage = ({ query }) => {
     <div>
       <Navbar variant="dark" bg="dark" />
       <Container>
-        <BreadcrumbComponent data={breadcrumbs} />
+        <BreadcrumbComponent data={breadcrumbs} baseColor="black" />
         <Card style={{ width: "100%" }}>
           <Card.Img
             style={{ width: 400, height: "auto", margin: "auto" }}
@@ -62,7 +55,12 @@ const ProductDetailPage = ({ query }) => {
               Buy
             </Button>
             <Card.Text>
-              Share: <ShareButton name={product?.name} id={product?.id} />
+              {product && (
+                <div>
+                  Share: <ShareButton name={product?.name} id={product?.id} />
+                </div>
+              )}
+              
             </Card.Text>
           </Card.Body>
         </Card>

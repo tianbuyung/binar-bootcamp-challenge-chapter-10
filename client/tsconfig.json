@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "paths": {
+       "@screens/*": ["./src/screens/*"],
+    },
+    "target": "ES6",
+    "module": "CommonJS",
+    "lib": [
+      "DOM",
+      "ES6",
+      "ES2017",
+      "ESNext.AsyncIterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -5,6 +5,8 @@ import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
 import ProductService from "../../services/ProductService";
 import AuthService from "../../services/AuthService";
+import ButtonComponent from '../../components/button'
+
 const categoryService = new CategoryService();
 const productService = new ProductService();
 
@@ -22,8 +24,6 @@ const HomePage = (props) => {
   const [loading, setLoading] = useState(false);
   const [getCategory, _] = useState(props.getCategoryProps);
   const [getProductPopular, setGetProductPopular] = useState([]);
-
-
   const fetchGetProductPopularHandler = useCallback(async () => {
     try {
       const data = await productService.getProductPopular();
@@ -38,6 +38,10 @@ const HomePage = (props) => {
     setLoading(true)
     fetchGetProductPopularHandler();
   }, [fetchGetProductPopularHandler]);
+
+  const returnSOmething = (value: string) => {
+    return 'hello world'
+  }
 
   return (
     <div>
