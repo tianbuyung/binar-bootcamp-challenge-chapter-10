@@ -1,5 +1,4 @@
 import { Button, Container, Form } from "react-bootstrap";
-// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -12,7 +11,6 @@ import { useRouter } from "next/router";
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
-	// let navigate = useNavigate();
 	const router = useRouter();
 
 	const loginUser = async (e) => {
@@ -23,7 +21,6 @@ const LoginUser = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				// navigate("../profile", { replace: true });
 				router.push("/");
 			} else {
 				const message = await getData.json();
