@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
-import Navbar from "../../components/navbar";
-import UserService from "../../services/UserService";
+import BreadcrumbComponent from "@components/breadcrumbs/BreadCrumbs";
+import Navbar from "@components/navbar";
+import UserService from "@services/UserService";
 import ProfilePicture from "./components/ProfilePicture";
 import SocialMedia from "./components/SocialMedia";
 import ProfileMenu from "./components/ProfileMenu";
 
-import "./ProfilePage.css";
+import classes from "./ProfilePage.module.css";
 
 const userService = new UserService();
 
@@ -57,9 +57,9 @@ const ProfilePage = () => {
   ];
 
   return (
-    <>
+    <div>
       <Navbar variant={"dark"} bg={"dark"} />
-      <Container className="main-body">
+      <Container className={classes["main-body"]}>
         <BreadcrumbComponent data={breadcrumbs} />
         <Row className="gutters-sm mb-3 justify-content-center">
           <Col md={12}>
@@ -81,8 +81,15 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
+
+// ProfilePage.getInitialProps = async () => {
+//   try {
+//   } catch (error) {
+//     return error;
+//   }
+// };
 
 export default ProfilePage;

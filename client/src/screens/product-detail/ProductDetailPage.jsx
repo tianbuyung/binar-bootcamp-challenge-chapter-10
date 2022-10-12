@@ -26,7 +26,7 @@ const ProductDetailPage = ({ query }) => {
   const addCartDetail = async () => {
     try {
       const body = {
-        ProductId: product_id,
+        ProductId: product?.id,
         qty: 1,
         isIcrement: true,
       };
@@ -58,9 +58,11 @@ const ProductDetailPage = ({ query }) => {
             <Button variant="primary" onClick={addCartDetail} className="mb-3">
               Buy
             </Button>
-            <Card.Text>
-              Share: <ShareButton name={product?.name} id={product?.id} />
-            </Card.Text>
+            {product && (
+              <div className="d-flex align-items-center">
+                Share: <ShareButton name={product?.name} id={product?.id} />
+              </div>
+            )}
           </Card.Body>
         </Card>
       </Container>

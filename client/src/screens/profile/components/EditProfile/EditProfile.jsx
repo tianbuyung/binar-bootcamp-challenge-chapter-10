@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import UserService from "../../../../services/UserService";
+import UserService from "@services/UserService";
 import FormEdit from "./FormEdit";
 
 const userService = new UserService();
