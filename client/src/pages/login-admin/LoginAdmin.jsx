@@ -1,14 +1,17 @@
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
+import { loginAdmin } from "../../features/authSlice";
 
 const authservice = new AuthService();
 const LoginAdmin = () => {
 	const [user, setUser] = useState();
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const login = async (e) => {
 		e.preventDefault();
@@ -18,6 +21,7 @@ const LoginAdmin = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
+				dispatch(loginAdmin());
 				navigate("../admin", { replace: true });
 			} else {
 				const message = await getData.json();

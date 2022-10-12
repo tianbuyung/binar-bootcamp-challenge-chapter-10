@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Card, Col, Container, Row, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/navbar";
 
+import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
 import ProductService from "../../services/ProductService";
+import CardPlaceholder from "../../components/CardPlaceholder";
 
 const categoryService = new CategoryService();
 const productService = new ProductService();
@@ -157,6 +158,8 @@ const HomePage = () => {
 															<Card
 																style={{
 																	height: "400px",
+																	borderRadius:
+																		"30",
 																}}
 															>
 																<Card.Img
@@ -196,40 +199,14 @@ const HomePage = () => {
 							<h3 className="text-start text-white h2 mt-3">
 								Produk Terlaris
 							</h3>
-							<Row xs={1} md={5} className="g-4">
+							<Row xs={1} md={5}>
 								{Array.from(new Array(5)).map(
 									(_, i) => (
-										<Card
-											style={{
-												height: "400px",
-											}}
-										>
-											<Card.Img
-												variant="top"
-												src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
+										<Col>
+											<CardPlaceholder
+												className={"m-2"}
 											/>
-											<Card.Body>
-												<Placeholder
-													as={Card.Title}
-													animation="wave"
-												>
-													<Placeholder
-														xs={12}
-													/>
-												</Placeholder>
-												<Placeholder
-													as={Card.Text}
-													animation="wave"
-												>
-													<Placeholder
-														xs={12}
-													/>{" "}
-													<Placeholder
-														xs={7}
-													/>{" "}
-												</Placeholder>
-											</Card.Body>
-										</Card>
+										</Col>
 									)
 								)}
 							</Row>
@@ -243,8 +220,7 @@ const HomePage = () => {
 									lg={2}
 									xl={2}
 									className="text-start text-white"
-									>
-										
+								>
 									<Placeholder
 										md={6}
 										as={"h3"}
@@ -264,47 +240,13 @@ const HomePage = () => {
 									<Row xs={1} md={5} className="g-4">
 										{Array.from(new Array(5)).map(
 											(_, i) => (
-												<Card
-													style={{
-														height: "400px",
-													}}
-												>
-													<Card.Img
-														variant="top"
-														src="https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
+												<Col>
+													<CardPlaceholder
+														className={
+															"m-2"
+														}
 													/>
-													<Card.Body>
-														<Placeholder
-															as={
-																Card.Title
-															}
-															animation="wave"
-														>
-															<Placeholder
-																xs={
-																	12
-																}
-															/>
-														</Placeholder>
-														<Placeholder
-															as={
-																Card.Text
-															}
-															animation="wave"
-														>
-															<Placeholder
-																xs={
-																	12
-																}
-															/>{" "}
-															<Placeholder
-																xs={
-																	7
-																}
-															/>{" "}
-														</Placeholder>
-													</Card.Body>
-												</Card>
+												</Col>
 											)
 										)}
 									</Row>

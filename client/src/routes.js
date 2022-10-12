@@ -27,10 +27,10 @@ const ProtectedRouteNonAuth = ({ children }) => {
 const ProtectedRouteAuth = ({ children }) => {
 	const navigate = useNavigate();
 
-	const { isUser } = useAuth();
+	const isUser = useAuth();
 
-	if (isUser === true) {
-		navigate("/", { replace: true });
+	if (isUser === false) {
+		navigate("/login", { replace: true });
 	}
 	return children;
 };

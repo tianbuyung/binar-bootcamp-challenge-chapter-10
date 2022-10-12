@@ -1,5 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -42,54 +43,47 @@ const NavbarComponent = ({ variant, bg }) => {
 					Home
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-				{isUser ? (
-					<>
-						<Navbar.Brand>
-							<div
-								className="cursor-pointer"
-								onClick={() => navigate("/cart")}
-							>
-								Cart
-							</div>
-						</Navbar.Brand>
-						<Navbar.Brand>
-							<div
-								className="cursor-pointer"
-								onClick={() => navigate("/profile")}
-							>
-								Profile
-							</div>
-						</Navbar.Brand>
-						<Navbar.Brand>
-							<div
-								className="cursor-pointer"
-								onClick={userLogout}
-							>
-								Logout
-							</div>
-						</Navbar.Brand>
-					</>
-				) : (
-					<>
-						<Navbar.Brand>
-							<div
-								className="cursor-pointer"
-								onClick={() => navigate("/login")}
-							>
-								Login
-							</div>
-						</Navbar.Brand>
-						<Navbar.Brand>
-							<div
-								className="cursor-pointer"
-								onClick={() => navigate("/register")}
-							>
-								Register
-							</div>
-						</Navbar.Brand>
-					</>
-				)}
+				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="me-auto">
+						{isUser ? (
+							<>
+								<Nav.Link
+									onClick={() => navigate("/cart")}
+								>
+									Cart
+								</Nav.Link>
+								<Nav.Link>
+									<div
+										className="cursor-pointer"
+										onClick={() =>
+											navigate("/profile")
+										}
+									>
+										Profile
+									</div>
+								</Nav.Link>
+								<Nav.Link onClick={userLogout}>
+									Logout
+								</Nav.Link>
+							</>
+						) : (
+							<>
+								<Nav.Link
+									onClick={() => navigate("/login")}
+								>
+									Login
+								</Nav.Link>
+								<Nav.Link
+									onClick={() =>
+										navigate("/register")
+									}
+								>
+									Register
+								</Nav.Link>
+							</>
+						)}
+					</Nav>
+				</Navbar.Collapse>
 			</Container>
 		</Navbar>
 	);

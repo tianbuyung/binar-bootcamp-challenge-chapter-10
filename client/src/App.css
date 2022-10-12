@@ -42,4 +42,20 @@
   cursor: pointer;
 }
 
+.change-border {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.btn, .card{
+  border-radius: 10;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  -ms-border-radius: 10;
+  -o-border-radius: 10;
+}
+
 

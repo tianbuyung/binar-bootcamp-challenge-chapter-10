@@ -161,7 +161,11 @@ const CartPage = () => {
 										width="100"
 										height="auto"
 									/>
-									<Placeholder size="lg" lg={5} />
+									<Placeholder
+										size="lg"
+										lg={5}
+										bg="secondary"
+									/>
 									<Placeholder.Button
 										size="lg"
 										lg={1}
@@ -171,17 +175,23 @@ const CartPage = () => {
 							))}
 						</Col>
 						<Col>
-							<Card style={{ width: "100%" }}>
+							<Card
+								style={{
+									width: "100%",
+								}}
+							>
 								<Card.Body>
 									<Placeholder
 										as={Card.Title}
 										animation="glow"
+										bg="secondary"
 									>
 										<Placeholder lg={6} />
 									</Placeholder>
 									<Placeholder
 										as={Card.Text}
 										animation="glow"
+										bg="secondary"
 									>
 										<Placeholder lg={2} />
 									</Placeholder>
