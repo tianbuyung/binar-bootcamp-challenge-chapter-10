@@ -5,13 +5,14 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <Routes>
+      <div>Testing Next Js</div>
+      {/* <Routes>
         {routes.map((route) => {
           return (
             <Route key={route.path} path={route.path} element={route.page} />
           );
         })}
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
