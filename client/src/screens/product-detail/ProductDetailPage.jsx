@@ -1,16 +1,9 @@
 import Navbar from "../../components/navbar";
 import useProductDetailPage from "./useProductDetailPage";
-<<<<<<< HEAD:client/src/screens/product-detail/ProductDetailPage.jsx
 // import { useNavigate, useParams } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container'
-=======
-import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
->>>>>>> origin/main:client/src/pages/product-detail/ProductDetailPage.jsx
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";
@@ -19,12 +12,16 @@ const NO_IMAGE =
   "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
 const ProductDetailPage = ({ query }) => {
-    const { product } = useProductDetailPage({ id: query?.slug });
-    const breadcrumbs = [
-        { title: 'Home', isActive: false, href: "/" },
-        { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
-        { title: product?.name, isActive: true }
-    ]
+  const { product } = useProductDetailPage({ id: query?.slug });
+  const breadcrumbs = [
+    { title: "Home", isActive: false, href: "/" },
+    {
+      title: product?.Category?.name,
+      isActive: false,
+      href: `/product/category/${product?.Category?.id}`,
+    },
+    { title: product?.name, isActive: true },
+  ];
 
   const addCartDetail = async () => {
     try {
@@ -36,12 +33,12 @@ const ProductDetailPage = ({ query }) => {
 
       const data = await cartDetailService.createCartDetail(body);
 
-            alert(data.message);
-        } catch (error) {
-            alert(error.message);
-            // navigate("/login", { replace: true });
-        }
-    };
+      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+      // navigate("/login", { replace: true });
+    }
+  };
 
   return (
     <div>
@@ -71,13 +68,12 @@ const ProductDetailPage = ({ query }) => {
   );
 };
 
-
 ProductDetailPage.getInitialProps = async ({ query }) => {
-    // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
-    // const post = await res.json();
-    return {
-        query
-    }
-}
+  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
+  // const post = await res.json();
+  return {
+    query,
+  };
+};
 
 export default ProductDetailPage;

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import HomePage from "./screens/home";
 import ProductDetailPage from "./screens/product-detail";
 import ProfilePage from "./screens/profile";
@@ -13,27 +12,10 @@ import { API } from "./configs/config";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-=======
-import HomePage from "./pages/home";
-import ProductDetailPage from "./pages/product-detail";
-import ProfilePage from "./pages/profile";
-import LoginUser from "./pages/login/LoginUser";
-import LoginAdmin from "./pages/login-admin";
-import RegisterPage from "./pages/register";
-import Admin from "./pages/admin";
-import CartPage from "./pages/cart";
-import OrderPage from "./pages/order";
-import ProductListPage from "./pages/product-list";
-import AuthService from "./services/AuthService";
-
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
->>>>>>> origin/main
 
 // ! bug = masih bisa tembus di beberapa halaman
 const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
-<<<<<<< HEAD
   const navigate = useNavigate();
   const [data, setData] = useState("");
 
@@ -60,19 +42,6 @@ const ProtectedRouteNonAuth = ({ children }) => {
     };
     cekUser();
   }, []);
-=======
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyUser();
-
-			if (verify.status === 200) {
-				navigate("/", { replace: true });
-			}
-		};
-		cekUser();
-	});
->>>>>>> origin/main
 
   console.log("testing 1");
   //   return children;
@@ -80,54 +49,54 @@ const ProtectedRouteNonAuth = ({ children }) => {
 };
 
 const ProtectedRouteAuth = ({ children }) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyUser();
+  useEffect(() => {
+    const cekUser = async () => {
+      const verify = await authservice.verifyUser();
 
-			if (verify.status === 403) {
-				navigate("/", { replace: true });
-			}
-		};
-		cekUser();
-	});
+      if (verify.status === 403) {
+        navigate("/", { replace: true });
+      }
+    };
+    cekUser();
+  });
 
   return children;
 };
 
 // ! Error
 const ProtectedRouteAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekAdmin = async () => {
-			const verify = await authservice.verifyAdmin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cekAdmin = async () => {
+      const verify = await authservice.verifyAdmin();
 
-			if (verify.status === 403) {
-				navigate("/admin/login", { replace: true });
-			}
-		};
+      if (verify.status === 403) {
+        navigate("/admin/login", { replace: true });
+      }
+    };
 
-		cekAdmin();
-	});
-	return children;
+    cekAdmin();
+  });
+  return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyAdmin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cekUser = async () => {
+      const verify = await authservice.verifyAdmin();
 
-			if (verify.status === 200) {
-				navigate("/admin", { replace: true });
-			}
-		};
+      if (verify.status === 200) {
+        navigate("/admin", { replace: true });
+      }
+    };
 
-		cekUser();
-	});
+    cekUser();
+  });
 
-	return children;
+  return children;
 };
 const routes = [
   {
