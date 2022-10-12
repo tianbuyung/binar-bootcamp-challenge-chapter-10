@@ -9,6 +9,12 @@ router.get(
   UserController.getUserById
 );
 
+router.get(
+  "/badge",
+  passport.authenticate("user-role", { session: false }),
+  UserController.getBadgeByUser
+);
+
 router.get("/verify", UserController.verifyJwt);
 
 router.post("/logout", UserController.logout);

@@ -35,7 +35,7 @@ const loginAdmin = async (req, res) => {
 			httpOnly: true, // The cookie only accessible by the web server
 			signed: true, // Indicates if the cookie should be signed
 			secure: true, // Indicates if the cookie should be secure
-			samesite: "lax",
+			samesite: "none",
 		};
 
 		res.cookie("tokenAdmin", token, options);
@@ -59,7 +59,6 @@ const verifyJwt = (req, res) => {
 				message: "unauthorized",
 			});
 		} else {
-			console.log("berhasil");
 			res.status(200).json({
 				message: "authorized",
 			});

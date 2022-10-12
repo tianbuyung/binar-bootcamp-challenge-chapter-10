@@ -100,7 +100,9 @@ const HomePage = (props) => {
                             as={`/product/category/${category.id}`}
                             href="/product/category/[slug]"
                           >
-                            Lihat Semua
+                            {category?.Products?.length < 5
+                              ? ""
+                              : "Lihat Semua"}
                           </Link>
                         </Col>
                       </Row>
