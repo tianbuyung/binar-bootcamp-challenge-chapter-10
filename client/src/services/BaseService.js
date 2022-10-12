@@ -1,14 +1,21 @@
 import { API } from "../configs/config";
 
 class BaseService {
-	async fetch(url, options, authenticate = false) {
-		options.credentials = "include";
-		options.headers = { "Content-Type": "application/json" };
+  async fetch(url, options, authenticate = false) {
+    // if (authenticate) {
+    // 	const token = localStorage.getItem("token");
+    // 	options.headers = {
+    // 		authorization: `Bearer ${token}`,
+    // 	};
+    // }
 
-		const response = await fetch(API + url, options);
+    options.credentials = "include";
+    options.headers = { "Content-Type": "application/json" };
 
-		return await response.json();
-	}
+    const response = await fetch(API + url, options);
+
+    return await response.json();
+  }
 }
 
 export default BaseService;
