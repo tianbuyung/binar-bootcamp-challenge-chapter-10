@@ -1,11 +1,26 @@
+<<<<<<< HEAD:client/src/pages/product-detail/ProductDetailPage.jsx
+=======
+import Navbar from "../../components/navbar";
+import useProductDetailPage from "./useProductDetailPage";
+<<<<<<< HEAD:client/src/screens/product-detail/ProductDetailPage.jsx
+// import { useNavigate, useParams } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container'
+=======
+>>>>>>> origin:client/src/screens/product-detail/ProductDetailPage.jsx
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+<<<<<<< HEAD:client/src/pages/product-detail/ProductDetailPage.jsx
 import { Col, Placeholder, Row } from "react-bootstrap";
 
 import useProductDetailPage from "./useProductDetailPage";
 import Navbar from "../../components/navbar";
+=======
+>>>>>>> origin/main:client/src/pages/product-detail/ProductDetailPage.jsx
+>>>>>>> origin:client/src/screens/product-detail/ProductDetailPage.jsx
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";
@@ -13,11 +28,21 @@ import ShareButton from "./components/ShareButton";
 const NO_IMAGE =
 	"https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
+<<<<<<< HEAD:client/src/pages/product-detail/ProductDetailPage.jsx
 
 const ProductDetailPage = () => {
 	const navigate = useNavigate();
 	const { product_id } = useParams();
 	const { product, loading } = useProductDetailPage({ id: product_id });
+=======
+const ProductDetailPage = ({ query }) => {
+    const { product } = useProductDetailPage({ id: query?.slug });
+    const breadcrumbs = [
+        { title: 'Home', isActive: false, href: "/" },
+        { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
+        { title: product?.name, isActive: true }
+    ]
+>>>>>>> origin:client/src/screens/product-detail/ProductDetailPage.jsx
 
 	const breadcrumbs = [
 		{ title: "Home", isActive: false, href: "/" },
@@ -37,6 +62,7 @@ const ProductDetailPage = () => {
 				isIcrement: true,
 			};
 
+<<<<<<< HEAD:client/src/pages/product-detail/ProductDetailPage.jsx
 			const data = await cartDetailService.createCartDetail(body);
 			alert(data.message);
 		} catch (error) {
@@ -44,6 +70,14 @@ const ProductDetailPage = () => {
 			navigate("/login", { replace: true });
 		}
 	};
+=======
+            alert(data.message);
+        } catch (error) {
+            alert(error.message);
+            // navigate("/login", { replace: true });
+        }
+    };
+>>>>>>> origin:client/src/screens/product-detail/ProductDetailPage.jsx
 
 	return (
 		<div>
@@ -133,5 +167,14 @@ const ProductDetailPage = () => {
 		</div>
 	);
 };
+
+
+ProductDetailPage.getInitialProps = async ({ query }) => {
+    // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
+    // const post = await res.json();
+    return {
+        query
+    }
+}
 
 export default ProductDetailPage;

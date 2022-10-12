@@ -260,4 +260,18 @@ const HomePage = () => {
 	);
 };
 
+HomePage.getInitialProps = async () => {
+	const authService = new AuthService();
+	const props = {
+		getCategoryProps: [],
+	};
+	try {
+		const data = await fetchGetCategoryHandlerServer();
+		props.getCategoryProps = data?.categories;
+		return props;
+	} catch (e) {
+		// silent e
+		return props;
+	}
+};
 export default HomePage;
