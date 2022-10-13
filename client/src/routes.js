@@ -11,15 +11,16 @@ import ProductListPage from "./screens/product-list";
 import { useAuth, useAuthAdmin } from "./hooks/useAuth";
 
 import { useRouter } from "next/router";
-const router = useRouter();
 
-const ProtectedRouteNonAuth = ({ children }) => {
+const router = useRouter();
+const ProtectedRouteNonAuth = () => {
 	const isUser = useAuth();
 
 	if (isUser === true) {
 		router.replace("/profile");
 	}
-	return children;
+
+	// return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
@@ -49,79 +50,85 @@ const ProtectedRouteNonAuthAdmin = ({ children }) => {
 
 	return children;
 };
-const routes = [
-	{
-		path: "/",
-		page: <HomePage />,
-	},
-	{
-		path: "product/:product_id",
-		page: <ProductDetailPage />,
-	},
-	{
-		path: "product/category/:categoryId",
-		page: <ProductListPage />,
-	},
-	{
-		path: "profile",
-		page: (
-			<ProtectedRouteAuth>
-				<ProfilePage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "login",
-		page: (
-			<ProtectedRouteNonAuth>
-				<LoginUser />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "register",
-		page: (
-			<ProtectedRouteNonAuth>
-				<RegisterPage />
-			</ProtectedRouteNonAuth>
-		),
-	},
-	{
-		path: "admin/login",
-		page: (
-			<ProtectedRouteNonAuthAdmin>
-				<LoginAdmin />
-			</ProtectedRouteNonAuthAdmin>
-		),
-	},
-	{
-		path: "/cart",
-		page: (
-			<ProtectedRouteAuth>
-				<CartPage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "/order/:orderId",
-		page: (
-			<ProtectedRouteAuth>
-				<OrderPage />
-			</ProtectedRouteAuth>
-		),
-	},
-	{
-		path: "/admin",
-		page: (
-			<ProtectedRouteAdmin>
-				<Admin />
-			</ProtectedRouteAdmin>
-		),
-	},
-	// {
-	// 	path: "/test",
-	// 	page: <Test />,
-	// },
-];
 
-export default routes;
+// const routes = [
+// 	{
+// 		path: "/",
+// 		page: <HomePage />,
+// 	},
+// 	{
+// 		path: "product/:product_id",
+// 		page: <ProductDetailPage />,
+// 	},
+// 	{
+// 		path: "product/category/:categoryId",
+// 		page: <ProductListPage />,
+// 	},
+// 	{
+// 		path: "profile",
+// 		page: (
+// 			<ProtectedRouteAuth>
+// 				<ProfilePage />
+// 			</ProtectedRouteAuth>
+// 		),
+// 	},
+// 	{
+// 		path: "login",
+// 		page: (
+// 			<ProtectedRouteNonAuth>
+// 				<LoginUser />
+// 			</ProtectedRouteNonAuth>
+// 		),
+// 	},
+// 	{
+// 		path: "register",
+// 		page: (
+// 			<ProtectedRouteNonAuth>
+// 				<RegisterPage />
+// 			</ProtectedRouteNonAuth>
+// 		),
+// 	},
+// 	{
+// 		path: "admin/login",
+// 		page: (
+// 			<ProtectedRouteNonAuthAdmin>
+// 				<LoginAdmin />
+// 			</ProtectedRouteNonAuthAdmin>
+// 		),
+// 	},
+// 	{
+// 		path: "/cart",
+// 		page: (
+// 			<ProtectedRouteAuth>
+// 				<CartPage />
+// 			</ProtectedRouteAuth>
+// 		),
+// 	},
+// 	{
+// 		path: "/order/:orderId",
+// 		page: (
+// 			<ProtectedRouteAuth>
+// 				<OrderPage />
+// 			</ProtectedRouteAuth>
+// 		),
+// 	},
+// 	{
+// 		path: "/admin",
+// 		page: (
+// 			<ProtectedRouteAdmin>
+// 				<Admin />
+// 			</ProtectedRouteAdmin>
+// 		),
+// 	},
+// 	// {
+// 	// 	path: "/test",
+// 	// 	page: <Test />,
+// 	// },
+// ];
+
+export {
+	ProtectedRouteNonAuth,
+	ProtectedRouteAuth,
+	ProtectedRouteAdmin,
+	ProtectedRouteNonAuthAdmin,
+};

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { cekUser, cekAdmin } from "../features/authSlice";
@@ -9,7 +9,12 @@ const useAuth = () => {
 		return state.auth;
 	});
 
-	useEffect(() => {
+	// useEffect(() => {
+	// if (isUser.isLoading === true) {
+	// 	dispatch(cekUser());
+	// }
+	// }, [isUser]);
+	useCallback(() => {
 		if (isUser.isLoading === true) {
 			dispatch(cekUser());
 		}

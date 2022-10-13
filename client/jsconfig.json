@@ -5,7 +5,8 @@
     "paths": {
         "@screens/*": ["screens/*.js"],
         "@components/*": ["components/*"],
-        "@services/*" : ["services/*.js"]
+        "@services/*" : ["services/*.js"],
+        "@features/" : ["features/*"],
     }
     
   },

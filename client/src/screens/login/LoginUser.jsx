@@ -7,11 +7,11 @@ import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import Navbar from "../../components/navbar";
 import { useRouter } from "next/router";
+import * as routes from "../../routes";
 
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
-	// let navigate = useNavigate();
 	const router = useRouter();
 
 	const loginUser = async (e) => {
@@ -22,7 +22,6 @@ const LoginUser = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				// navigate("../profile", { replace: true });
 				router.push("/");
 			} else {
 				const message = await getData.json();
@@ -69,6 +68,10 @@ const LoginUser = () => {
 			</Container>
 		</>
 	);
+};
+
+LoginUser.getInitialProps = async () => {
+	routes.ProtectedRouteNonAuth();
 };
 
 export default LoginUser;

@@ -5,6 +5,7 @@
         "@screens/*": ["screens/*"],
         "@components/*": ["components/*"],
         "@services/*" : ["services/*.js"],
+        "@features/" : ["features/*"],
     },
     "target": "ES6",
     "module": "CommonJS",
