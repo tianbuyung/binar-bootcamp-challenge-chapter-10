@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -11,8 +11,8 @@ import AuthService from "../../services/AuthService";
 const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
 	const isUser = useAuth();
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const userLogout = async () => {
 		try {
@@ -22,7 +22,7 @@ const NavbarComponent = ({ variant, bg }) => {
 				const message = await getData.json();
 				alert(message.message);
 				dispatch(logout());
-				navigate("../login", { replace: true });
+				router.replace("/login");
 			} else {
 				const message = await getData.json();
 				alert(message.message);
@@ -37,7 +37,7 @@ const NavbarComponent = ({ variant, bg }) => {
 		<Navbar variant={variant} bg={bg} expand="lg">
 			<Container>
 				<Navbar.Brand
-					onClick={() => navigate("/")}
+					onClick={() => router.push("/")}
 					className="cursor-pointer"
 				>
 					Home
@@ -48,7 +48,9 @@ const NavbarComponent = ({ variant, bg }) => {
 						{isUser ? (
 							<>
 								<Nav.Link
-									onClick={() => navigate("/cart")}
+									onClick={() =>
+										router.push("/cart")
+									}
 								>
 									Cart
 								</Nav.Link>
@@ -56,7 +58,7 @@ const NavbarComponent = ({ variant, bg }) => {
 									<div
 										className="cursor-pointer"
 										onClick={() =>
-											navigate("/profile")
+											router.push("/profile")
 										}
 									>
 										Profile
@@ -69,13 +71,15 @@ const NavbarComponent = ({ variant, bg }) => {
 						) : (
 							<>
 								<Nav.Link
-									onClick={() => navigate("/login")}
+									onClick={() =>
+										router.push("/login")
+									}
 								>
 									Login
 								</Nav.Link>
 								<Nav.Link
 									onClick={() =>
-										navigate("/register")
+										router.push("/register")
 									}
 								>
 									Register

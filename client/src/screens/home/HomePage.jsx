@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Card, Col, Container, Row, Placeholder } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
-import Navbar from "../../components/navbar";
-import CategoryService from "../../services/CategoryService";
-import ProductService from "../../services/ProductService";
-import CardPlaceholder from "../../components/CardPlaceholder";
+import Navbar from "@components/navbar";
+import CategoryService from "@services/CategoryService";
+import ProductService from "@services/ProductService";
+import CardPlaceholder from "@components/CardPlaceholder";
 
 const categoryService = new CategoryService();
 const productService = new ProductService();
@@ -65,7 +65,8 @@ const HomePage = () => {
 												}
 											>
 												<Link
-													to={`product/${productPopuler?.Product?.id}`}
+													as={`product/${productPopuler?.Product?.id}`}
+													href="/product/[slug]"
 													className="text-black text-decoration-none"
 												>
 													<Card

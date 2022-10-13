@@ -1,6 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { Col, Placeholder, Row } from "react-bootstrap";
 
@@ -15,8 +14,8 @@ const NO_IMAGE =
 const cartDetailService = new CartDetailService();
 
 const ProductDetailPage = () => {
-	const navigate = useNavigate();
-	const { product_id } = useParams();
+	const router = useRouter();
+	const { product_id } = router.query;
 	const { product, loading } = useProductDetailPage({ id: product_id });
 
 	const breadcrumbs = [

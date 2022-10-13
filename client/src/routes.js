@@ -10,47 +10,41 @@ import OrderPage from "./screens/order";
 import ProductListPage from "./screens/product-list";
 import { useAuth, useAuthAdmin } from "./hooks/useAuth";
 
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
+const router = useRouter();
 
 const ProtectedRouteNonAuth = ({ children }) => {
-	const navigate = useNavigate();
-
 	const isUser = useAuth();
 
 	if (isUser === true) {
-		navigate("/profile", { replace: true });
+		router.replace("/profile");
 	}
 	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
-	const navigate = useNavigate();
-
 	const isUser = useAuth();
 
 	if (isUser === false) {
-		navigate("/login", { replace: true });
+		router.replace("/login");
 	}
 	return children;
 };
 
 const ProtectedRouteAdmin = ({ children }) => {
-	const navigate = useNavigate();
-
 	const isAdmin = useAuthAdmin();
 
 	if (isAdmin === false) {
-		navigate("/admin/login", { replace: true });
+		router.replace("/admin/login");
 	}
 	return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
-	const navigate = useNavigate();
 	const isAdmin = useAuthAdmin();
 
 	if (isAdmin === true) {
-		navigate("/admin", { replace: true });
+		router.replace("/admin");
 	}
 
 	return children;

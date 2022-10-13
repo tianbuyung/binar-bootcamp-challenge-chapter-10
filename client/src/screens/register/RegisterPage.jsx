@@ -1,5 +1,5 @@
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import Forms from "../../components/Forms";
@@ -9,7 +9,7 @@ import Navbar from "../../components/navbar";
 const authservice = new AuthService();
 const RegisterPage = () => {
 	const [user, setUser] = useState();
-	let navigate = useNavigate();
+	let router = useRouter();
 
 	const createUser = async (e) => {
 		e.preventDefault();
@@ -18,7 +18,7 @@ const RegisterPage = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				navigate("../login", { replace: true });
+				router.replace("/login");
 			} else {
 				const message = await getData.json();
 				alert(await message.message);

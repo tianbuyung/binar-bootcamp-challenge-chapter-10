@@ -1,6 +1,5 @@
-<<<<<<< HEAD:client/src/pages/product-list/ProductListPage.jsx
 import { Container, Row, Col, Card, Placeholder } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
 
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
@@ -13,7 +12,7 @@ const NO_IMAGE =
 const ProductListPage = () => {
 	const { products, totalPage, page, setPage, loading } =
 		useProductListPage();
-	const navigate = useNavigate();
+	const router = useRouter();
 	const breadcrumbs = [
 		{ title: "Home", isActive: false, href: "/" },
 		{ title: products[0]?.Category?.name, isActive: true },
@@ -31,36 +30,37 @@ const ProductListPage = () => {
 					>
 						{products?.map((p) => (
 							<Col
-								onClick={() =>
-									navigate(`/product/${p?.id}`)
-								}
 								className="cursor-pointer"
 								key={p?.id}
 								class="mb-2 pb-1"
 							>
-								<Card
-									style={{
-										width: "100%",
-										height: "400px",
-									}}
+								<Link
+									as={`/product/${p.id}`}
+									href="/product/[slug]"
+									className="text-black text-decoration-none"
 								>
-									<Card.Img
-										variant="top"
-										src={p?.image || NO_IMAGE}
-									/>
-									<Card.Body>
-										<Card.Title>
-											{p?.name}
-										</Card.Title>
-										<Card.Text>
-											Category:{" "}
-											{p?.Category?.name}
-										</Card.Text>
-										<Card.Text>
-											Price: Rp. {p?.price}K
-										</Card.Text>
-									</Card.Body>
-								</Card>
+									<Card style={{ width: "100%" }}>
+										<Card.Img
+											variant="top"
+											src={
+												p?.image || NO_IMAGE
+											}
+										/>
+										<Card.Body>
+											<Card.Title>
+												{p?.name}
+											</Card.Title>
+											<Card.Text>
+												Category:{" "}
+												{p?.Category?.name}
+											</Card.Text>
+											<Card.Text>
+												Price: Rp.{" "}
+												{p?.price}K
+											</Card.Text>
+										</Card.Body>
+									</Card>
+								</Link>
 							</Col>
 						))}
 					</Row>
@@ -138,81 +138,5 @@ const ProductListPage = () => {
 		</>
 	);
 };
-=======
-import useProductListPage from './useProductListPage'
-import { Container, Row, Col, Card, Button } from 'react-bootstrap'
-// import { useNavigate } from 'react-router-dom'
-import BreadcrumbComponent from '../../components/breadcrumbs/BreadCrumbs'
-import Navbar from '../../components/navbar'
-import ReactPaginate from 'react-paginate';
-import Link from 'next/link'
-
-const NO_IMAGE = 'https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg'
-const ProductListPage = ({ query }) => {
-    const { products, totalPage, page, setPage } = useProductListPage({ query })
-    // const navigate = useNavigate()
-    const breadcrumbs = [
-        { title: 'Home', isActive: false, href: "/" },
-        { title: products[0]?.Category?.name, isActive: true }
-    ]
-    return (
-        <>
-            <Navbar variant="dark" bg="dark" />
-            <Container>
-                <BreadcrumbComponent data={breadcrumbs} />
-                <Row>
-                    {products?.map((p)=> (
-                        <Col className='cursor-pointer' key={p?.id} xs={3}>
-                            <Link
-                                    as={`/product/${p.id}`}
-                                    href="/product/[slug]"
-                                    className="text-black text-decoration-none"
-                                >
-                                    <Card style={{ width: '100%' }}>
-                                        <Card.Img variant="top" src={p?.image || NO_IMAGE} />
-                                        <Card.Body>
-                                            <Card.Title>{p?.name}</Card.Title>
-                                            <Card.Text>
-                                                Category: {p?.Category?.name}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                Price: Rp. {p?.price}K
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                        
-                                </Link>
-                        </Col>
-                    ))}
-                    
-                </Row>
-                <ReactPaginate
-                    breakLabel="..."
-                    nextLabel="next >"
-                    onPageChange={({ selected }) => setPage(selected + 1)}
-                    pageRangeDisplayed={5}
-                    pageCount={totalPage}
-                    previousLabel="< previous"
-                    breakLinkClassName={'page-link'}
-                    containerClassName={'pagination'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    activeClassName={'active'}
-                />
-            </Container>
-        </>
-    )
-}
-ProductListPage.getInitialProps = async ({ query }, screen) => {
-    console.log('query', query);
-    return {
-        query
-    }
-}
->>>>>>> origin:client/src/screens/product-list/ProductListPage.jsx
 
 export default ProductListPage;

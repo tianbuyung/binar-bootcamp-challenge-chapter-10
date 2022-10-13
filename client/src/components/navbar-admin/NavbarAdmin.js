@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 import { logoutAdmin } from "../../features/authSlice";
@@ -8,8 +8,8 @@ import AuthService from "../../services/AuthService";
 
 const authservice = new AuthService();
 const NavbarAdmin = () => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const adminLogout = async () => {
 		try {
@@ -19,7 +19,7 @@ const NavbarAdmin = () => {
 				const message = await getData.json();
 				alert(message.message);
 				dispatch(logoutAdmin());
-				navigate("/admin/login", { replace: true });
+				router.replace("/admin/login");
 			} else {
 				const message = await getData.json();
 				alert(message.message);
@@ -33,7 +33,7 @@ const NavbarAdmin = () => {
 		<Navbar variant={"dark"} bg={"dark"} expand="lg">
 			<Container>
 				<Navbar.Brand
-					onClick={() => navigate("/admin")}
+					onClick={() => router.push("/admin")}
 					className="cursor-pointer"
 				>
 					Home
@@ -43,7 +43,7 @@ const NavbarAdmin = () => {
 				<Navbar.Brand>
 					<div
 						className="cursor-pointer"
-						onClick={() => navigate("/admin")}
+						onClick={() => router.push("/admin")}
 					>
 						Product
 					</div>

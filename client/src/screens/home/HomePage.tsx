@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, Placeholder } from "react-bootstrap";
 import Link from "next/link";
+
 import Navbar from "../../components/navbar";
 import CategoryService from "../../services/CategoryService";
 import ProductService from "../../services/ProductService";
 import AuthService from "../../services/AuthService";
-import ButtonComponent from '../../components/button'
+import CardPlaceholder from "components/CardPlaceholder";
 
 const categoryService = new CategoryService();
 const productService = new ProductService();
-
-
 
 const fetchGetCategoryHandlerServer = async () => {
     try {
@@ -38,10 +37,6 @@ const HomePage = (props) => {
     setLoading(true)
     fetchGetProductPopularHandler();
   }, [fetchGetProductPopularHandler]);
-
-  const returnSOmething = (value: string) => {
-    return 'hello world'
-  }
 
   return (
     <div>
@@ -76,7 +71,6 @@ const HomePage = (props) => {
                             <Card.Text>
                               Price: Rp. {productPopuler?.Product?.price}K
                             </Card.Text>
-                            <Button variant="success">Details</Button>
                           </Card.Body>
                         </Card>
                       </Link>
@@ -132,7 +126,6 @@ const HomePage = (props) => {
                                   <Card.Text>
                                     Price: Rp. {product.price}K
                                   </Card.Text>
-                                  <Button variant="success">Details</Button>
                                 </Card.Body>
                               </Card>
                             </Link>
@@ -146,7 +139,67 @@ const HomePage = (props) => {
             })}
           </>
         ) : (
-          <div>Loading...</div>
+          <>
+						<div className="my-3 p-3 bg-secondary rounded">
+							<h3 className="text-start text-white h2 mt-3">
+								Produk Terlaris
+							</h3>
+							<Row xs={1} md={5}>
+								{Array.from(new Array(5)).map(
+									(_, i) => (
+										<Col>
+											<CardPlaceholder
+												className={"m-2"}
+											/>
+										</Col>
+									)
+								)}
+							</Row>
+						</div>
+						<h2 className="text-start h2 mt-3">
+							Jelajahi Produk Kami
+						</h2>
+						<div className="my-3 p-3 bg-secondary rounded">
+							<Row className="align-items-center">
+								<Col
+									lg={2}
+									xl={2}
+									className="text-start text-white"
+								>
+									<Placeholder
+										md={6}
+										as={"h3"}
+										animation="wave"
+										variant="primary"
+									/>
+								</Col>
+								<Col lg={"auto"} xl={"10"}>
+									<Row>
+										<Col className="text-end my-3">
+											<Placeholder
+												xs={3}
+												animation="wave"
+											/>
+										</Col>
+									</Row>
+									<Row xs={1} md={5} className="g-4">
+										{Array.from(new Array(5)).map(
+											(_, i) => (
+												<Col>
+													<CardPlaceholder
+														className={
+															"m-2"
+														}
+													/>
+												</Col>
+											)
+										)}
+									</Row>
+								</Col>
+							</Row>
+						</div>
+					</>
+
         )}
       </Container>
     </div>

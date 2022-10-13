@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "jsx": "react",
-    "jsx": "react",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-        "@screens/*": ["./screens/*.js"],
-        "@components/*": ["./components/*.js"]
+        "@screens/*": ["screens/*.js"],
+        "@components/*": ["components/*"],
+        "@services/*" : ["services/*.js"]
     }
     
   },
-   "include": [
-    "."
+  "include": [
+    "*"
   ],
   "exclude": ["node_modules"]
 }

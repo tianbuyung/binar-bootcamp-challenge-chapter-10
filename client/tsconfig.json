@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "paths": {
-       "@screens/*": ["./src/screens/*"],
+        "@screens/*": ["screens/*"],
+        "@components/*": ["components/*"],
+        "@services/*" : ["services/*.js"],
     },
     "target": "ES6",
     "module": "CommonJS",
@@ -27,7 +30,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
   ],
   "exclude": [
     "node_modules"

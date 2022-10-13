@@ -8,7 +8,7 @@ import {
 	Stack,
 	Placeholder,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 import CartDetailService from "../../services/CartDetailService";
 import CartService from "../../services/CartService";
@@ -23,7 +23,7 @@ const cartDetailService = new CartDetailService();
 const orderService = new OrderService();
 
 const CartPage = () => {
-	const navigate = useNavigate();
+	const router = useRouter();
 	const [loading, setLoading] = useState(true);
 	const [cart, setCart] = useState();
 	const [inputs, setInputs] = useState({});
@@ -102,7 +102,7 @@ const CartPage = () => {
 
 		const data = await orderService.createOrder(body);
 		alert(data.message);
-		navigate("/order/" + data.data.id);
+		router.push("/order/" + data.data.id);
 	};
 
 	return (
