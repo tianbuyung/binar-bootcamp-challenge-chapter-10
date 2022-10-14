@@ -1,9 +1,9 @@
 import Navbar from "../../components/navbar";
 import useProductDetailPage from "./useProductDetailPage";
 // import { useNavigate, useParams } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container'
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";
@@ -12,29 +12,33 @@ const NO_IMAGE =
   "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
 const ProductDetailPage = ({ query }) => {
-    const { product } = useProductDetailPage({ id: query?.slug });
-    const breadcrumbs = [
-        { title: 'Home', isActive: false, href: "/" },
-        { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
-        { title: product?.name, isActive: true }
-    ]
+  const { product } = useProductDetailPage({ id: query?.slug });
+  const breadcrumbs = [
+    { title: "Home", isActive: false, href: "/" },
+    {
+      title: product?.Category?.name,
+      isActive: false,
+      href: `/product/category/${product?.Category?.id}`,
+    },
+    { title: product?.name, isActive: true },
+  ];
 
   const addCartDetail = async () => {
     try {
       const body = {
-        ProductId: product_id,
+        ProductId: product?.id,
         qty: 1,
         isIcrement: true,
       };
 
       const data = await cartDetailService.createCartDetail(body);
 
-            alert(data.message);
-        } catch (error) {
-            alert(error.message);
-            // navigate("/login", { replace: true });
-        }
-    };
+      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+      // navigate("/login", { replace: true });
+    }
+  };
 
   return (
     <div>
@@ -54,14 +58,11 @@ const ProductDetailPage = ({ query }) => {
             <Button variant="primary" onClick={addCartDetail} className="mb-3">
               Buy
             </Button>
-            <Card.Text>
-              {product && (
-                <div>
-                  Share: <ShareButton name={product?.name} id={product?.id} />
-                </div>
-              )}
-              
-            </Card.Text>
+            {product && (
+              <div className="d-flex align-items-center">
+                Share: <ShareButton name={product?.name} id={product?.id} />
+              </div>
+            )}
           </Card.Body>
         </Card>
       </Container>
@@ -69,13 +70,12 @@ const ProductDetailPage = ({ query }) => {
   );
 };
 
-
 ProductDetailPage.getInitialProps = async ({ query }) => {
-    // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
-    // const post = await res.json();
-    return {
-        query
-    }
-}
+  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
+  // const post = await res.json();
+  return {
+    query,
+  };
+};
 
 export default ProductDetailPage;

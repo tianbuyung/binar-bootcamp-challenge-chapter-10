@@ -16,17 +16,17 @@ import { useEffect } from "react";
 // ! bug = masih bisa tembus di beberapa halaman
 const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyUser();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cekUser = async () => {
+      const verify = await authservice.verifyUser();
 
-			if (verify.status === 200) {
-				navigate("/", { replace: true });
-			}
-		};
-		cekUser();
-	});
+      if (verify.status === 200) {
+        navigate("/", { replace: true });
+      }
+    };
+    cekUser();
+  });
 
   console.log("testing 1");
   //   return children;
@@ -34,54 +34,54 @@ const ProtectedRouteNonAuth = ({ children }) => {
 };
 
 const ProtectedRouteAuth = ({ children }) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyUser();
+  useEffect(() => {
+    const cekUser = async () => {
+      const verify = await authservice.verifyUser();
 
-			if (verify.status === 403) {
-				navigate("/", { replace: true });
-			}
-		};
-		cekUser();
-	});
+      if (verify.status === 403) {
+        navigate("/", { replace: true });
+      }
+    };
+    cekUser();
+  });
 
   return children;
 };
 
 // ! Error
 const ProtectedRouteAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekAdmin = async () => {
-			const verify = await authservice.verifyAdmin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cekAdmin = async () => {
+      const verify = await authservice.verifyAdmin();
 
-			if (verify.status === 403) {
-				navigate("/admin/login", { replace: true });
-			}
-		};
+      if (verify.status === 403) {
+        navigate("/admin/login", { replace: true });
+      }
+    };
 
-		cekAdmin();
-	});
-	return children;
+    cekAdmin();
+  });
+  return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		const cekUser = async () => {
-			const verify = await authservice.verifyAdmin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cekUser = async () => {
+      const verify = await authservice.verifyAdmin();
 
-			if (verify.status === 200) {
-				navigate("/admin", { replace: true });
-			}
-		};
+      if (verify.status === 200) {
+        navigate("/admin", { replace: true });
+      }
+    };
 
-		cekUser();
-	});
+    cekUser();
+  });
 
-	return children;
+  return children;
 };
 const routes = [
   {

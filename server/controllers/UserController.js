@@ -130,7 +130,7 @@ const getBadgeByUser = async (req, res) => {
 
     let val = await results[0].totalShop;
     console.log(val);
-    let badge = "None";
+    let badge = "Basic";
 
     if (val > 100000000) {
       badge = "Ruby Diamond";
@@ -157,7 +157,38 @@ const getBadgeByUser = async (req, res) => {
           totalShop: 0,
         },
       ],
-      badge: "None",
+      badge: "Basic",
+    });
+  }
+};
+
+const editUser = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const { name, address, phoneNumber, twitter, instagram, facebook } =
+      req.body;
+    const options = {
+      where: {
+        id,
+      },
+    };
+    let user = await User.findOne(options);
+    if (user) {
+      await User.update(
+        { name, address, phoneNumber, twitter, instagram, facebook },
+        options
+      );
+      res.status(200).json({
+        message: "The user has been successfully updated",
+      });
+    } else {
+      res.status(400).json({
+        message: "The user is not found!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
     });
   }
 };
@@ -169,4 +200,5 @@ module.exports = {
   logout,
   getUserById,
   getBadgeByUser,
+  editUser,
 };
