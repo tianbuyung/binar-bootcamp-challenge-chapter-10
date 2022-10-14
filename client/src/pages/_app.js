@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../index.css";
 import "../App.css";
-import store from "./store";
+import store from "../store";
 import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {

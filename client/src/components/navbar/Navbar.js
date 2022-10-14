@@ -1,9 +1,11 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import useAuth from "../../hooks/useAuth";
+import Nav from "react-bootstrap/Nav";
+import { useAuth } from "../../hooks/useAuth";
 import Link from "next/link";
 import { API } from "../../configs/config";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const NavbarComponent = ({ variant, bg }) => {
 	const isUser = useAuth();
