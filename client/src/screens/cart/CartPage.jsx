@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import CartDetailService from "../../services/CartDetailService";
 import CartService from "../../services/CartService";
 import OrderService from "../../services/OrderService";
@@ -13,7 +12,6 @@ const cartDetailService = new CartDetailService();
 const orderService = new OrderService();
 
 const CartPage = () => {
-	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 	const [cart, setCart] = useState();
 	const [inputs, setInputs] = useState({});
@@ -85,7 +83,7 @@ const CartPage = () => {
 
 		const data = await orderService.createOrder(body);
 		alert(data.message);
-		navigate('/order/' + data.data.id);
+		// navigate('/order/' + data.data.id);
 	}
 
 	return (
