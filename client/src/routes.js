@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-import HomePage from "./screens/home";
-import ProductDetailPage from "./screens/product-detail";
-import ProfilePage from "./screens/profile";
-import LoginUser from "./screens/login/LoginUser";
-import LoginAdmin from "./screens/login-admin";
-import RegisterPage from "./screens/register";
-import Admin from "./screens/admin";
-import CartPage from "./screens/cart";
-import OrderPage from "./screens/order";
-import ProductListPage from "./screens/product-list";
-import { API } from "./configs/config";
-
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-=======
 import HomePage from "./pages/home";
 import ProductDetailPage from "./pages/product-detail";
 import ProfilePage from "./pages/profile";
@@ -28,39 +12,10 @@ import AuthService from "./services/AuthService";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
->>>>>>> origin/main
 
 // ! bug = masih bisa tembus di beberapa halaman
 const authservice = new AuthService();
 const ProtectedRouteNonAuth = ({ children }) => {
-<<<<<<< HEAD
-  const navigate = useNavigate();
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    const cekUser = () => {
-      console.log("testing 2");
-      const verify = fetch(API + "/users/verify", {
-        method: "GET",
-        redirect: "follow",
-        credentials: "include",
-      });
-      console.log("verify", verify);
-
-      verify
-        .then((res) => {
-          console.log("res", res);
-          if (res.status === 200) {
-            navigate("/", { replace: true });
-          }
-        })
-        .catch((err) => {
-          console.log("error verify user = ", err);
-        });
-    };
-    cekUser();
-  }, []);
-=======
 	const navigate = useNavigate();
 	useEffect(() => {
 		const cekUser = async () => {
@@ -72,7 +27,6 @@ const ProtectedRouteNonAuth = ({ children }) => {
 		};
 		cekUser();
 	});
->>>>>>> origin/main
 
   console.log("testing 1");
   //   return children;

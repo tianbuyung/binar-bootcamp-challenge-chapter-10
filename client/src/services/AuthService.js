@@ -43,9 +43,12 @@ export default class AuthService extends BaseService {
   };
 
   // ? buat utk verify user dan admin?
-  verifyUser = async () => {
+  verifyUser = async (token) => {
     const options = {
       method: "GET",
+      headers: {
+        Authorization: token,
+      },
     };
 
     return await this.customFetch(API + "/users/verify", options);
