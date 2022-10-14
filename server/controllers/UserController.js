@@ -52,7 +52,7 @@ const login = async (req, res) => {
 			httpOnly: true,
 			signed: true, // Indicates if the cookie should be signed
 			secure: true,
-			samesite: "none",
+			samesite: "lax",
 		};
 
 		res.cookie("token", token, options);
@@ -69,6 +69,10 @@ const login = async (req, res) => {
 
 const verifyJwt = (req, res) => {
 	const token = req.signedCookies.token;
+	console.log(
+		"🚀 ~ file: UserController.js ~ line 72 ~ verifyJwt ~ token",
+		token
+	);
 	jwt.verify(token, process.env.KEY, (err, result) => {
 		if (err) {
 			res.status(403).json({

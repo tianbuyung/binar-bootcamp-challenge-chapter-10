@@ -9,12 +9,7 @@ const useAuth = () => {
 		return state.auth;
 	});
 
-	// useEffect(() => {
-	// if (isUser.isLoading === true) {
-	// 	dispatch(cekUser());
-	// }
-	// }, [isUser]);
-	useCallback(() => {
+	useEffect(() => {
 		if (isUser.isLoading === true) {
 			dispatch(cekUser());
 		}

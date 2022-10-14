@@ -12,15 +12,16 @@ import { useAuth, useAuthAdmin } from "./hooks/useAuth";
 
 import { useRouter } from "next/router";
 
-const router = useRouter();
-const ProtectedRouteNonAuth = () => {
-	const isUser = useAuth();
+const ProtectedRouteNonAuth = (WrappedComponent) => {
+	return (props) => {
+		const router = useRouter();
+		const isUser = useAuth();
 
-	if (isUser === true) {
-		router.replace("/profile");
-	}
-
-	// return children;
+		if (isUser === true) {
+			router.replace("/profile");
+		}
+		return <WrappedComponent {...props} />;
+	};
 };
 
 const ProtectedRouteAuth = ({ children }) => {
@@ -120,15 +121,10 @@ const ProtectedRouteNonAuthAdmin = ({ children }) => {
 // 			</ProtectedRouteAdmin>
 // 		),
 // 	},
-// 	// {
-// 	// 	path: "/test",
-// 	// 	page: <Test />,
-// 	// },
+// 	{
+// 		path: "/test",
+// 		page: <Test />,
+// 	},
 // ];
 
-export {
-	ProtectedRouteNonAuth,
-	ProtectedRouteAuth,
-	ProtectedRouteAdmin,
-	ProtectedRouteNonAuthAdmin,
-};
+export default ProtectedRouteNonAuth;
