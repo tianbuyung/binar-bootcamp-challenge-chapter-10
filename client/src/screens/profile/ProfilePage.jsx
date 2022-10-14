@@ -8,7 +8,7 @@ import SocialMedia from "./components/SocialMedia";
 import ProfileMenu from "./components/ProfileMenu";
 
 import classes from "./ProfilePage.module.css";
-
+import withAuth from "../../hoc/withAuth";
 const userService = new UserService();
 
 const ProfilePage = () => {
@@ -85,11 +85,4 @@ const ProfilePage = () => {
   );
 };
 
-// ProfilePage.getInitialProps = async () => {
-//   try {
-//   } catch (error) {
-//     return error;
-//   }
-// };
-
-export default ProfilePage;
+export default withAuth(ProfilePage);

@@ -18,7 +18,7 @@ const ProductListPage = ({ query }) => {
         <>
             <Navbar variant="dark" bg="dark" />
             <Container>
-                <BreadcrumbComponent data={breadcrumbs} />
+                <BreadcrumbComponent data={breadcrumbs} baseColor="black" />
                 <Row>
                     {products?.map((p)=> (
                         <Col className='cursor-pointer' key={p?.id} xs={3}>
