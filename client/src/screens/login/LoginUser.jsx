@@ -6,7 +6,7 @@ import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import Navbar from "../../components/navbar";
 import { useRouter } from 'next/router'
-
+import withNoAuth from '../../hoc/withNoAuth';
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
@@ -19,13 +19,14 @@ const LoginUser = () => {
 			const getData = await authservice.loginUser(user);
 
 			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
+				const response = await getData.json();
+				alert(response.message);
 				// navigate("../profile", { replace: true });
+				localStorage.setItem('token', response.token);
 				router.push('/')
 			} else {
-				const message = await getData.json();
-				alert(await message.message);
+				const response = await getData.json();
+				alert(await meresponsessage.message);
 			}
 		} catch (err) {
 			alert("Error! Please try again");
@@ -70,4 +71,4 @@ const LoginUser = () => {
 	);
 };
 
-export default LoginUser;
+export default withNoAuth(LoginUser);

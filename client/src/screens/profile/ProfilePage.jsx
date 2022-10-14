@@ -11,8 +11,8 @@ import {
 import Navbar from "../../components/navbar";
 import UserService from "../../services/UserService";
 
-import "./ProfilePage.css";
-
+import classes from "./ProfilePage.module.css";
+import withAuth from "../../hoc/withAuth";
 const userService = new UserService();
 
 const ProfilePage = () => {
@@ -44,7 +44,7 @@ const ProfilePage = () => {
   return (
     <>
       <Navbar variant={"dark"} bg={"dark"} />
-      <Container className="main-body">
+      <Container className={classes['main-body']}>
         <Row className="gutters-sm">
           <Col md={4} className="mb-3">
             <Card>
@@ -136,4 +136,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuth(ProfilePage);
