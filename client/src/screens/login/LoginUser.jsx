@@ -1,19 +1,20 @@
 import { Button, Container, Form } from "react-bootstrap";
-// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { login } from "../../features/authSlice";
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import Navbar from "../../components/navbar";
-import { useRouter } from 'next/router'
-import withNoAuth from '../../hoc/withNoAuth';
+import { useRouter } from "next/router";
+import withNoAuth from "../../hoc/withNoAuth";
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
-	// let navigate = useNavigate();
-	 const router = useRouter()
+	const router = useRouter();
+	const dispatch = useDispatch();
 
-	const login = async (e) => {
+	const loginUser = async (e) => {
 		e.preventDefault();
 		try {
 			const getData = await authservice.loginUser(user);
@@ -22,8 +23,8 @@ const LoginUser = () => {
 				const response = await getData.json();
 				alert(response.message);
 				// navigate("../profile", { replace: true });
-				localStorage.setItem('token', response.token);
-				router.push('/')
+				localStorage.setItem("token", response.token);
+				router.push("/");
 			} else {
 				const response = await getData.json();
 				alert(await meresponsessage.message);
@@ -39,7 +40,7 @@ const LoginUser = () => {
 			<Navbar variant={"dark"} bg={"dark"} />
 			<Container>
 				<h1>Login User</h1>
-				<Form onSubmit={login} align="left">
+				<Form onSubmit={loginUser} align="left">
 					<Forms
 						label={"Email"}
 						name={"email"}

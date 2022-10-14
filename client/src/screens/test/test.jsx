@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const Test = () => {
-	let navigate = useNavigate();
+	let router = useRouter();
 
 	const logout = async () => {
 		try {
@@ -15,7 +15,7 @@ const Test = () => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				navigate("../login", { replace: true });
+				router.replace("../login");
 			} else {
 				const message = await getData.json();
 				alert(message.message);

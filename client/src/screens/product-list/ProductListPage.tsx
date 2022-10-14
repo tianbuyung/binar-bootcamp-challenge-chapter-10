@@ -1,6 +1,5 @@
 import useProductListPage from './useProductListPage'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
-// import { useNavigate } from 'react-router-dom'
 import BreadcrumbComponent from '../../components/breadcrumbs/BreadCrumbs'
 import Navbar from '../../components/navbar'
 import ReactPaginate from 'react-paginate';
