@@ -46,19 +46,9 @@ const login = async (req, res) => {
 
 		const secret = process.env.KEY;
 		const token = jwt.sign(payload, secret);
-
-		let options = {
-			maxAge: 1000 * 60 * 60, // would expire after 60 minutes
-			httpOnly: true,
-			signed: true, // Indicates if the cookie should be signed
-			secure: true,
-			samesite: "lax",
-		};
-
-		res.cookie("token", token, options);
-
 		return await res.status(200).json({
 			message: "Login successful",
+			token,
 		});
 	} catch (error) {
 		return await res.status(500).json({
@@ -68,11 +58,7 @@ const login = async (req, res) => {
 };
 
 const verifyJwt = (req, res) => {
-	const token = req.signedCookies.token;
-	console.log(
-		"🚀 ~ file: UserController.js ~ line 72 ~ verifyJwt ~ token",
-		token
-	);
+	const token = req.headers.authorization;
 	jwt.verify(token, process.env.KEY, (err, result) => {
 		if (err) {
 			res.status(403).json({
@@ -144,7 +130,7 @@ const getBadgeByUser = async (req, res) => {
 
 		let val = await results[0].totalShop;
 		console.log(val);
-		let badge = "None";
+		let badge = "Basic";
 
 		if (val > 100000000) {
 			badge = "Ruby Diamond";
@@ -171,7 +157,45 @@ const getBadgeByUser = async (req, res) => {
 					totalShop: 0,
 				},
 			],
-			badge: "None",
+			badge: "Basic",
+		});
+	}
+};
+
+const editUser = async (req, res) => {
+	try {
+		const id = req.user.id;
+		const { name, address, phoneNumber, twitter, instagram, facebook } =
+			req.body;
+		const options = {
+			where: {
+				id,
+			},
+		};
+		let user = await User.findOne(options);
+		if (user) {
+			await User.update(
+				{
+					name,
+					address,
+					phoneNumber,
+					twitter,
+					instagram,
+					facebook,
+				},
+				options
+			);
+			res.status(200).json({
+				message: "The user has been successfully updated",
+			});
+		} else {
+			res.status(400).json({
+				message: "The user is not found!",
+			});
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: error.message,
 		});
 	}
 };
@@ -183,4 +207,5 @@ module.exports = {
 	logout,
 	getUserById,
 	getBadgeByUser,
+	editUser,
 };

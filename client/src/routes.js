@@ -1,53 +1,84 @@
-import HomePage from "./screens/home";
-import ProductDetailPage from "./screens/product-detail";
-import ProfilePage from "./screens/profile";
-import LoginUser from "./screens/login/LoginUser";
-import LoginAdmin from "./screens/login-admin";
-import RegisterPage from "./screens/register";
-import Admin from "./screens/admin";
-import CartPage from "./screens/cart";
-import OrderPage from "./screens/order";
-import ProductListPage from "./screens/product-list";
-import { useAuth, useAuthAdmin } from "./hooks/useAuth";
+import HomePage from "./pages/home";
+import ProductDetailPage from "./pages/product-detail";
+import ProfilePage from "./pages/profile";
+import LoginUser from "./pages/login/LoginUser";
+import LoginAdmin from "./pages/login-admin";
+import RegisterPage from "./pages/register";
+import Admin from "./pages/admin";
+import CartPage from "./pages/cart";
+import OrderPage from "./pages/order";
+import ProductListPage from "./pages/product-list";
+import AuthService from "./services/AuthService";
 
-import { useRouter } from "next/router";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const ProtectedRouteNonAuth = (WrappedComponent) => {
-	return (props) => {
-		const router = useRouter();
-		const isUser = useAuth();
+// ! bug = masih bisa tembus di beberapa halaman
+const authservice = new AuthService();
+const ProtectedRouteNonAuth = ({ children }) => {
+	const navigate = useNavigate();
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyUser();
 
-		if (isUser === true) {
-			router.replace("/profile");
-		}
-		return <WrappedComponent {...props} />;
-	};
+			if (verify.status === 200) {
+				navigate("/", { replace: true });
+			}
+		};
+		cekUser();
+	});
+
+	console.log("testing 1");
+	//   return children;
+	return children;
 };
 
 const ProtectedRouteAuth = ({ children }) => {
-	const isUser = useAuth();
+	const navigate = useNavigate();
 
-	if (isUser === false) {
-		router.replace("/login");
-	}
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyUser();
+
+			if (verify.status === 403) {
+				navigate("/", { replace: true });
+			}
+		};
+		cekUser();
+	});
+
 	return children;
 };
 
 const ProtectedRouteAdmin = ({ children }) => {
-	const isAdmin = useAuthAdmin();
+	const navigate = useNavigate();
+	useEffect(() => {
+		const cekAdmin = async () => {
+			const verify = await authservice.verifyAdmin();
 
-	if (isAdmin === false) {
-		router.replace("/admin/login");
-	}
+			if (verify.status === 403) {
+				navigate("/admin/login", { replace: true });
+			}
+		};
+
+		cekAdmin();
+	});
 	return children;
 };
 
 const ProtectedRouteNonAuthAdmin = ({ children }) => {
-	const isAdmin = useAuthAdmin();
+	const navigate = useNavigate();
+	useEffect(() => {
+		const cekUser = async () => {
+			const verify = await authservice.verifyAdmin();
 
-	if (isAdmin === true) {
-		router.replace("/admin");
-	}
+			if (verify.status === 200) {
+				navigate("/admin", { replace: true });
+			}
+		};
+
+		cekUser();
+	});
 
 	return children;
 };

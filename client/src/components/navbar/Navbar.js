@@ -1,14 +1,10 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import useAuth from "../../hooks/useAuth";
+import Link from "next/link";
+import { API } from "../../configs/config";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 
-import { useAuth } from "../../hooks/useAuth";
-import { logout } from "../../features/authSlice";
-import AuthService from "../../services/AuthService";
-
-const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
 	const isUser = useAuth();
 	const dispatch = useDispatch();
@@ -21,7 +17,7 @@ const NavbarComponent = ({ variant, bg }) => {
 			if (getData.status === 200) {
 				const message = await getData.json();
 				alert(message.message);
-				dispatch(logout());
+				localStorage.removeItem("token");
 				router.replace("/login");
 			} else {
 				const message = await getData.json();

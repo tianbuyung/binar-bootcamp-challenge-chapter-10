@@ -4,7 +4,10 @@ import Container from "react-bootstrap/Container";
 import { Col, Placeholder, Row } from "react-bootstrap";
 
 import useProductDetailPage from "./useProductDetailPage";
-import Navbar from "../../components/navbar";
+// import { useNavigate, useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";

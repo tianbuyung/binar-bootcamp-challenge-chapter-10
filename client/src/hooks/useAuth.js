@@ -1,21 +1,31 @@
-import { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { cekUser, cekAdmin } from "../features/authSlice";
-
+import { useEffect, useState } from "react";
+import { API } from "../configs/config";
 const useAuth = () => {
-	const dispatch = useDispatch();
-	const isUser = useSelector((state) => {
-		return state.auth;
-	});
+	const [isLogin, setIsLogin] = useState(false);
+	const checkLogin = async () => {
+		const res = await fetch(API + "/users/verify", {
+			method: "GET",
+			redirect: "follow",
+			credentials: "include",
+			headers: {
+				Authorization: localStorage.getItem("token"),
+			},
+		});
 
-	useEffect(() => {
-		if (isUser.isLoading === true) {
-			dispatch(cekUser());
+		console.log("res", res.status);
+
+		if (res.status === 200) {
+			setIsLogin(true);
+		} else if (res.status === 403) {
+			return false;
 		}
-	}, [isUser]);
-
-	return isUser.isUser;
+	};
+	useEffect(() => {
+		checkLogin();
+	}, []);
+	return {
+		isLogin,
+	};
 };
 
 const useAuthAdmin = () => {
