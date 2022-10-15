@@ -1,13 +1,16 @@
 import { useRouter } from "next/router";
 import { useAuth, useAuthAdmin } from "../hooks/useAuth";
+import { useEffect } from 'react';
 
 const withNoAuth = WrappedComponent => props => { 
   const router = useRouter();
   const isUser = useAuth();
 
-  if (isUser === true) {
-		router.replace("/");
-	}
+  useEffect(() => {
+    if (isUser === true) {
+      router.replace("/");
+    }
+  }, [isUser])
 
   return (
     <WrappedComponent
@@ -20,10 +23,12 @@ const withNoAuthAdmin = WrappedComponent => props => {
   const router = useRouter();
   const isAdmin = useAuthAdmin();
 
-  if (isAdmin === true) {
-		router.replace("/admin");
-	}
-
+  useEffect(() => {
+    if (isAdmin === true) {
+      router.replace("/admin");
+    }
+  }, [isAdmin]);
+  
   return (
     <WrappedComponent
       {...props}

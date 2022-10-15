@@ -15,6 +15,8 @@ import CartService from "../../services/CartService";
 import OrderService from "../../services/OrderService";
 import CartStack from "./components/CartStack";
 import Navbar from "../../components/navbar";
+import { withAuth } from "../../hoc/withAuth";
+
 const NO_IMAGE =
 	"https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 
@@ -209,4 +211,4 @@ const CartPage = () => {
 	);
 };
 
-export default CartPage;
+export default withAuth(CartPage);

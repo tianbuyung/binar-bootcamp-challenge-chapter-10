@@ -67,12 +67,9 @@ export default class AuthService extends BaseService {
 		return await this.customFetch(API + "/admin/verify", options);
 	};
 
-	logoutAdmin = async () => {
-		const dispatch = useDispatch();
-
+	logoutAdmin = () => {
 		localStorage.removeItem("tokenAdmin");
 		if (localStorage.getItem("tokenAdmin") === null) {
-			dispatch(logoutAdmin());
 			return "success";
 		} else {
 			return "failed";
@@ -80,11 +77,8 @@ export default class AuthService extends BaseService {
 	};
 
 	logoutUser = () => {
-		const dispatch = useDispatch();
-
 		localStorage.removeItem("token");
 		if (localStorage.getItem("token") === null) {
-			dispatch(logout());
 			return "success";
 		} else {
 			return "failed";

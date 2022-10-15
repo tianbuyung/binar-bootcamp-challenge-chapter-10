@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { Container } from "react-bootstrap";
+
 import OrderService from "../../services/OrderService";
 import Navbar from "../../components/navbar";
-import { Container } from "react-bootstrap";
 import OrderStack from "../cart/components/OrderStack";
+import { withAuth } from "../../hoc/withAuth";
 
 const orderService = new OrderService();
 
@@ -53,4 +55,4 @@ const OrderPage = () => {
 	);
 };
 
-export default OrderPage;
+export default withAuth(OrderPage);

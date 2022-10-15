@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import { loginAdmin } from "../../features/authSlice";
+import { withNoAuthAdmin } from "@hoc/withNoAuth";
 
 const authservice = new AuthService();
 const LoginAdmin = () => {
@@ -65,4 +66,4 @@ const LoginAdmin = () => {
 	);
 };
 
-export default LoginAdmin;
+export default withNoAuthAdmin(LoginAdmin);

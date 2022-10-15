@@ -12,6 +12,7 @@ const NavbarComponent = ({ variant, bg }) => {
 	const isUser = useSelector((state) => {
 		return state.auth.isUser;
 	});
+
 	const dispatch = useDispatch();
 	const router = useRouter();
 
