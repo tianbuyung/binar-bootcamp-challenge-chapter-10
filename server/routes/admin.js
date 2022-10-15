@@ -30,7 +30,7 @@ router.get(
 	productController.getDetailProduct
 );
 router.post("/", adminController.loginAdmin);
-router.post("/logout", adminController.logoutAdmin);
+// router.post("/logout", adminController.logoutAdmin);
 router.get("/verify", adminController.verifyJwt);
 
 module.exports = router;

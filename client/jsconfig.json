@@ -5,7 +5,8 @@
     "paths": {
       "@screens/*": ["./src/screens/*"],
       "@components/*": ["./src/components/*"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@features/" : ["./src/features/*"],
     }
   },
   "include": ["."],

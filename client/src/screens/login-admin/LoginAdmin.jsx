@@ -22,6 +22,7 @@ const LoginAdmin = () => {
 				const message = await getData.json();
 				alert(message.message);
 				dispatch(loginAdmin());
+				localStorage.setItem("tokenAdmmin", response.token);
 				router.replace("/admin");
 			} else {
 				const message = await getData.json();

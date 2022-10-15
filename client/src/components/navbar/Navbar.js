@@ -1,33 +1,28 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { useAuth } from "../../hooks/useAuth";
-import Link from "next/link";
-import { API } from "../../configs/config";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { logout } from "../../features/authSlice";
+import AuthService from "@services/AuthService";
+
+const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
-	const isUser = useAuth();
+	const isUser = useSelector((state) => {
+		return state.auth.isUser;
+	});
 	const dispatch = useDispatch();
 	const router = useRouter();
 
-	const userLogout = async () => {
-		try {
-			const getData = await authservice.logoutUser();
-
-			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
-				localStorage.removeItem("token");
-				router.replace("/login");
-			} else {
-				const message = await getData.json();
-				alert(message.message);
-			}
-		} catch (err) {
-			alert("Error! Please try again");
-			console.log("error while send api : " + err.message);
+	const userLogout = () => {
+		const response = authservice.logoutUser();
+		if (response === "success") {
+			alert("Successfully logout");
+			dispatch(logout());
+			router.replace("/login");
+		} else {
+			alert("Failed to logout! Please try again!");
 		}
 	};
 

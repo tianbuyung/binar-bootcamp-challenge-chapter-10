@@ -7,5 +7,5 @@ export default configureStore({
 		auth: authReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({ serializableCheck: false }).concat(logger),
+		getDefaultMiddleware({ serializableCheck: false }),
 });
