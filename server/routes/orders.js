@@ -8,10 +8,20 @@ router.post(
 	passport.authenticate("user-role", { session: false }),
 	orderController.createOrder
 );
+router.put(
+	"/:id",
+	// passport.authenticate("user-role", { session: false }),
+	orderController.updateOrderStatus
+);
 router.get(
 	"/:id",
 	passport.authenticate("user-role", { session: false }),
 	orderController.getOrder
+);
+router.get(
+	"/",
+	// passport.authenticate("user-role", { session: false }),
+	orderController.getOrders
 );
 
 module.exports = router;
