@@ -70,6 +70,77 @@ const createOrder = async (req, res) => {
     }
 }
 
+const updateOrderStatus = async (req, res) => {
+    try {
+        const order = await Order.findOne({
+            where: {
+                id: req.params.id,
+                status: "waiting payment"
+            },
+            include: [{
+                model: Cart,
+                where: {
+                    UserId: req.user.id,
+                }
+            }]
+        });
+
+        if (order) {
+            if (req.body.status === "done" | req.body.status === "cancelled") {
+                await Order.update({
+                    status: req.body.status
+                }, {
+                    where: {
+                        id: req.params.id
+                    }
+                });
+
+                res.status(200).json({
+                    message: "Update order success"
+                })
+            } else {
+                res.status(400).json({
+                    message: "Order status not valid"
+                });
+            }
+        } else {
+            res.status(404).json({
+                message: "Order not found"
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+}
+
+const getOrders = async (req, res) => {
+    try {
+        const orders = await Order.findAll({
+            include: [{
+                model: Cart,
+                where: {
+                    UserId: req.user.id,
+                }
+            }, {
+                model: OrderDetail,
+                include: Product
+            }]
+        });
+
+        res.status(200).json({
+            message: "Get Orders Success",
+            data: orders
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+};
+
 const getOrder = async (req, res) => {
     try {
         const order = await Order.findOne({
@@ -99,5 +170,5 @@ const getOrder = async (req, res) => {
 };
 
 module.exports = {
-    createOrder, getOrder,
+    createOrder, updateOrderStatus, getOrder, getOrders
 };

@@ -12,29 +12,29 @@ const NO_IMAGE =
   "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
 const ProductDetailPage = ({ query }) => {
-    const { product } = useProductDetailPage({ id: query?.slug });
-    const breadcrumbs = product ? [
-        { title: 'Home', isActive: false, href: "/" },
-        { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
-        { title: product?.name, isActive: true }
-    ] : [ { title: 'Home', isActive: false, href: "/" },]
+  const { product } = useProductDetailPage({ id: query?.slug });
+  const breadcrumbs = product ? [
+    { title: 'Home', isActive: false, href: "/" },
+    { title: product?.Category?.name, isActive: false, href: `/product/category/${product?.Category?.id}` },
+    { title: product?.name, isActive: true }
+  ] : [{ title: 'Home', isActive: false, href: "/" },]
 
   const addCartDetail = async () => {
     try {
       const body = {
         ProductId: product?.id,
         qty: 1,
-        isIcrement: true,
+        isIncrement: true,
       };
 
       const data = await cartDetailService.createCartDetail(body);
 
-            alert(data.message);
-        } catch (error) {
-            alert(error.message);
-            // navigate("/login", { replace: true });
-        }
-    };
+      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+      // navigate("/login", { replace: true });
+    }
+  };
 
   return (
     <div>
@@ -55,9 +55,9 @@ const ProductDetailPage = ({ query }) => {
               Buy
             </Button>
             {product && (
-                <div>
-                  Share: <ShareButton name={product?.name} id={product?.id} />
-                </div>
+              <div>
+                Share: <ShareButton name={product?.name} id={product?.id} />
+              </div>
             )}
           </Card.Body>
         </Card>
@@ -68,11 +68,11 @@ const ProductDetailPage = ({ query }) => {
 
 
 ProductDetailPage.getInitialProps = async ({ query }) => {
-    // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
-    // const post = await res.json();
-    return {
-        query
-    }
+  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/' + query?.slug)
+  // const post = await res.json();
+  return {
+    query
+  }
 }
 
 export default ProductDetailPage;

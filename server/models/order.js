@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
+    status: {
+      type: DataTypes.ENUM("waiting payment", "done", "cancelled"),
+      defaultValue: "waiting payment"
+    },
     totalOrder: {
       type: DataTypes.NUMERIC,
       allowNull: false,
