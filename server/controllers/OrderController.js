@@ -80,8 +80,7 @@ const updateOrderStatus = async (req, res) => {
             include: [{
                 model: Cart,
                 where: {
-                    UserId: 1,
-                    // UserId: req.user.id,
+                    UserId: req.user.id,
                 }
             }]
         });
@@ -123,8 +122,7 @@ const getOrders = async (req, res) => {
             include: [{
                 model: Cart,
                 where: {
-                    UserId: 1
-                    // UserId: req.user.id,
+                    UserId: req.user.id,
                 }
             }, {
                 model: OrderDetail,

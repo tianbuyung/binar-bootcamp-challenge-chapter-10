@@ -1,5 +1,6 @@
 import { Card, Col, Nav, Row, Tab } from "react-bootstrap";
 import ProfileData from "./ProfileData/ProfileData";
+import ProfileOrder from "./ProfileOrder/ProfileOrder";
 
 const ProfileMenu = (props) => {
   return (
@@ -26,7 +27,9 @@ const ProfileMenu = (props) => {
                   <ProfileData profile={props.profile} badge={props.badge} />
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" style={{ height: "400px" }}>
-                  Daftar Pesanan
+                  {props.orders.data?.map((order) => (
+                    <ProfileOrder key={order.id} order={order} />
+                  ))}
                 </Tab.Pane>
                 <Tab.Pane eventKey="third" style={{ height: "400px" }}>
                   Binarpay

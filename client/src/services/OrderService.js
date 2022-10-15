@@ -32,4 +32,12 @@ export default class OrderService extends BaseService {
 
 		return await this.fetch("/orders/" + query, options, true);
 	};
+
+	getOrders = async () => {
+		const options = {
+			method: "GET",
+		};
+
+		return await this.fetch("/orders/", options, true);
+	};
 }

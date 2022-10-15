@@ -10,7 +10,7 @@ router.post(
 );
 router.put(
 	"/:id",
-	// passport.authenticate("user-role", { session: false }),
+	passport.authenticate("user-role", { session: false }),
 	orderController.updateOrderStatus
 );
 router.get(
@@ -20,7 +20,7 @@ router.get(
 );
 router.get(
 	"/",
-	// passport.authenticate("user-role", { session: false }),
+	passport.authenticate("user-role", { session: false }),
 	orderController.getOrders
 );
 

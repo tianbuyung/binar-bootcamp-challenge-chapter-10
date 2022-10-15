@@ -9,11 +9,14 @@ import ProfileMenu from "./components/ProfileMenu";
 
 import classes from "./ProfilePage.module.css";
 import withAuth from "../../hoc/withAuth";
+import OrderService from "../../services/OrderService";
 const userService = new UserService();
+const orderService = new OrderService();
 
 const ProfilePage = () => {
 	const [profile, setProfile] = useState("");
 	const [badge, setBadge] = useState("");
+	const [orders, setOrders] = useState("");
 	const [isfetching, setIsFetching] = useState(false);
 
 	useEffect(() => {
@@ -21,8 +24,10 @@ const ProfilePage = () => {
 			try {
 				const getUser = await userService.getUser();
 				const getBadge = await userService.getBadge();
+				const getOrders = await orderService.getOrders();
 				setProfile(getUser);
 				setBadge(getBadge);
+				setOrders(getOrders);
 			} catch (error) {
 				// silent error
 			}
@@ -72,7 +77,7 @@ const ProfilePage = () => {
 				</Row>
 				<Row className="gutters-sm mb-3">
 					<Col md={12}>
-						<ProfileMenu profile={profile} badge={badge} />
+						<ProfileMenu profile={profile} badge={badge} orders={orders} />
 					</Col>
 				</Row>
 				<Row className="gutters-sm">
