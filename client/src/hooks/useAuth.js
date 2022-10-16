@@ -15,7 +15,7 @@ const useAuth = () => {
 		}
 	}, [isUser]);
 
-	return isUser.isUser;
+	return isUser;
 };
 
 const useAuthAdmin = () => {
@@ -30,7 +30,7 @@ const useAuthAdmin = () => {
 		}
 	}, [isAdmin]);
 
-	return isAdmin.isAdmin;
+	return isAdmin;
 };
 
 export { useAuth, useAuthAdmin };

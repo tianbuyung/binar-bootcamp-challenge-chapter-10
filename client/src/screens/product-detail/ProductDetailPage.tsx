@@ -5,7 +5,6 @@ import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
 import ShareButton from "./components/ShareButton";
 
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container'
 import { Placeholder, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
@@ -14,6 +13,7 @@ const NO_IMAGE =
   "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
 const cartDetailService = new CartDetailService();
 const ProductDetailPage = ({ query }) => {
+	const router = useRouter();
     const { product, loading } = useProductDetailPage({ id: query?.product_id });
     const breadcrumbs = product ? [
         { title: 'Home', isActive: false, href: "/" },
@@ -31,11 +31,11 @@ const ProductDetailPage = ({ query }) => {
 
       const data = await cartDetailService.createCartDetail(body);
 
-            alert(data.message);
-        } catch (error) {
-            alert(error.message);
-            // navigate("/login", { replace: true });
-        }
+      alert(data.message);
+    } catch (error) {
+			alert(error.message);
+			router.replace('/')
+      }
     };
 
   return (
@@ -129,10 +129,11 @@ const ProductDetailPage = ({ query }) => {
 
 
 ProductDetailPage.getInitialProps = async ({ query }) => {
-  console.log("query", query);
     return {
         query
     }
 }
 
 export default ProductDetailPage;
+
+

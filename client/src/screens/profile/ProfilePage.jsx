@@ -8,7 +8,7 @@ import SocialMedia from "./components/SocialMedia";
 import ProfileMenu from "./components/ProfileMenu";
 
 import classes from "./ProfilePage.module.css";
-import withAuth from "../../hoc/withAuth";
+import { withAuth } from "../../hoc/withAuth";
 const userService = new UserService();
 
 const ProfilePage = () => {

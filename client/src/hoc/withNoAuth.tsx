@@ -7,8 +7,10 @@ const withNoAuth = WrappedComponent => props => {
   const isUser = useAuth();
 
   useEffect(() => {
-    if (isUser === true) {
-      router.replace("/");
+    if (isUser.isLoading === false) {
+      if (isUser.isUser === true) {
+        router.replace("/");
+      }
     }
   }, [isUser])
 
@@ -24,8 +26,10 @@ const withNoAuthAdmin = WrappedComponent => props => {
   const isAdmin = useAuthAdmin();
 
   useEffect(() => {
-    if (isAdmin === true) {
-      router.replace("/admin");
+    if (isAdmin.isLoading === false) {
+      if (isAdmin.isAdmin === true) {
+        router.replace("/");
+      }
     }
   }, [isAdmin]);
   
