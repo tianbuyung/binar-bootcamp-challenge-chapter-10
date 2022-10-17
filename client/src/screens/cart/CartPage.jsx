@@ -73,7 +73,7 @@ const CartPage = () => {
 		const body = {
 			ProductId: productId,
 			qty: event.target.value,
-			isIcrement: false,
+			isIncrement: false,
 		};
 
 		await cartDetailService.createCartDetail(body);
@@ -85,8 +85,8 @@ const CartPage = () => {
 		if (
 			window.confirm(
 				"Are you sure you want to delete this item '" +
-					cartProductName +
-					"'?"
+				cartProductName +
+				"'?"
 			)
 		) {
 			const data = await cartDetailService.deleteCartDetail(id);

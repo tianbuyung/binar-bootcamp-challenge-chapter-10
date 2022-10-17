@@ -27,6 +27,21 @@ const OrderPage = () => {
 		console.log(data.data);
 	};
 
+	const updateOrder = async (status) => {
+		if (window.confirm(status + " order?")) {
+			let statusBody = "done";
+			if (status === "Cancel") {
+				statusBody = "cancelled";
+			}
+			const body = {
+				status: statusBody,
+			};
+			const data = await orderService.updateOrder(orderId, body);
+			alert(data.message);
+			fetchOrder();
+		}
+	};
+
 	return (
 		<>
 			<Navbar variant="dark" bg="dark" />
@@ -35,7 +50,9 @@ const OrderPage = () => {
 					<h1 className="mt-3 mb-3">My Order</h1>
 					<div className="border p-1">
 						<div className="border mb-2">
-							Order Date: {order.createdAt}
+							Order Date: {order?.createdAt}
+							<br />
+							Status: {order?.status.toUpperCase()}
 						</div>
 						{order?.OrderDetails.map((orderDetail) => (
 							<OrderStack
@@ -44,7 +61,30 @@ const OrderPage = () => {
 							/>
 						))}
 						<div className="border">
-							Total: {order.totalOrder}
+							Total: {order?.totalOrder}
+							{order?.status === "waiting payment" ? (
+								<div>
+									<Button
+										variant="primary"
+										onClick={() =>
+											updateOrder("Confirm")
+										}
+									>
+										Confirm
+									</Button>
+									&nbsp;
+									<Button
+										variant="danger"
+										onClick={() =>
+											updateOrder("Cancel")
+										}
+									>
+										Cancel
+									</Button>
+								</div>
+							) : (
+								<div></div>
+							)}
 						</div>
 					</div>
 				</Container>

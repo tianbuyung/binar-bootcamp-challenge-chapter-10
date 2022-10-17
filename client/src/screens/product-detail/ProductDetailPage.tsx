@@ -26,7 +26,7 @@ const ProductDetailPage = ({ query }) => {
       const body = {
         ProductId: product?.id,
         qty: 1,
-        isIcrement: true,
+        isIncrement: true,
       };
 
       const data = await cartDetailService.createCartDetail(body);
