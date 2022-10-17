@@ -7,7 +7,8 @@ import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import Navbar from "../../components/navbar";
 import { useRouter } from "next/router";
-import withNoAuth from "../../hoc/withNoAuth";
+import { withNoAuth } from "../../hoc/withNoAuth";
+
 const authservice = new AuthService();
 const LoginUser = () => {
 	const [user, setUser] = useState();
@@ -22,12 +23,12 @@ const LoginUser = () => {
 			if (getData.status === 200) {
 				const response = await getData.json();
 				alert(response.message);
-				// navigate("../profile", { replace: true });
+				dispatch(login());
 				localStorage.setItem("token", response.token);
 				router.push("/");
 			} else {
 				const response = await getData.json();
-				alert(await meresponsessage.message);
+				alert(await response.message);
 			}
 		} catch (err) {
 			alert("Error! Please try again");

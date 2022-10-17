@@ -6,11 +6,12 @@ import { useDispatch } from "react-redux";
 import Forms from "../../components/Forms";
 import AuthService from "../../services/AuthService";
 import { loginAdmin } from "../../features/authSlice";
+import { withNoAuthAdmin } from "../../hoc/withNoAuth";
 
 const authservice = new AuthService();
 const LoginAdmin = () => {
 	const [user, setUser] = useState();
-	let router = useRouter();
+	const router = useRouter();
 	const dispatch = useDispatch();
 
 	const login = async (e) => {
@@ -19,9 +20,10 @@ const LoginAdmin = () => {
 			const getData = await authservice.loginAdmin(user);
 
 			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
 				dispatch(loginAdmin());
+				const response = await getData.json();
+				alert(response.message);
+				localStorage.setItem("tokenAdmin", response.token);
 				router.replace("/admin");
 			} else {
 				const message = await getData.json();
@@ -64,4 +66,4 @@ const LoginAdmin = () => {
 	);
 };
 
-export default LoginAdmin;
+export default withNoAuthAdmin(LoginAdmin);

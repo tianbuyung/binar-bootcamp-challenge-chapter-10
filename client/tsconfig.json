@@ -2,11 +2,12 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@screens/*": ["screens/*"],
-      "@components/*": ["components/*"],
-      "@services/*": ["services/*"],
-      "@features/*": ["features/*"],
-      "@interfaces/*": ["interfaces/*"]
+        "@screens/*": ["screens/*"],
+        "@components/*": ["components/*"],
+        "@services/*" : ["services/*.js"],
+        "@features/" : ["features/*"],
+        "@hoc/" : ["hoc/*"],
+        "@interfaces/" : ["interfaces/*"],
     },
     "target": "ES6",
     "module": "CommonJS",

@@ -6,9 +6,11 @@
       "@screens/*": ["./src/screens/*"],
       "@components/*": ["./src/components/*"],
       "@services/*": ["./src/services/*"],
-      "@features/*": ["./src/features/*"]
+      "@features/" : ["./src/features/*"],
+      "@interfaces/" : ["./src/interfaces/*"],
+      "@hoc/" : ["./src/hoc/*"],
     }
   },
-  "include": ["."],
+  "include": ["*"],
   "exclude": ["node_modules"]
 }

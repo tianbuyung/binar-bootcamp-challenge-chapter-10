@@ -36,14 +36,15 @@ export interface CategoryProductProps {
 //     }
 //   }
 
-// export interface ProductsProps {
-//   id: string;
-//   name: string;
-//   price: string;
-//   CategoryId: string;
-//   imageUrl: string | null;
-//   createdAt: string;
-//   updatedAt: string;
-//   deletedAt: string;
-//   Category: any;
-// }
+export interface ProductsProps {
+    id: string;
+    name: string;
+    price: string;
+    CategoryId: string;
+    imageUrl: string | null;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+    Category: any;
+    loading: boolean;
+}

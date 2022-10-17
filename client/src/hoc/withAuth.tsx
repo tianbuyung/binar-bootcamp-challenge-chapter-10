@@ -1,23 +1,44 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import AuthService from "../services/AuthService";
-const authservice = new AuthService();
-const withAuth = WrappedComponent => props => { // curry
-    const router = useRouter();
-    useEffect(() => {
-        const cekUser = async () => {
-            const token = localStorage.getItem('token')
-            const verify = await authservice.verifyUser(token);
-            if (verify.status !== 200) {
-                router.push("/");
-            }
-        };
-        cekUser();
-    }, []);;
+import { useEffect } from 'react';
+import { useAuth, useAuthAdmin } from "../hooks/useAuth";
+
+const withAuthAdmin = WrappedComponent => props => {
+  const router = useRouter();
+  const isAdmin = useAuthAdmin();
+  
+  useEffect(() => {
+    if (isAdmin.isLoading === false) {
+      if (isAdmin.isAdmin === false) {
+        router.replace("/");
+      }
+    }
+  }, [isAdmin]);
+
   return (
     <WrappedComponent
       {...props}
     />
   );
 };
-export default withAuth;
+
+const withAuth = WrappedComponent => props => {
+  const router = useRouter();
+  const isUser = useAuth();
+
+  useEffect(() => {
+    if (isUser.isLoading === false) {
+      if (isUser.isUser === false) {
+        router.replace("/login");
+      }
+    }
+  },
+    [isUser],
+  )
+  
+  return (
+    <WrappedComponent
+      {...props}
+    />
+  );
+};
+export {withAuthAdmin, withAuth};

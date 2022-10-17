@@ -1,9 +1,11 @@
-import useProductListPage from "./useProductListPage";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import BreadcrumbComponent from "@components/breadcrumbs/BreadCrumbs";
-import Navbar from "@components/navbar";
-import ReactPaginate from "react-paginate";
-import Link from "next/link";
+import useProductListPage from './useProductListPage'
+import BreadcrumbComponent from '../../components/breadcrumbs/BreadCrumbs'
+import Navbar from '../../components/navbar'
+import { withAuth } from "../../hoc/withAuth";
+
+import ReactPaginate from 'react-paginate';
+import Link from 'next/link'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 
 const NO_IMAGE =
   "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg";
@@ -61,9 +63,9 @@ const ProductListPage = ({ query }) => {
   );
 };
 ProductListPage.getInitialProps = async ({ query }, screen) => {
-  return {
-    query,
-  };
-};
+    return {
+        query
+    }
+}
 
 export default ProductListPage;

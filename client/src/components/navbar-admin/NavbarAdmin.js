@@ -11,22 +11,14 @@ const NavbarAdmin = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 
-	const adminLogout = async () => {
-		try {
-			const getData = await authservice.logoutAdmin();
-
-			if (getData.status === 200) {
-				const message = await getData.json();
-				alert(message.message);
-				dispatch(logoutAdmin());
-				router.replace("/admin/login");
-			} else {
-				const message = await getData.json();
-				alert(message.message);
-			}
-		} catch (err) {
-			alert("Error! Please try again");
-			console.log("error while send api : " + err.message);
+	const adminLogout = () => {
+		const response = authservice.logoutAdmin();
+		if (response === "success") {
+			alert("Successfully logout");
+			dispatch(logoutAdmin());
+			router.replace("/");
+		} else {
+			alert("Failed to logout! Please try again!");
 		}
 	};
 	return (
