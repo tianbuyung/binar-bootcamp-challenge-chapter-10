@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+
 import BreadcrumbComponent from "@components/breadcrumbs/BreadCrumbs";
 import Navbar from "@components/navbar";
 import UserService from "@services/UserService";
+import OrderService from "@services/OrderService";
 import ProfilePicture from "./components/ProfilePicture";
 import SocialMedia from "./components/SocialMedia";
 import ProfileMenu from "./components/ProfileMenu";
-
 import classes from "./ProfilePage.module.css";
 import { withAuth } from "../../hoc/withAuth";
+
 const userService = new UserService();
 const orderService = new OrderService();
 
