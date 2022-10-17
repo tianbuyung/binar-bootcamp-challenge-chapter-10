@@ -2,24 +2,24 @@ import { useCallback, useEffect, useState } from "react";
 import { Card, Col, Container, Row, Placeholder } from "react-bootstrap";
 import Link from "next/link";
 
-import Navbar from "../../components/navbar";
-import CategoryService from "../../services/CategoryService";
-import ProductService from "../../services/ProductService";
-import AuthService from "../../services/AuthService";
-import CardPlaceholder from "components/CardPlaceholder";
+import Navbar from "@components/navbar";
+import CategoryService from "@services/CategoryService";
+import ProductService from "@services/ProductService";
+import AuthService from "@services/AuthService";
+import CardPlaceholder from "@components/CardPlaceholder";
 
 const categoryService = new CategoryService();
 const productService = new ProductService();
 
 const fetchGetCategoryHandlerServer = async () => {
-    try {
-      return await categoryService.getAllCategories();
-    } catch (error) {
-      // silent e
-    }
+  try {
+    return await categoryService.getAllCategories();
+  } catch (error) {
+    // silent e
   }
+};
 
-const HomePage = (props) => { 
+const HomePage = (props) => {
   const [loading, setLoading] = useState(false);
   const [getCategory, _] = useState(props.getCategoryProps);
   const [getProductPopular, setGetProductPopular] = useState([]);
@@ -34,7 +34,7 @@ const HomePage = (props) => {
   }, []);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetchGetProductPopularHandler();
   }, [fetchGetProductPopularHandler]);
 
@@ -58,6 +58,7 @@ const HomePage = (props) => {
                         <Card
                           style={{
                             height: "400px",
+                            cursor: "pointer",
                           }}
                         >
                           <Card.Img
@@ -98,9 +99,11 @@ const HomePage = (props) => {
                             as={`/product/category/${category.id}`}
                             href="/product/category/[slug]"
                           >
-                            {category?.Products?.length < 5
-                              ? ""
-                              : "Lihat Semua"}
+                            {category?.Products?.length < 5 ? (
+                              ""
+                            ) : (
+                              <a className="text-light">Lihat Semua</a>
+                            )}
                           </Link>
                         </Col>
                       </Row>
@@ -115,6 +118,7 @@ const HomePage = (props) => {
                               <Card
                                 style={{
                                   height: "400px",
+                                  cursor: "pointer",
                                 }}
                               >
                                 <Card.Img
@@ -140,66 +144,44 @@ const HomePage = (props) => {
           </>
         ) : (
           <>
-						<div className="my-3 p-3 bg-secondary rounded">
-							<h3 className="text-start text-white h2 mt-3">
-								Produk Terlaris
-							</h3>
-							<Row xs={1} md={5}>
-								{Array.from(new Array(5)).map(
-									(_, i) => (
-										<Col>
-											<CardPlaceholder
-												className={"m-2"}
-											/>
-										</Col>
-									)
-								)}
-							</Row>
-						</div>
-						<h2 className="text-start h2 mt-3">
-							Jelajahi Produk Kami
-						</h2>
-						<div className="my-3 p-3 bg-secondary rounded">
-							<Row className="align-items-center">
-								<Col
-									lg={2}
-									xl={2}
-									className="text-start text-white"
-								>
-									<Placeholder
-										md={6}
-										as={"h3"}
-										animation="wave"
-										variant="primary"
-									/>
-								</Col>
-								<Col lg={"auto"} xl={"10"}>
-									<Row>
-										<Col className="text-end my-3">
-											<Placeholder
-												xs={3}
-												animation="wave"
-											/>
-										</Col>
-									</Row>
-									<Row xs={1} md={5} className="g-4">
-										{Array.from(new Array(5)).map(
-											(_, i) => (
-												<Col>
-													<CardPlaceholder
-														className={
-															"m-2"
-														}
-													/>
-												</Col>
-											)
-										)}
-									</Row>
-								</Col>
-							</Row>
-						</div>
-					</>
-
+            <div className="my-3 p-3 bg-secondary rounded">
+              <h3 className="text-start text-white h2 mt-3">Produk Terlaris</h3>
+              <Row xs={1} md={5}>
+                {Array.from(new Array(5)).map((_, i) => (
+                  <Col key={i}>
+                    <CardPlaceholder />
+                  </Col>
+                ))}
+              </Row>
+            </div>
+            <h2 className="text-start h2 mt-3">Jelajahi Produk Kami</h2>
+            <div className="my-3 p-3 bg-secondary rounded">
+              <Row className="align-items-center">
+                <Col lg={2} xl={2} className="text-start text-white">
+                  <Placeholder
+                    md={6}
+                    as={"h3"}
+                    animation="wave"
+                    variant="primary"
+                  />
+                </Col>
+                <Col lg={"auto"} xl={"10"}>
+                  <Row>
+                    <Col className="text-end my-3">
+                      <Placeholder xs={3} animation="wave" />
+                    </Col>
+                  </Row>
+                  <Row xs={1} md={5} className="g-4">
+                    {Array.from(new Array(5)).map((_, i) => (
+                      <Col key={i}>
+                        <CardPlaceholder />
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          </>
         )}
       </Container>
     </div>
@@ -207,17 +189,17 @@ const HomePage = (props) => {
 };
 
 HomePage.getInitialProps = async () => {
-    const authService = new AuthService();
-    const props = {
-      getCategoryProps: []
-    }
-    try {
-      const data = await fetchGetCategoryHandlerServer();
-        props.getCategoryProps = data?.categories; 
-      return props
-    } catch(e) {
-      // silent e
-      return props
-    }
-}
+  const authService = new AuthService();
+  const props = {
+    getCategoryProps: [],
+  };
+  try {
+    const data = await fetchGetCategoryHandlerServer();
+    props.getCategoryProps = data?.categories;
+    return props;
+  } catch (e) {
+    // silent e
+    return props;
+  }
+};
 export default HomePage;

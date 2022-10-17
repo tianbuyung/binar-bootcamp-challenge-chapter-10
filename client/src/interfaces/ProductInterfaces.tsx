@@ -1,22 +1,23 @@
 export interface ProductProps {
-    id: string;
-    name: string;
-    price: string;
-    CategoryId: string;
-    imageUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-    deletedAt: string;
-    Category: CategoryProductProps
+  id: string;
+  name: string;
+  price: string;
+  CategoryId: string;
+  imageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  Category: CategoryProductProps;
 }
 
 export interface CategoryProductProps {
-    id: string;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-    deletedAt: null;
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
 }
+
 // "product": {
 //     "id": 22,
 //     "name": "Sleek Frozen Mouse",
@@ -35,14 +36,14 @@ export interface CategoryProductProps {
 //     }
 //   }
 
-export interface ProductsProps {
-    id: string;
-    name: string;
-    price: string;
-    CategoryId: string;
-    imageUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-    deletedAt: string;
-    Category: any
-}
+// export interface ProductsProps {
+//   id: string;
+//   name: string;
+//   price: string;
+//   CategoryId: string;
+//   imageUrl: string | null;
+//   createdAt: string;
+//   updatedAt: string;
+//   deletedAt: string;
+//   Category: any;
+// }
