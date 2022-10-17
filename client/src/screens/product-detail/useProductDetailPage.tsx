@@ -10,6 +10,24 @@ interface ProductDetailHooksProps {
     // loading: boolean
 }
 
+const useProductDetailPage = ({ id }: ProductDetailHooksProps) => {
+  const [product, setProduct] = useState<ProductProps | null>(null);
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const data = await productService.getProductDetailUser(id);
+        setProduct(data.product);
+      } catch (error) {
+        console.log("error", error);
+        //
+      }
+    };
+    getProduct();
+  }, []);
+  return {
+    product,
+  };
+};
 
 const useProductDetailPage = ({ id } : ProductDetailHooksProps) => {
     const [product, setProduct] = useState<ProductProps | null>(null);

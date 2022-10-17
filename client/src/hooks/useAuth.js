@@ -19,16 +19,16 @@ const useAuth = () => {
 };
 
 const useAuthAdmin = () => {
-	const dispatch = useDispatch();
-	const isAdmin = useSelector((state) => {
-		return state.auth;
-	});
+  const dispatch = useDispatch();
+  const isAdmin = useSelector((state) => {
+    return state.auth;
+  });
 
-	useEffect(() => {
-		if (isAdmin.isLoading === true) {
-			dispatch(cekAdmin());
-		}
-	}, [isAdmin]);
+  useEffect(() => {
+    if (isAdmin.isLoading === true) {
+      dispatch(cekAdmin());
+    }
+  }, [isAdmin]);
 
 	return isAdmin;
 };

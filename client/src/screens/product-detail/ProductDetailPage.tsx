@@ -1,4 +1,4 @@
-import Navbar from "../../components/navbar";
+import Navbar from "@components/navbar";
 import useProductDetailPage from "./useProductDetailPage";
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
@@ -126,7 +126,6 @@ const ProductDetailPage = ({ query }) => {
     </div>
   );
 };
-
 
 ProductDetailPage.getInitialProps = async ({ query }) => {
     return {

@@ -1,6 +1,7 @@
 import { Card, Col, Nav, Row, Tab } from "react-bootstrap";
 import ProfileData from "./ProfileData/ProfileData";
 import ProfileOrder from "./ProfileOrder/ProfileOrder";
+import classes from "./ProfileMenu.module.css";
 
 const ProfileMenu = (props) => {
   return (
@@ -22,18 +23,16 @@ const ProfileMenu = (props) => {
               </Nav>
             </Col>
             <Col sm={9}>
-              <Tab.Content>
-                <Tab.Pane eventKey="first" style={{ height: "400px" }}>
+              <Tab.Content className={classes["tab-content"]}>
+                <Tab.Pane eventKey="first">
                   <ProfileData profile={props.profile} badge={props.badge} />
                 </Tab.Pane>
-                <Tab.Pane eventKey="second" style={{ height: "400px" }}>
+                <Tab.Pane eventKey="second">
                   {props.orders.data?.map((order) => (
                     <ProfileOrder key={order.id} order={order} />
                   ))}
                 </Tab.Pane>
-                <Tab.Pane eventKey="third" style={{ height: "400px" }}>
-                  Binarpay
-                </Tab.Pane>
+                <Tab.Pane eventKey="third">Binarpay</Tab.Pane>
               </Tab.Content>
             </Col>
           </Row>
