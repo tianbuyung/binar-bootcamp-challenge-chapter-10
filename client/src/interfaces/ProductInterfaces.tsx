@@ -44,5 +44,6 @@ export interface ProductsProps {
     createdAt: string;
     updatedAt: string;
     deletedAt: string;
-    Category: any
+    Category: any;
+    loading: boolean;
 }

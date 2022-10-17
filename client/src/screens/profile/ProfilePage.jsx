@@ -8,8 +8,7 @@ import SocialMedia from "./components/SocialMedia";
 import ProfileMenu from "./components/ProfileMenu";
 
 import classes from "./ProfilePage.module.css";
-import withAuth from "../../hoc/withAuth";
-import OrderService from "../../services/OrderService";
+import { withAuth } from "../../hoc/withAuth";
 const userService = new UserService();
 const orderService = new OrderService();
 
@@ -77,7 +76,11 @@ const ProfilePage = () => {
 				</Row>
 				<Row className="gutters-sm mb-3">
 					<Col md={12}>
-						<ProfileMenu profile={profile} badge={badge} orders={orders} />
+						<ProfileMenu
+							profile={profile}
+							badge={badge}
+							orders={orders}
+						/>
 					</Col>
 				</Row>
 				<Row className="gutters-sm">

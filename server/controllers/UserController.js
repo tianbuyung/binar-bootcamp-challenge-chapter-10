@@ -45,7 +45,7 @@ const login = async (req, res) => {
 		};
 
 		const secret = process.env.KEY;
-		const token = jwt.sign(payload, secret);
+		const token = jwt.sign(payload, secret, { expiresIn: "1 hour" });
 		return await res.status(200).json({
 			message: "Login successful",
 			token,
@@ -74,7 +74,7 @@ const verifyJwt = (req, res) => {
 
 const logout = async (req, res) => {
 	try {
-		res.cookie("token", "");
+		// localStorage.setItem("token", "");
 
 		return await res.status(200).send({
 			message: "Successfully logged out",
@@ -204,7 +204,6 @@ module.exports = {
 	login,
 	verifyJwt,
 	createUser,
-	logout,
 	getUserById,
 	getBadgeByUser,
 	editUser,

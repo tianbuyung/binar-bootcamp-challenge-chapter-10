@@ -4,9 +4,7 @@ import Container from "react-bootstrap/Container";
 import { Col, Placeholder, Row } from "react-bootstrap";
 
 import useProductDetailPage from "./useProductDetailPage";
-// import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import CartDetailService from "../../services/CartDetailService";
 import BreadcrumbComponent from "../../components/breadcrumbs/BreadCrumbs";
@@ -44,7 +42,7 @@ const ProductDetailPage = () => {
 			alert(data.message);
 		} catch (error) {
 			alert(error.message);
-			// navigate("/login", { replace: true });
+			router.replace("/login");
 		}
 	};
 
@@ -91,7 +89,7 @@ const ProductDetailPage = () => {
 					<Row xs={1} md={2} className="align-items-center">
 						<Col>
 							<img
-								tyle={{
+								style={{
 									width: 400,
 									height: "auto",
 									margin: "auto",

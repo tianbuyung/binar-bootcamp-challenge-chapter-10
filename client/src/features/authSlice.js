@@ -5,11 +5,13 @@ import AuthService from "../services/AuthService";
 const authservice = new AuthService();
 
 export const cekUser = createAsyncThunk("users/verify", async () => {
-	return await authservice.verifyUser();
+	const token = localStorage.getItem("token");
+	return await authservice.verifyUser(token);
 });
 
 export const cekAdmin = createAsyncThunk("admin/verify", async () => {
-	return await authservice.verifyAdmin();
+	const tokenAdmin = localStorage.getItem("tokenAdmin");
+	return await authservice.verifyAdmin(tokenAdmin);
 });
 
 const authSlice = createSlice({
@@ -36,7 +38,7 @@ const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(cekUser.pending, (state, action) => {
-				state.isUser = false;
+				// state.isUser = true;
 				state.isLoading = true;
 			})
 			.addCase(cekUser.fulfilled, (state, action) => {
@@ -54,15 +56,15 @@ const authSlice = createSlice({
 
 			// ! cekAdmin
 			.addCase(cekAdmin.pending, (state, action) => {
-				state.isAdmin = false;
+				// state.isAdmin = true;
 				state.isLoading = true;
 			})
 			.addCase(cekAdmin.fulfilled, (state, action) => {
 				state.isLoading = false;
-				if (action.payload.status === 403) {
-					state.isAdmin = false;
-				} else {
+				if (action.payload.status === 200) {
 					state.isAdmin = true;
+				} else {
+					state.isAdmin = false;
 				}
 			})
 			.addCase(cekAdmin.rejected, (state, action) => {
