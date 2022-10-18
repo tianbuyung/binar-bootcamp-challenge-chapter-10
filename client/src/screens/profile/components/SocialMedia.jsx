@@ -17,7 +17,12 @@ const SocialMedia = (props) => {
                 rel="noreferrer"
               >
                 <h6 className="mb-0">
-                  <i className={socialMedia.icon}></i> {socialMedia.data}
+                  {socialMedia.data && (
+                    <>
+                      <i className={socialMedia.icon}></i>
+                      <span className="m-2">{socialMedia.data}</span>
+                    </>
+                  )}
                 </h6>
               </a>
             </ListGroupItem>

@@ -58,6 +58,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       phoneNumber: {
         type: DataTypes.STRING,
+        validate: {
+          len: [10, 13],
+        },
       },
       twitter: {
         type: DataTypes.STRING,

@@ -96,7 +96,9 @@ const EditProfile = (props) => {
             />
             <FormEdit
               label="Phone Number"
-              type="text"
+              type="number"
+              minLength={11}
+              maxLength={13}
               value={props.phoneNumber}
               onChange={updatePhoneNumberChangeHandler}
               name="phoneNumber"
