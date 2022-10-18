@@ -10,25 +10,25 @@ interface ProductDetailHooksProps {
   // loading: boolean
 }
 
-const useProductDetailPage = ({ id }: ProductDetailHooksProps) => {
-  const [product, setProduct] = useState<ProductProps | null>(null);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const data = await productService.getProductDetailUser(id);
-        setProduct(data.product);
-        setLoading(false);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    getProduct();
-  }, []);
-  return {
-    product,
-    loading,
-  };
-};
+const useProductDetailPage = ({ id } : ProductDetailHooksProps) => {
+    const [product, setProduct] = useState<ProductProps | null>(null);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const data = await productService.getProductDetailUser(id)
+                setProduct(data.product)
+                setLoading(false);
+            } catch (error) {
+                console.log('error', error)
+            }
+        }
+        getProduct();
+    }, [])
+    return {
+        product,
+        loading
+    }
+}
 
 export default useProductDetailPage;
