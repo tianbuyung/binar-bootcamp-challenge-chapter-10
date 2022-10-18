@@ -44,7 +44,12 @@ export default class ProductService extends BaseService {
 			body: JSON.stringify(data),
 		};
 
-		return await this.fetch(`/admin/products/${id}`, options, true);
+		return await this.fetch(
+			`/admin/products/${id}`,
+			options,
+			true,
+			"admin"
+		);
 	};
 
 	deleteProduct = async (id) => {
@@ -52,6 +57,11 @@ export default class ProductService extends BaseService {
 			method: "DELETE",
 		};
 
-		return await this.fetch(`/admin/products/${id}`, options, true);
+		return await this.fetch(
+			`/admin/products/${id}`,
+			options,
+			true,
+			"admin"
+		);
 	};
 }
