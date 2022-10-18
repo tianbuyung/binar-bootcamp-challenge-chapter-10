@@ -8,6 +8,7 @@
         "@features/" : ["features/*"],
         "@hoc/" : ["hoc/*"],
         "@interfaces/" : ["interfaces/*"],
+        "@hooks/" : ["hooks/*"],
     },
     "target": "ES6",
     "module": "CommonJS",

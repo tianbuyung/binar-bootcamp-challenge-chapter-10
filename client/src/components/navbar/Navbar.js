@@ -2,16 +2,15 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { logout } from "../../features/authSlice";
 import AuthService from "@services/AuthService";
+import { useAuth } from "../../hooks/useAuth";
 
 const authservice = new AuthService();
 const NavbarComponent = ({ variant, bg }) => {
-	const isUser = useSelector((state) => {
-		return state.auth.isUser;
-	});
+	const isUser = useAuth();
 
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -39,7 +38,7 @@ const NavbarComponent = ({ variant, bg }) => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						{isUser ? (
+						{isUser.isUser ? (
 							<>
 								<Nav.Link
 									onClick={() =>

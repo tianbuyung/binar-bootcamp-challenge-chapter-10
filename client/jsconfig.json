@@ -9,6 +9,7 @@
       "@features/" : ["./src/features/*"],
       "@interfaces/" : ["./src/interfaces/*"],
       "@hoc/" : ["./src/hoc/*"],
+      "@hooks/" : ["./src/hooks/*"],
     }
   },
   "include": ["*"],
