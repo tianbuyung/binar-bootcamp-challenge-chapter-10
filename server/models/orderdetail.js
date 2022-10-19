@@ -57,9 +57,6 @@ module.exports = (sequelize, DataTypes) => {
         isDecimal: true,
         notNull: true,
         notEmpty: true
-      },
-      set() {
-        this.setDataValue('totalOrderDetail', this.getDataValue('qty') * this.getDataValue('price'));
       }
     }
   }, {

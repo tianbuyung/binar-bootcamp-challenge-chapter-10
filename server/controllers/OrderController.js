@@ -37,8 +37,8 @@ const createOrder = async (req, res) => {
 
             const result = await sequelize.transaction(async (t) => {
                 const [results, metadata] = await sequelize.query(
-                    `INSERT INTO "OrderDetails" ("OrderId", "ProductId", "qty", "price", "createdAt", "updatedAt") 
-                    SELECT ${order.id}, "ProductId", "qty", "price", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM "CartDetails" 
+                    `INSERT INTO "OrderDetails" ("OrderId", "ProductId", "qty", "price", "totalOrderDetail", "createdAt", "updatedAt") 
+                    SELECT ${order.id}, "ProductId", "qty", "price", "qty"*"price",CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM "CartDetails" 
                     JOIN "Products" ON "CartDetails"."ProductId" = "Products"."id" 
                     WHERE "CartId" = ${cart.id}`
                 );
