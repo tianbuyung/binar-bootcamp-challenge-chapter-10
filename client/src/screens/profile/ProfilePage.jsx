@@ -36,26 +36,36 @@ const ProfilePage = () => {
     fetchGetUserHandler();
   }, [isfetching]);
 
-  const socialMedias = [
-    {
-      name: "Twitter",
-      icon: "bi bi-twitter",
-      data: profile.user?.twitter,
-      link: `https://twitter.com/${profile.user?.twitter}`,
-    },
-    {
-      name: "Instagram",
-      icon: "bi bi-instagram",
-      data: profile.user?.instagram,
-      link: `https://www.instagram.com/${profile.user?.instagram}`,
-    },
-    {
-      name: "Facebook",
-      icon: "bi bi-facebook",
-      data: profile.user?.facebook,
-      link: `https://www.facebook.com/${profile.user?.facebook}`,
-    },
-  ];
+  const userTwitter = profile.user?.twitter;
+  const userInstagram = profile.user?.instagram;
+  const userFacebook = profile.user?.facebook;
+
+  let socialMedias = "";
+
+  if (!userTwitter && !userInstagram && !userFacebook) {
+    socialMedias = "";
+  } else {
+    socialMedias = [
+      {
+        name: "Twitter",
+        icon: "bi bi-twitter",
+        data: userTwitter,
+        link: `https://twitter.com/${profile.user?.twitter}`,
+      },
+      {
+        name: "Instagram",
+        icon: "bi bi-instagram",
+        data: userInstagram,
+        link: `https://www.instagram.com/${profile.user?.instagram}`,
+      },
+      {
+        name: "Facebook",
+        icon: "bi bi-facebook",
+        data: userFacebook,
+        link: `https://www.facebook.com/${profile.user?.facebook}`,
+      },
+    ];
+  }
 
   const breadcrumbs = [
     { title: "Home", isActive: false, href: "/" },
@@ -83,7 +93,7 @@ const ProfilePage = () => {
         </Row>
         <Row className="gutters-sm">
           <Col md={12}>
-            <SocialMedia socialMedias={socialMedias} />
+            {socialMedias && <SocialMedia socialMedias={socialMedias} />}
           </Col>
         </Row>
       </Container>
